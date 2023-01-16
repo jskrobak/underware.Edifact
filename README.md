@@ -44,4 +44,4 @@ edifact.Messages.Add(msg);
 ```        
 
 
-See more in underware.Edifact.Examples project 
+See more in underware.Edifact.Examples project. 

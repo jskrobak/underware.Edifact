@@ -29,7 +29,7 @@ namespace underware.Edifact.Security.Signers
             Segment USA = new USA("USA+1:0:1:{0}:1", (int)hashAlgorithm);
 
             //USC
-            Segment USC = new USC("USC+{0}", cert.SerialNumber.LongValue.ToString("X"));
+            Segment USC = new USC("USC+{0}", cert.SerialNumber.ToByteArray().ToHexString());
 
             msg.Segments.Insert(0, USC);
             msg.Segments.Insert(0, USA);

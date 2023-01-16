@@ -1,0 +1,11 @@
+﻿extensions: designer.cs generated.cs
+extensions: .cs .cpp .h
+// Copyright (c) 2019 Jakub Škrobák
+extensions: .aspx .ascx
+<%-- 
+Copyright (c) 2019 Jakub Škrobák
+--%>
+extensions:  .xml .config .xsd
+<!--
+Copyright (c) 2019 Jakub Škrobák
+-->

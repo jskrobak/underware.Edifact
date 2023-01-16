@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) 2019 Jakub Škrobák
+-->
+<segmentGroup code="Message" type="EFACT_D00A_CUSRES">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="FTX" />
+  <segment code="TDT" />
+  <segment code="LOC" />
+  <segment code="GIS" />
+  <segment code="EQD" />
+  <segmentGroup code="SG1">
+    <segment code="NAD" />
+    <segmentGroup code="SG2">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG3">
+    <segment code="RFF" />
+    <segment code="DTM" />
+    <segment code="LOC" />
+  </segmentGroup>
+  <segmentGroup code="SG4">
+    <segment code="ERP" />
+    <segment code="RFF" />
+    <segment code="ERC" />
+    <segment code="FTX" />
+  </segmentGroup>
+  <segmentGroup code="SG5">
+    <segment code="TAX" />
+    <segment code="MOA" />
+    <segment code="GIS" />
+  </segmentGroup>
+  <segmentGroup code="SG6">
+    <segment code="DOC" />
+    <segment code="PAC" />
+    <segment code="RFF" />
+    <segment code="PCI" />
+    <segment code="FTX" />
+    <segment code="TDT" />
+    <segment code="LOC" />
+    <segment code="DTM" />
+    <segment code="GIS" />
+    <segment code="MEA" />
+    <segment code="EQD" />
+    <segmentGroup code="SG7">
+      <segment code="NAD" />
+      <segmentGroup code="SG8">
+        <segment code="CTA" />
+        <segment code="COM" />
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG9">
+      <segment code="MOA" />
+      <segment code="CUX" />
+    </segmentGroup>
+    <segmentGroup code="SG10">
+      <segment code="TAX" />
+      <segment code="MOA" />
+      <segment code="GIS" />
+    </segmentGroup>
+    <segmentGroup code="SG11">
+      <segment code="CST" />
+      <segment code="FTX" />
+      <segmentGroup code="SG12">
+        <segment code="TAX" />
+        <segment code="MOA" />
+        <segment code="GIS" />
+        <segment code="MEA" />
+        <segment code="RFF" />
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG13">
+      <segment code="ERP" />
+      <segment code="RFF" />
+      <segment code="ERC" />
+      <segment code="FTX" />
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="CNT" />
+  <segmentGroup code="SG14">
+    <segment code="AUT" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

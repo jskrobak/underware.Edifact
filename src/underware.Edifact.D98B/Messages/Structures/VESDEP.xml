@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D98B_VESDEP">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="FTX" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="NAD" />
+    <segmentGroup code="SG3">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG4">
+    <segment code="TDT" />
+    <segment code="RFF" />
+    <segment code="LOC" />
+    <segment code="DTM" />
+    <segment code="MEA" />
+  </segmentGroup>
+  <segmentGroup code="SG5">
+    <segment code="QTY" />
+    <segment code="FTX" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

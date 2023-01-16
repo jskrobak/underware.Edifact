@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D03A_MEDPID">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="RFF" />
+  <segment code="FTX" />
+  <segmentGroup code="SG1">
+    <segment code="PNA" />
+    <segment code="ADR" />
+    <segment code="CTA" />
+    <segment code="COM" />
+    <segment code="RFF" />
+    <segment code="LAN" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="GEI" />
+    <segment code="PNA" />
+    <segment code="ADR" />
+    <segment code="RFF" />
+    <segment code="DTM" />
+    <segment code="IHC" />
+    <segment code="NAT" />
+    <segment code="FTX" />
+    <segment code="LAN" />
+    <segment code="HAN" />
+    <segment code="LOC" />
+    <segment code="FII" />
+    <segment code="CTA" />
+    <segmentGroup code="SG3">
+      <segment code="PDI" />
+      <segment code="DTM" />
+    </segmentGroup>
+    <segmentGroup code="SG4">
+      <segment code="COM" />
+      <segment code="CTA" />
+    </segmentGroup>
+    <segmentGroup code="SG5">
+      <segment code="REL" />
+      <segment code="PNA" />
+      <segment code="ADR" />
+      <segment code="RFF" />
+      <segment code="DTM" />
+      <segment code="PDI" />
+      <segment code="IHC" />
+      <segment code="NAT" />
+      <segment code="LAN" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG6">
+    <segment code="AUT" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

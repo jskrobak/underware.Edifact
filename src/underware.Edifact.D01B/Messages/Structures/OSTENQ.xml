@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D01B_OSTENQ">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="IRQ" />
+  <segment code="FTX" />
+  <segmentGroup code="SG1">
+    <segment code="NAD" />
+    <segmentGroup code="SG2">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG3">
+    <segment code="DOC" />
+    <segment code="DTM" />
+    <segmentGroup code="SG4">
+      <segment code="LIN" />
+      <segment code="PIA" />
+      <segment code="IMD" />
+      <segment code="MEA" />
+      <segment code="STS" />
+      <segmentGroup code="SG5">
+        <segment code="RFF" />
+        <segment code="DTM" />
+      </segmentGroup>
+      <segmentGroup code="SG6">
+        <segment code="LOC" />
+        <segment code="DTM" />
+        <segment code="QTY" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

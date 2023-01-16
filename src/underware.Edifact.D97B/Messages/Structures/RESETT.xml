@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D97B_RESETT">
+  <segment code="UNH" />
+  <segment code="GIS" />
+  <segmentGroup code="SG1">
+    <segment code="NAD" />
+    <segment code="CTA" />
+    <segment code="COM" />
+    <segment code="RFF" />
+  </segmentGroup>
+  <segment code="DTM" />
+  <segment code="FTX" />
+  <segmentGroup code="SG2">
+    <segment code="RFF" />
+    <segmentGroup code="SG3">
+      <segment code="GIS" />
+      <segment code="PAI" />
+      <segment code="NAD" />
+      <segment code="DTM" />
+      <segmentGroup code="SG4">
+        <segment code="RFF" />
+        <segment code="COM" />
+        <segment code="DTM" />
+        <segment code="FTX" />
+      </segmentGroup>
+      <segment code="GIS" />
+      <segment code="MOA" />
+      <segment code="CUX" />
+      <segment code="FTX" />
+      <segmentGroup code="SG5">
+        <segment code="NAD" />
+        <segment code="CTA" />
+        <segment code="COM" />
+        <segment code="PCD" />
+        <segment code="RFF" />
+        <segment code="GIS" />
+        <segment code="MOA" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNS" />
+  <segmentGroup code="SG6">
+    <segment code="MOA" />
+    <segment code="NAD" />
+    <segment code="PAI" />
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

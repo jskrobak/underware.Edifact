@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D95B_PRPAID">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="GIS" />
+  <segment code="RFF" />
+  <segment code="DTM" />
+  <segmentGroup code="SG1">
+    <segment code="NAD" />
+    <segment code="CTA" />
+    <segment code="COM" />
+    <segment code="RFF" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="DOC" />
+    <segmentGroup code="SG3">
+      <segment code="GIS" />
+      <segment code="FTX" />
+    </segmentGroup>
+    <segment code="DTM" />
+    <segment code="NAD" />
+    <segmentGroup code="SG4">
+      <segment code="MOA" />
+      <segment code="DTM" />
+      <segment code="PCD" />
+    </segmentGroup>
+    <segment code="RFF" />
+    <segment code="ICD" />
+    <segmentGroup code="SG5">
+      <segment code="ATT" />
+      <segment code="PCD" />
+    </segmentGroup>
+    <segment code="CUX" />
+  </segmentGroup>
+  <segmentGroup code="SG6">
+    <segment code="MOA" />
+    <segment code="GIS" />
+    <segment code="DTM" />
+    <segment code="RFF" />
+    <segment code="ATT" />
+    <segment code="ICD" />
+    <segment code="CUX" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

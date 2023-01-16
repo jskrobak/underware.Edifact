@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D02B_VATDEC">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="LOC" />
+  <segmentGroup code="SG1">
+    <segment code="NAD" />
+    <segmentGroup code="SG2">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+    <segmentGroup code="SG3">
+      <segment code="RFF" />
+      <segment code="FTX" />
+    </segmentGroup>
+    <segment code="FII" />
+    <segment code="PAI" />
+    <segment code="GEI" />
+    <segment code="LOC" />
+    <segmentGroup code="SG4">
+      <segment code="DTM" />
+      <segment code="GEI" />
+      <segment code="MEA" />
+      <segmentGroup code="SG5">
+        <segment code="DMS" />
+        <segment code="MOA" />
+        <segment code="MEA" />
+        <segment code="PCD" />
+        <segment code="GEI" />
+      </segmentGroup>
+      <segmentGroup code="SG6">
+        <segment code="LIN" />
+        <segmentGroup code="SG7">
+          <segment code="NAD" />
+          <segmentGroup code="SG8">
+            <segment code="CTA" />
+            <segment code="COM" />
+          </segmentGroup>
+          <segment code="RFF" />
+          <segment code="FII" />
+        </segmentGroup>
+        <segment code="GEI" />
+        <segmentGroup code="SG9">
+          <segment code="MOA" />
+          <segment code="ARD" />
+          <segment code="PCD" />
+          <segment code="GEI" />
+          <segmentGroup code="SG10">
+            <segment code="DMS" />
+            <segment code="MOA" />
+            <segment code="MEA" />
+            <segment code="PCD" />
+            <segment code="GEI" />
+          </segmentGroup>
+        </segmentGroup>
+      </segmentGroup>
+      <segmentGroup code="SG11">
+        <segment code="CNT" />
+        <segment code="MOA" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG12">
+    <segment code="AUT" />
+    <segment code="DTM" />
+    <segment code="RFF" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

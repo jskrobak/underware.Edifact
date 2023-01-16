@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) 2019 Jakub Škrobák
+-->
+<segmentGroup code="Message" type="EFACT_D00A_SANCRT">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="STS" />
+  <segment code="LOC" />
+  <segment code="RFF" />
+  <segment code="FTX" />
+  <segment code="MEA" />
+  <segment code="MOA" />
+  <segment code="GEI" />
+  <segment code="CST" />
+  <segmentGroup code="SG1">
+    <segment code="DOC" />
+    <segment code="DTM" />
+    <segment code="LOC" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="PNA" />
+    <segment code="ADR" />
+    <segmentGroup code="SG3">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG4">
+    <segment code="TDT" />
+    <segment code="DTM" />
+    <segment code="LOC" />
+    <segment code="RFF" />
+  </segmentGroup>
+  <segmentGroup code="SG5">
+    <segment code="PAC" />
+    <segment code="PCI" />
+    <segment code="MEA" />
+  </segmentGroup>
+  <segmentGroup code="SG6">
+    <segment code="EQD" />
+    <segment code="TMP" />
+    <segmentGroup code="SG7">
+      <segment code="SEL" />
+      <segment code="DTM" />
+      <segment code="LOC" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG8">
+    <segment code="PRC" />
+    <segment code="IMD" />
+    <segment code="MEA" />
+    <segment code="DTM" />
+    <segment code="LOC" />
+    <segment code="DOC" />
+    <segment code="RFF" />
+    <segment code="TMP" />
+    <segment code="GEI" />
+    <segment code="FTX" />
+    <segmentGroup code="SG9">
+      <segment code="PNA" />
+      <segment code="ADR" />
+      <segmentGroup code="SG10">
+        <segment code="CTA" />
+        <segment code="COM" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG11">
+    <segment code="LIN" />
+    <segment code="CST" />
+    <segment code="MEA" />
+    <segment code="PIA" />
+    <segment code="IMD" />
+    <segment code="GIN" />
+    <segment code="RFF" />
+    <segment code="ATT" />
+    <segment code="DTM" />
+    <segment code="LOC" />
+    <segment code="FTX" />
+    <segment code="QTY" />
+    <segment code="MOA" />
+    <segmentGroup code="SG12">
+      <segment code="DOC" />
+      <segment code="DTM" />
+      <segment code="LOC" />
+    </segmentGroup>
+    <segmentGroup code="SG13">
+      <segment code="PNA" />
+      <segment code="ADR" />
+      <segmentGroup code="SG14">
+        <segment code="CTA" />
+        <segment code="COM" />
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG15">
+      <segment code="PAC" />
+      <segment code="PCI" />
+      <segment code="MEA" />
+    </segmentGroup>
+    <segmentGroup code="SG16">
+      <segment code="EQD" />
+      <segment code="TMP" />
+      <segmentGroup code="SG17">
+        <segment code="SEL" />
+        <segment code="DTM" />
+        <segment code="LOC" />
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG18">
+      <segment code="PRC" />
+      <segment code="IMD" />
+      <segment code="MEA" />
+      <segment code="DTM" />
+      <segment code="LOC" />
+      <segment code="DOC" />
+      <segment code="RFF" />
+      <segment code="TMP" />
+      <segment code="GEI" />
+      <segment code="FTX" />
+      <segmentGroup code="SG19">
+        <segment code="PNA" />
+        <segment code="ADR" />
+        <segmentGroup code="SG20">
+          <segment code="CTA" />
+          <segment code="COM" />
+        </segmentGroup>
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="CNT" />
+  <segmentGroup code="SG21">
+    <segment code="AUT" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

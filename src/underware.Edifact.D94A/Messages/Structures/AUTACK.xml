@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<segmentGroup code="Message" type="AUTACK">
+ 
+  <segment code="UNH" />
+
+  <segmentGroup code="SG1">
+
+    <segment code="USH" />
+    <segment code="USA" />
+
+    <segmentGroup code="SG2">
+      
+      <segment code="USC" />
+      <segment code="USA" />
+      <segment code="USR" />
+      
+    </segmentGroup>
+    
+  </segmentGroup>
+
+  <segment code="USB" />
+  
+  <segmentGroup code="SG3">
+    
+    <segment code="USX" />
+    <segment code="USY" />
+    
+  </segmentGroup>
+
+  <segmentGroup code="SG4">
+  
+    <segment code="UST" />
+    <segment code="USR" />  
+    
+  </segmentGroup>
+  
+  <segment code="UNT" />
+
+</segmentGroup>
+

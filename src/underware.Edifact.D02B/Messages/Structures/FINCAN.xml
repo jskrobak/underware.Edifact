@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D02B_FINCAN">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="BUS" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="FII" />
+    <segment code="CTA" />
+    <segment code="COM" />
+  </segmentGroup>
+  <segmentGroup code="SG3">
+    <segment code="NAD" />
+    <segment code="CTA" />
+    <segment code="COM" />
+  </segmentGroup>
+  <segmentGroup code="SG4">
+    <segment code="LIN" />
+    <segmentGroup code="SG5">
+      <segment code="RFF" />
+      <segment code="DTM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="CNT" />
+  <segmentGroup code="SG6">
+    <segment code="AUT" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) 2019 Jakub Škrobák
+-->
+<segmentGroup code="Message" type="EFACT_D00A_BOPDIR">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="NAD" />
+    <segment code="CTA" />
+    <segment code="COM" />
+    <segment code="FTX" />
+  </segmentGroup>
+  <segmentGroup code="SG3">
+    <segment code="RFF" />
+    <segment code="ATT" />
+    <segment code="FII" />
+    <segment code="NAD" />
+    <segment code="MOA" />
+    <segment code="CUX" />
+    <segmentGroup code="SG4">
+      <segment code="RCS" />
+      <segment code="FTX" />
+      <segment code="DTM" />
+      <segment code="FII" />
+      <segment code="NAD" />
+      <segment code="SPR" />
+      <segment code="LOC" />
+      <segmentGroup code="SG5">
+        <segment code="RFF" />
+        <segment code="DTM" />
+      </segmentGroup>
+      <segmentGroup code="SG6">
+        <segment code="MOA" />
+        <segment code="CUX" />
+      </segmentGroup>
+      <segmentGroup code="SG7">
+        <segment code="GIR" />
+        <segment code="QTY" />
+        <segment code="PRI" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNS" />
+  <segmentGroup code="SG8">
+    <segment code="RFF" />
+    <segmentGroup code="SG9">
+      <segment code="RCS" />
+      <segment code="FTX" />
+      <segment code="CUX" />
+      <segmentGroup code="SG10">
+        <segment code="MOA" />
+        <segment code="NAD" />
+        <segment code="LOC" />
+        <segmentGroup code="SG11">
+          <segment code="GIR" />
+          <segment code="QTY" />
+          <segment code="PRI" />
+        </segmentGroup>
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="CNT" />
+  <segment code="UNT" />
+</segmentGroup>

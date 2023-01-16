@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D03A_SSREGW">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="GEI" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="PNA" />
+    <segment code="GIR" />
+    <segment code="NAT" />
+    <segment code="DOC" />
+    <segment code="ADR" />
+    <segment code="ATT" />
+    <segmentGroup code="SG3">
+      <segment code="DTM" />
+      <segment code="ADR" />
+    </segmentGroup>
+    <segmentGroup code="SG4">
+      <segment code="PDI" />
+      <segment code="DTM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="FTX" />
+  <segmentGroup code="SG5">
+    <segment code="AUT" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

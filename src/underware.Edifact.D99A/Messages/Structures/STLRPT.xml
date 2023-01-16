@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D99A_STLRPT">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="NAD" />
+  <segmentGroup code="SG1">
+    <segment code="CUX" />
+    <segment code="EQN" />
+    <segment code="MOA" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="DTM" />
+    <segment code="GIS" />
+    <segmentGroup code="SG3">
+      <segment code="CUX" />
+      <segment code="EQN" />
+      <segment code="MOA" />
+      <segment code="QVR" />
+    </segmentGroup>
+    <segmentGroup code="SG4">
+      <segment code="RFF" />
+      <segment code="LOC" />
+      <segment code="DTM" />
+      <segment code="FTX" />
+      <segmentGroup code="SG5">
+        <segment code="CUX" />
+        <segment code="MOA" />
+        <segment code="QVR" />
+      </segmentGroup>
+      <segmentGroup code="SG6">
+        <segment code="BUS" />
+        <segmentGroup code="SG7">
+          <segment code="CUX" />
+          <segment code="MOA" />
+          <segment code="QVR" />
+        </segmentGroup>
+        <segmentGroup code="SG8">
+          <segment code="LIN" />
+          <segment code="DTM" />
+          <segment code="RFF" />
+          <segment code="NAD" />
+          <segment code="LOC" />
+          <segment code="CUX" />
+          <segment code="GIS" />
+          <segment code="IMD" />
+          <segment code="MOA" />
+          <segment code="ALC" />
+          <segment code="FTX" />
+          <segment code="TAX" />
+          <segmentGroup code="SG9">
+            <segment code="DOC" />
+            <segment code="DTM" />
+            <segment code="FTX" />
+            <segment code="PIA" />
+            <segment code="SEQ" />
+          </segmentGroup>
+          <segmentGroup code="SG10">
+            <segment code="PAT" />
+            <segment code="MOA" />
+            <segment code="RFF" />
+            <segment code="DTM" />
+            <segment code="AGR" />
+            <segment code="GIS" />
+            <segment code="NAD" />
+            <segment code="FTX" />
+            <segment code="IMD" />
+          </segmentGroup>
+          <segmentGroup code="SG11">
+            <segment code="GIR" />
+            <segment code="IMD" />
+            <segment code="GIN" />
+            <segmentGroup code="SG12">
+              <segment code="SEQ" />
+              <segment code="FTX" />
+              <segment code="ALC" />
+              <segment code="GIN" />
+              <segment code="RFF" />
+              <segment code="IMD" />
+              <segment code="NAD" />
+              <segment code="TDT" />
+              <segment code="DTM" />
+              <segment code="LOC" />
+              <segment code="CNT" />
+            </segmentGroup>
+          </segmentGroup>
+        </segmentGroup>
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

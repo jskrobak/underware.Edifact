@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+   
+  </Target>
+  <ItemGroup>
+    <None Remove=".gitattributes" />
+    <None Remove=".gitignore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BouncyCastle.NetCore" Version="1.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\underware.Edifact.D94A\underware.Edifact.D94A.csproj" />
+    <ProjectReference Include="..\underware.Edifact\underware.Edifact.csproj" />
+  </ItemGroup>
+
+</Project>

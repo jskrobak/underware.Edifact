@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D01A_REBORD">
+  <segment code="UNH" />
+  <segment code="GIS" />
+  <segmentGroup code="SG1">
+    <segment code="NAD" />
+    <segment code="CTA" />
+    <segment code="COM" />
+    <segment code="RFF" />
+  </segmentGroup>
+  <segment code="DTM" />
+  <segment code="FTX" />
+  <segmentGroup code="SG2">
+    <segment code="ARD" />
+    <segment code="CUX" />
+    <segment code="GIS" />
+    <segment code="LOC" />
+    <segment code="DTM" />
+    <segment code="FTX" />
+    <segment code="RFF" />
+    <segmentGroup code="SG3">
+      <segment code="REL" />
+      <segment code="RFF" />
+      <segment code="GIS" />
+      <segment code="LOC" />
+      <segment code="NAD" />
+      <segment code="DTM" />
+      <segment code="FTX" />
+      <segmentGroup code="SG4">
+        <segment code="PCD" />
+        <segment code="NAD" />
+      </segmentGroup>
+      <segmentGroup code="SG5">
+        <segment code="MOA" />
+        <segment code="GIS" />
+        <segment code="PCD" />
+        <segment code="DTM" />
+        <segmentGroup code="SG6">
+          <segment code="RFF" />
+          <segment code="DTM" />
+          <segment code="COM" />
+        </segmentGroup>
+        <segment code="CUX" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNS" />
+  <segmentGroup code="SG7">
+    <segment code="MOA" />
+    <segmentGroup code="SG8">
+      <segment code="RFF" />
+      <segment code="DTM" />
+      <segment code="COM" />
+    </segmentGroup>
+    <segment code="PCD" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

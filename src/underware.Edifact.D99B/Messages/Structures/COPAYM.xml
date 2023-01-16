@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D99B_COPAYM">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="GIS" />
+  <segment code="DTM" />
+  <segment code="QTY" />
+  <segment code="RFF" />
+  <segment code="CUX" />
+  <segmentGroup code="SG1">
+    <segment code="PNA" />
+    <segment code="ADR" />
+    <segment code="CTA" />
+    <segment code="COM" />
+    <segment code="RFF" />
+    <segment code="ATT" />
+  </segmentGroup>
+  <segment code="UNS" />
+  <segmentGroup code="SG2">
+    <segment code="PNA" />
+    <segment code="ADR" />
+    <segment code="CTA" />
+    <segment code="COM" />
+    <segment code="DTM" />
+    <segment code="MOA" />
+    <segment code="QTY" />
+    <segment code="RFF" />
+    <segment code="ATT" />
+    <segmentGroup code="SG3">
+      <segment code="COT" />
+      <segment code="DLI" />
+      <segment code="DTM" />
+      <segment code="PCD" />
+      <segment code="MOA" />
+      <segment code="QTY" />
+      <segment code="RFF" />
+      <segment code="ATT" />
+    </segmentGroup>
+    <segmentGroup code="SG4">
+      <segment code="LOC" />
+      <segmentGroup code="SG5">
+        <segment code="PCD" />
+        <segment code="MOA" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNS" />
+  <segment code="MOA" />
+  <segment code="CNT" />
+  <segmentGroup code="SG6">
+    <segment code="PAI" />
+    <segment code="FII" />
+    <segment code="MOA" />
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG7">
+    <segment code="AUT" />
+    <segment code="DTM" />
+    <segment code="RFF" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

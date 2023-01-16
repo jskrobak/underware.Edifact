@@ -1,0 +1,723 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segments>
+  <segment code="UNH">
+    <element code="0062" />
+    <element code="UNH2" />
+    <element code="0068" />
+    <element code="UNH4" />
+    <element code="UNH5" />
+    <element code="UNH6" />
+    <element code="UNH7" />
+  </segment>
+  <segment code="BGM">
+    <composite code="C002" />
+    <element code="1004" />
+    <element code="1225" />
+    <element code="4343" />
+  </segment>
+  <segment code="DTM">
+    <composite code="C507" />
+  </segment>
+  <segment code="FTX">
+    <element code="4451" />
+    <element code="4453" />
+    <composite code="C107" />
+    <composite code="C108" />
+    <element code="3453" />
+  </segment>
+  <segment code="CNT">
+    <composite code="C270" />
+  </segment>
+  <segment code="RFF">
+    <composite code="C506" />
+  </segment>
+  <segment code="NAD">
+    <element code="3035" />
+    <composite code="C082" />
+    <composite code="C058" />
+    <composite code="C080" />
+    <composite code="C059" />
+    <element code="3164" />
+    <element code="3229" />
+    <element code="3251" />
+    <element code="3207" />
+  </segment>
+  <segment code="CTA">
+    <element code="3139" />
+    <composite code="C056" />
+  </segment>
+  <segment code="COM">
+    <composite code="C076" />
+  </segment>
+  <segment code="ERC">
+    <composite code="C901" />
+  </segment>
+  <segment code="UNT">
+    <element code="0074" />
+    <element code="0062" />
+  </segment>
+  <segment code="BUS">
+    <composite code="C521" />
+    <element code="3279" />
+    <element code="4487" />
+    <composite code="C551" />
+    <element code="4463" />
+  </segment>
+  <segment code="FII">
+    <element code="3035" />
+    <composite code="C078" />
+    <composite code="C088" />
+    <element code="3207" />
+  </segment>
+  <segment code="LIN">
+    <element code="1082" />
+    <element code="1229" />
+    <composite code="C212" />
+    <composite code="C829" />
+    <element code="1222" />
+    <element code="7083" />
+  </segment>
+  <segment code="SEQ">
+    <element code="1245" />
+    <composite code="C286" />
+  </segment>
+  <segment code="GIS">
+    <composite code="C529" />
+  </segment>
+  <segment code="MOA">
+    <composite code="C516" />
+  </segment>
+  <segment code="DOC">
+    <composite code="C002" />
+    <composite code="C503" />
+    <element code="3153" />
+    <element code="1220" />
+    <element code="1218" />
+  </segment>
+  <segment code="AUT">
+    <element code="9280" />
+    <element code="9282" />
+  </segment>
+  <segment code="CUX">
+    <composite code="C504" />
+    <composite code="C504" />
+    <element code="5402" />
+    <element code="6341" />
+  </segment>
+  <segment code="PCD">
+    <composite code="C501" />
+  </segment>
+  <segment code="TDT">
+    <element code="8051" />
+    <element code="8028" />
+    <composite code="C220" />
+    <composite code="C228" />
+    <composite code="C040" />
+    <element code="8101" />
+    <composite code="C401" />
+    <composite code="C222" />
+    <element code="8281" />
+  </segment>
+  <segment code="LOC">
+    <element code="3227" />
+    <composite code="C517" />
+    <composite code="C519" />
+    <composite code="C553" />
+    <element code="5479" />
+  </segment>
+  <segment code="GID">
+    <element code="1496" />
+    <composite code="C213" />
+    <composite code="C213" />
+    <composite code="C213" />
+  </segment>
+  <segment code="GDS">
+    <composite code="C703" />
+  </segment>
+  <segment code="MEA">
+    <element code="6311" />
+    <composite code="C502" />
+    <composite code="C174" />
+    <element code="7383" />
+  </segment>
+  <segment code="DIM">
+    <element code="6145" />
+    <composite code="C211" />
+  </segment>
+  <segment code="TMP">
+    <element code="6245" />
+    <composite code="C239" />
+  </segment>
+  <segment code="RNG">
+    <element code="6167" />
+    <composite code="C280" />
+  </segment>
+  <segment code="EQD">
+    <element code="8053" />
+    <composite code="C237" />
+    <composite code="C224" />
+    <element code="8077" />
+    <element code="8249" />
+    <element code="8169" />
+  </segment>
+  <segment code="EQA">
+    <element code="8053" />
+    <composite code="C237" />
+  </segment>
+  <segment code="DGS">
+    <element code="8273" />
+    <composite code="C205" />
+    <composite code="C234" />
+    <composite code="C223" />
+    <element code="8339" />
+    <element code="8364" />
+    <element code="8410" />
+    <element code="8126" />
+    <composite code="C235" />
+    <composite code="C236" />
+    <element code="8255" />
+    <element code="8325" />
+    <element code="8211" />
+  </segment>
+  <segment code="EQN">
+    <composite code="C523" />
+  </segment>
+  <segment code="RCS">
+    <element code="7293" />
+    <composite code="C550" />
+    <element code="1229" />
+  </segment>
+  <segment code="GIR">
+    <element code="7297" />
+    <composite code="C206" />
+    <composite code="C206" />
+    <composite code="C206" />
+    <composite code="C206" />
+    <composite code="C206" />
+  </segment>
+  <segment code="QTY">
+    <composite code="C186" />
+  </segment>
+  <segment code="PRI">
+    <composite code="C509" />
+    <element code="5213" />
+  </segment>
+  <segment code="UNS">
+    <element code="0081" />
+  </segment>
+  <segment code="TMD">
+    <composite code="C219" />
+    <element code="8332" />
+    <element code="8341" />
+  </segment>
+  <segment code="SEL">
+    <element code="9308" />
+    <composite code="C215" />
+    <element code="4517" />
+  </segment>
+  <segment code="PIA">
+    <element code="4347" />
+    <composite code="C212" />
+    <composite code="C212" />
+    <composite code="C212" />
+    <composite code="C212" />
+    <composite code="C212" />
+  </segment>
+  <segment code="DAM">
+    <element code="7493" />
+    <composite code="C821" />
+    <composite code="C822" />
+    <composite code="C825" />
+    <composite code="C826" />
+  </segment>
+  <segment code="COD">
+    <composite code="C823" />
+    <composite code="C824" />
+  </segment>
+  <segment code="HAN">
+    <composite code="C524" />
+    <composite code="C218" />
+  </segment>
+  <segment code="SGP">
+    <composite code="C237" />
+    <element code="7224" />
+  </segment>
+  <segment code="GOR">
+    <element code="8323" />
+    <composite code="C232" />
+    <composite code="C232" />
+    <composite code="C232" />
+    <composite code="C232" />
+  </segment>
+  <segment code="AJT">
+    <element code="4465" />
+    <element code="1082" />
+  </segment>
+  <segment code="INP">
+    <composite code="C849" />
+    <composite code="C522" />
+    <composite code="C850" />
+    <element code="1229" />
+  </segment>
+  <segment code="DLI">
+    <element code="1073" />
+    <element code="1082" />
+  </segment>
+  <segment code="IND">
+    <composite code="C545" />
+    <composite code="C546" />
+  </segment>
+  <segment code="BII">
+    <element code="7429" />
+    <composite code="C045" />
+    <element code="7140" />
+  </segment>
+  <segment code="PAI">
+    <composite code="C534" />
+  </segment>
+  <segment code="PAT">
+    <element code="4279" />
+    <composite code="C110" />
+    <composite code="C112" />
+  </segment>
+  <segment code="APR">
+    <element code="4043" />
+    <composite code="C138" />
+    <composite code="C960" />
+  </segment>
+  <segment code="ARD">
+    <composite code="C549" />
+  </segment>
+  <segment code="TAX">
+    <element code="5283" />
+    <composite code="C241" />
+    <composite code="C533" />
+    <element code="5286" />
+    <composite code="C243" />
+    <element code="5305" />
+    <element code="3446" />
+  </segment>
+  <segment code="AGR">
+    <composite code="C543" />
+    <element code="9419" />
+  </segment>
+  <segment code="EFI">
+    <composite code="C077" />
+    <composite code="C099" />
+    <element code="1050" />
+  </segment>
+  <segment code="CED">
+    <element code="1501" />
+    <composite code="C079" />
+  </segment>
+  <segment code="IMD">
+    <element code="7077" />
+    <element code="7081" />
+    <composite code="C273" />
+    <element code="7383" />
+  </segment>
+  <segment code="ALI">
+    <element code="3239" />
+    <element code="9213" />
+    <element code="4183" />
+    <element code="4183" />
+    <element code="4183" />
+    <element code="4183" />
+    <element code="4183" />
+  </segment>
+  <segment code="RTE">
+    <composite code="C128" />
+  </segment>
+  <segment code="ALC">
+    <element code="5463" />
+    <composite code="C552" />
+    <element code="4471" />
+    <element code="1227" />
+    <composite code="C214" />
+  </segment>
+  <segment code="TSR">
+    <composite code="C536" />
+    <composite code="C233" />
+    <composite code="C537" />
+    <composite code="C703" />
+  </segment>
+  <segment code="PCI">
+    <element code="4233" />
+    <composite code="C210" />
+    <element code="8275" />
+    <composite code="C827" />
+  </segment>
+  <segment code="CNI">
+    <element code="1490" />
+    <composite code="C503" />
+    <element code="1312" />
+  </segment>
+  <segment code="FCA">
+    <element code="4471" />
+    <composite code="C878" />
+  </segment>
+  <segment code="PRC">
+    <composite code="C242" />
+  </segment>
+  <segment code="CPI">
+    <composite code="C229" />
+    <composite code="C231" />
+    <element code="4237" />
+  </segment>
+  <segment code="PAC">
+    <element code="7224" />
+    <composite code="C531" />
+    <composite code="C202" />
+    <composite code="C402" />
+    <composite code="C532" />
+  </segment>
+  <segment code="CST">
+    <element code="1496" />
+    <composite code="C246" />
+    <composite code="C246" />
+    <composite code="C246" />
+    <composite code="C246" />
+    <composite code="C246" />
+  </segment>
+  <segment code="TPL">
+    <composite code="C222" />
+  </segment>
+  <segment code="TOD">
+    <element code="4055" />
+    <element code="4215" />
+    <composite code="C100" />
+  </segment>
+  <segment code="DMS">
+    <element code="1004" />
+    <element code="1001" />
+    <element code="7240" />
+  </segment>
+  <segment code="QVR">
+    <composite code="C279" />
+    <element code="4221" />
+    <composite code="C960" />
+  </segment>
+  <segment code="GIN">
+    <element code="7405" />
+    <composite code="C208" />
+    <composite code="C208" />
+    <composite code="C208" />
+    <composite code="C208" />
+    <composite code="C208" />
+  </segment>
+  <segment code="ERP">
+    <composite code="C701" />
+  </segment>
+  <segment code="SCC">
+    <element code="4017" />
+    <element code="4493" />
+    <composite code="C329" />
+  </segment>
+  <segment code="CPS">
+    <element code="7164" />
+    <element code="7166" />
+    <element code="7075" />
+  </segment>
+  <segment code="DLM">
+    <element code="4455" />
+    <composite code="C522" />
+    <composite code="C214" />
+    <element code="4457" />
+  </segment>
+  <segment code="DII">
+    <element code="1056" />
+    <element code="1058" />
+    <element code="9148" />
+    <element code="1476" />
+    <element code="3453" />
+    <element code="4513" />
+  </segment>
+  <segment code="MSG">
+    <composite code="C709" />
+    <element code="1507" />
+    <element code="4513" />
+  </segment>
+  <segment code="SGU">
+    <element code="9166" />
+    <element code="7299" />
+    <element code="6176" />
+    <element code="7168" />
+    <element code="1050" />
+    <element code="1049" />
+    <element code="4513" />
+  </segment>
+  <segment code="GRU">
+    <element code="9164" />
+    <element code="7299" />
+    <element code="6176" />
+    <element code="4513" />
+    <element code="1050" />
+  </segment>
+  <segment code="SEG">
+    <element code="9166" />
+    <element code="1507" />
+    <element code="4513" />
+  </segment>
+  <segment code="ELU">
+    <element code="9162" />
+    <element code="7299" />
+    <element code="1050" />
+    <element code="4513" />
+  </segment>
+  <segment code="CMP">
+    <element code="9146" />
+    <element code="1507" />
+    <element code="4513" />
+  </segment>
+  <segment code="ELM">
+    <element code="9150" />
+    <element code="9153" />
+    <element code="9155" />
+    <element code="9156" />
+    <element code="9158" />
+    <element code="9161" />
+    <element code="1507" />
+    <element code="4513" />
+  </segment>
+  <segment code="CDS">
+    <composite code="C702" />
+    <element code="1507" />
+    <element code="4513" />
+  </segment>
+  <segment code="CDV">
+    <element code="9426" />
+    <element code="9434" />
+    <element code="4513" />
+  </segment>
+  <segment code="FNT">
+    <composite code="C784" />
+    <composite code="C082" />
+    <element code="4405" />
+    <element code="4513" />
+  </segment>
+  <segment code="IDE">
+    <element code="7495" />
+    <composite code="C206" />
+    <composite code="C082" />
+    <element code="4405" />
+    <element code="1222" />
+    <composite code="C778" />
+    <composite code="C240" />
+  </segment>
+  <segment code="VLI">
+    <composite code="C780" />
+    <composite code="C082" />
+    <element code="4405" />
+    <element code="1514" />
+    <element code="1507" />
+    <element code="1505" />
+    <composite code="C240" />
+    <element code="4513" />
+  </segment>
+  <segment code="STC">
+    <composite code="C785" />
+    <composite code="C082" />
+    <element code="4405" />
+    <element code="4513" />
+  </segment>
+  <segment code="ASI">
+    <composite code="C779" />
+    <composite code="C082" />
+    <element code="4405" />
+    <element code="4513" />
+  </segment>
+  <segment code="SCD">
+    <element code="7497" />
+    <composite code="C786" />
+    <composite code="C082" />
+    <element code="4405" />
+    <element code="1222" />
+    <composite code="C778" />
+    <composite code="C240" />
+  </segment>
+  <segment code="ATT">
+    <element code="9017" />
+    <composite code="C955" />
+    <composite code="C956" />
+  </segment>
+  <segment code="DSI">
+    <composite code="C782" />
+    <composite code="C082" />
+    <element code="4405" />
+    <composite code="C286" />
+    <element code="1060" />
+  </segment>
+  <segment code="STS">
+    <composite code="C601" />
+    <composite code="C555" />
+    <composite code="C556" />
+    <composite code="C556" />
+    <composite code="C556" />
+    <composite code="C556" />
+    <composite code="C556" />
+  </segment>
+  <segment code="ARR">
+    <composite code="C778" />
+    <composite code="C770" />
+  </segment>
+  <segment code="FNS">
+    <composite code="C783" />
+    <composite code="C082" />
+    <element code="4405" />
+    <element code="4513" />
+  </segment>
+  <segment code="REL">
+    <element code="9141" />
+    <composite code="C941" />
+  </segment>
+  <segment code="TCC">
+    <composite code="C200" />
+    <composite code="C203" />
+    <composite code="C528" />
+    <composite code="C554" />
+  </segment>
+  <segment code="ICD">
+    <composite code="C330" />
+    <composite code="C331" />
+  </segment>
+  <segment code="INV">
+    <element code="4501" />
+    <element code="7491" />
+    <element code="4499" />
+    <element code="4503" />
+    <composite code="C522" />
+  </segment>
+  <segment code="PNA">
+    <element code="3035" />
+    <composite code="C206" />
+    <composite code="C082" />
+    <element code="3403" />
+    <element code="3397" />
+    <composite code="C816" />
+    <composite code="C816" />
+    <composite code="C816" />
+    <composite code="C816" />
+    <composite code="C816" />
+  </segment>
+  <segment code="ADR">
+    <composite code="C817" />
+    <composite code="C090" />
+    <element code="3164" />
+    <element code="3251" />
+    <element code="3207" />
+    <composite code="C819" />
+    <composite code="C517" />
+  </segment>
+  <segment code="NAT">
+    <element code="3493" />
+    <composite code="C042" />
+  </segment>
+  <segment code="PDI">
+    <element code="3499" />
+    <composite code="C085" />
+    <composite code="C101" />
+  </segment>
+  <segment code="EMP">
+    <element code="9003" />
+    <composite code="C948" />
+    <composite code="C951" />
+    <composite code="C950" />
+    <element code="3494" />
+    <element code="9035" />
+  </segment>
+  <segment code="PTY">
+    <element code="4035" />
+    <composite code="C585" />
+  </segment>
+  <segment code="LAN">
+    <element code="3455" />
+    <composite code="C508" />
+  </segment>
+  <segment code="SAL">
+    <composite code="C049" />
+  </segment>
+  <segment code="IHC">
+    <element code="3289" />
+    <composite code="C818" />
+  </segment>
+  <segment code="STG">
+    <element code="9421" />
+    <element code="6426" />
+    <element code="6428" />
+  </segment>
+  <segment code="PGI">
+    <element code="5379" />
+    <composite code="C288" />
+  </segment>
+  <segment code="PSD">
+    <element code="4407" />
+    <element code="7039" />
+    <composite code="C526" />
+    <element code="7045" />
+    <element code="7047" />
+    <composite code="C514" />
+  </segment>
+  <segment code="SPS">
+    <composite code="C526" />
+    <element code="6074" />
+    <composite code="C512" />
+    <composite code="C512" />
+    <composite code="C512" />
+    <composite code="C512" />
+    <composite code="C512" />
+  </segment>
+  <segment code="TEM">
+    <composite code="C244" />
+    <element code="4419" />
+    <element code="3077" />
+    <element code="6311" />
+    <element code="7188" />
+    <composite code="C515" />
+  </segment>
+  <segment code="CCI">
+    <element code="7059" />
+    <composite code="C502" />
+    <composite code="C240" />
+  </segment>
+  <segment code="STA">
+    <element code="6331" />
+    <composite code="C527" />
+  </segment>
+  <segment code="IRQ">
+    <composite code="C333" />
+  </segment>
+  <segment code="CCD">
+    <element code="4505" />
+    <element code="4507" />
+    <element code="4509" />
+  </segment>
+  <segment code="SFI">
+    <element code="7164" />
+    <composite code="C814" />
+    <composite code="C815" />
+    <element code="4513" />
+  </segment>
+  <segment code="CAV">
+    <composite code="C889" />
+  </segment>
+  <segment code="MKS">
+    <element code="7293" />
+    <composite code="C332" />
+    <element code="1229" />
+  </segment>
+  <segment code="COT">
+    <element code="5047" />
+    <composite code="C953" />
+    <composite code="C522" />
+    <composite code="C203" />
+    <composite code="C960" />
+  </segment>
+  <segment code="MEM">
+    <element code="7449" />
+    <composite code="C942" />
+    <composite code="C944" />
+    <composite code="C945" />
+    <composite code="C203" />
+    <composite code="C960" />
+  </segment>
+</segments>

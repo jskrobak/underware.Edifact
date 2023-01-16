@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D00B_RECECO">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="RFF" />
+  <segment code="DTM" />
+  <segmentGroup code="SG1">
+    <segment code="NAD" />
+    <segment code="CTA" />
+    <segment code="COM" />
+    <segment code="FII" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="DOC" />
+    <segment code="MOA" />
+    <segment code="CUX" />
+    <segment code="DTM" />
+    <segment code="CCD" />
+    <segment code="PCD" />
+    <segment code="PAT" />
+    <segment code="FTX" />
+    <segment code="RFF" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>underware.Edifact</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\underware.Edifact.D01B\underware.Edifact.D01B.csproj" />
+    <ProjectReference Include="..\underware.Edifact.D07A\underware.Edifact.D07A.csproj" />
+    <ProjectReference Include="..\underware.Edifact.D96A\underware.Edifact.D96A.csproj" />
+  </ItemGroup>
+
+</Project>

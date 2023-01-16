@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D98A_WKGRDC">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segmentGroup code="SG1">
+    <segment code="PNA" />
+    <segment code="ADR" />
+    <segment code="LOC" />
+    <segment code="DTM" />
+    <segmentGroup code="SG2">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG3">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG4">
+    <segment code="GIS" />
+    <segment code="FTX" />
+  </segmentGroup>
+  <segment code="UNS" />
+  <segmentGroup code="SG5">
+    <segment code="RFF" />
+    <segment code="DTM" />
+    <segmentGroup code="SG6">
+      <segment code="PNA" />
+      <segment code="ADR" />
+      <segment code="DTM" />
+      <segment code="LOC" />
+      <segment code="NAT" />
+      <segment code="PDI" />
+      <segment code="DOC" />
+    </segmentGroup>
+    <segment code="FTX" />
+    <segmentGroup code="SG7">
+      <segment code="GIS" />
+      <segment code="FTX" />
+    </segmentGroup>
+    <segmentGroup code="SG8">
+      <segment code="RFF" />
+      <segment code="DTM" />
+    </segmentGroup>
+    <segmentGroup code="SG9">
+      <segment code="RCS" />
+      <segment code="RFF" />
+      <segment code="DTM" />
+      <segment code="FTX" />
+    </segmentGroup>
+    <segmentGroup code="SG10">
+      <segment code="EMP" />
+      <segment code="LOC" />
+      <segmentGroup code="SG11">
+        <segment code="ATT" />
+        <segment code="FTX" />
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG12">
+      <segment code="PNA" />
+      <segment code="ADR" />
+      <segment code="LOC" />
+      <segment code="DTM" />
+      <segment code="FTX" />
+      <segmentGroup code="SG13">
+        <segment code="CTA" />
+        <segment code="COM" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

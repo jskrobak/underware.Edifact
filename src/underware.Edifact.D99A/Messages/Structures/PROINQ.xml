@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D99A_PROINQ">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="CUX" />
+  <segmentGroup code="SG1">
+    <segment code="NAD" />
+    <segmentGroup code="SG2">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG3">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG4">
+    <segment code="LIN" />
+    <segmentGroup code="SG5">
+      <segment code="CCI" />
+      <segment code="CAV" />
+      <segment code="MEA" />
+    </segmentGroup>
+    <segmentGroup code="SG6">
+      <segment code="IRQ" />
+      <segment code="PIA" />
+      <segment code="IMD" />
+      <segment code="MEA" />
+      <segment code="NAD" />
+      <segment code="PGI" />
+      <segment code="DTM" />
+      <segmentGroup code="SG7">
+        <segment code="PRI" />
+        <segment code="RNG" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) 2019 Jakub Škrobák
+-->
+<segmentGroup code="Message" type="EFACT_D00A_CODENO">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="FTX" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="TDT" />
+    <segment code="DTM" />
+    <segmentGroup code="SG3">
+      <segment code="LOC" />
+      <segment code="DTM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG4">
+    <segment code="NAD" />
+    <segmentGroup code="SG5">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG6">
+    <segment code="GID" />
+    <segmentGroup code="SG7">
+      <segment code="DOC" />
+      <segment code="DTM" />
+    </segmentGroup>
+    <segment code="SGP" />
+  </segmentGroup>
+  <segmentGroup code="SG8">
+    <segment code="EQD" />
+    <segment code="RFF" />
+    <segment code="NAD" />
+  </segmentGroup>
+  <segment code="CNT" />
+  <segment code="UNT" />
+</segmentGroup>

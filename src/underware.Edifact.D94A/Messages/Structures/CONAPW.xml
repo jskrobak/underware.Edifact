@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D94A_CONAPW">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="RFF" />
+  <segment code="DTM" />
+  <segmentGroup code="SG1">
+    <segment code="NAD" />
+    <segmentGroup code="SG2">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="LOC" />
+  <segment code="FTX" />
+  <segment code="DOC" />
+  <segment code="CNT" />
+  <segment code="AUT" />
+  <segment code="UNT" />
+</segmentGroup>

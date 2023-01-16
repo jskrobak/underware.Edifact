@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D94B_PRICAT">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="ALI" />
+  <segment code="FTX" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="NAD" />
+    <segment code="LOC" />
+    <segmentGroup code="SG3">
+      <segment code="RFF" />
+      <segment code="DTM" />
+    </segmentGroup>
+    <segmentGroup code="SG4">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG5">
+    <segment code="TAX" />
+    <segment code="MOA" />
+  </segmentGroup>
+  <segmentGroup code="SG6">
+    <segment code="CUX" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG7">
+    <segment code="PAT" />
+    <segment code="DTM" />
+    <segment code="PCD" />
+    <segment code="MOA" />
+  </segmentGroup>
+  <segmentGroup code="SG8">
+    <segment code="TDT" />
+    <segment code="LOC" />
+  </segmentGroup>
+  <segmentGroup code="SG9">
+    <segment code="TOD" />
+    <segment code="LOC" />
+  </segmentGroup>
+  <segmentGroup code="SG10">
+    <segment code="ALC" />
+    <segment code="ALI" />
+    <segmentGroup code="SG11">
+      <segment code="QTY" />
+      <segment code="RNG" />
+    </segmentGroup>
+    <segmentGroup code="SG12">
+      <segment code="PCD" />
+      <segment code="RNG" />
+    </segmentGroup>
+    <segmentGroup code="SG13">
+      <segment code="MOA" />
+      <segment code="RNG" />
+    </segmentGroup>
+    <segmentGroup code="SG14">
+      <segment code="RTE" />
+      <segment code="RNG" />
+    </segmentGroup>
+    <segmentGroup code="SG15">
+      <segment code="TAX" />
+      <segment code="MOA" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG16">
+    <segment code="PGI" />
+    <segment code="DTM" />
+    <segment code="QTY" />
+    <segment code="ALI" />
+    <segment code="FTX" />
+    <segmentGroup code="SG17">
+      <segment code="PRI" />
+      <segment code="API" />
+      <segment code="RNG" />
+      <segment code="DTM" />
+    </segmentGroup>
+    <segmentGroup code="SG18">
+      <segment code="TAX" />
+      <segment code="MOA" />
+    </segmentGroup>
+    <segmentGroup code="SG19">
+      <segment code="ALC" />
+      <segment code="ALI" />
+      <segmentGroup code="SG20">
+        <segment code="QTY" />
+        <segment code="RNG" />
+      </segmentGroup>
+      <segmentGroup code="SG21">
+        <segment code="PCD" />
+        <segment code="RNG" />
+      </segmentGroup>
+      <segmentGroup code="SG22">
+        <segment code="MOA" />
+        <segment code="RNG" />
+      </segmentGroup>
+      <segmentGroup code="SG23">
+        <segment code="RTE" />
+        <segment code="RNG" />
+      </segmentGroup>
+      <segmentGroup code="SG24">
+        <segment code="TAX" />
+        <segment code="MOA" />
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG25">
+      <segment code="NAD" />
+      <segment code="LOC" />
+      <segmentGroup code="SG26">
+        <segment code="RFF" />
+        <segment code="DTM" />
+      </segmentGroup>
+      <segmentGroup code="SG27">
+        <segment code="CTA" />
+        <segment code="COM" />
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG28">
+      <segment code="CUX" />
+      <segment code="DTM" />
+    </segmentGroup>
+    <segmentGroup code="SG29">
+      <segment code="PAT" />
+      <segment code="DTM" />
+      <segment code="PCD" />
+      <segment code="MOA" />
+    </segmentGroup>
+    <segmentGroup code="SG30">
+      <segment code="TDT" />
+      <segment code="LOC" />
+    </segmentGroup>
+    <segmentGroup code="SG31">
+      <segment code="TOD" />
+      <segment code="LOC" />
+    </segmentGroup>
+    <segmentGroup code="SG32">
+      <segment code="PAC" />
+      <segment code="MEA" />
+      <segment code="HAN" />
+    </segmentGroup>
+    <segmentGroup code="SG33">
+      <segment code="LIN" />
+      <segment code="PIA" />
+      <segment code="IMD" />
+      <segment code="MEA" />
+      <segment code="QTY" />
+      <segment code="HAN" />
+      <segment code="ALI" />
+      <segment code="DTM" />
+      <segment code="LOC" />
+      <segment code="DOC" />
+      <segment code="FTX" />
+      <segmentGroup code="SG34">
+        <segment code="TAX" />
+        <segment code="MOA" />
+      </segmentGroup>
+      <segmentGroup code="SG35">
+        <segment code="PRI" />
+        <segment code="API" />
+        <segment code="RNG" />
+        <segment code="DTM" />
+        <segment code="PCD" />
+      </segmentGroup>
+      <segmentGroup code="SG36">
+        <segment code="ALC" />
+        <segment code="ALI" />
+        <segmentGroup code="SG37">
+          <segment code="QTY" />
+          <segment code="RNG" />
+        </segmentGroup>
+        <segmentGroup code="SG38">
+          <segment code="PCD" />
+          <segment code="RNG" />
+        </segmentGroup>
+        <segmentGroup code="SG39">
+          <segment code="MOA" />
+          <segment code="RNG" />
+        </segmentGroup>
+        <segmentGroup code="SG40">
+          <segment code="RTE" />
+          <segment code="RNG" />
+        </segmentGroup>
+        <segmentGroup code="SG41">
+          <segment code="TAX" />
+          <segment code="MOA" />
+        </segmentGroup>
+      </segmentGroup>
+      <segmentGroup code="SG42">
+        <segment code="CUX" />
+        <segment code="DTM" />
+      </segmentGroup>
+      <segmentGroup code="SG43">
+        <segment code="PAC" />
+        <segment code="MEA" />
+        <segment code="HAN" />
+      </segmentGroup>
+      <segmentGroup code="SG44">
+        <segment code="PAT" />
+        <segment code="DTM" />
+        <segment code="PCD" />
+        <segment code="MOA" />
+      </segmentGroup>
+      <segmentGroup code="SG45">
+        <segment code="TDT" />
+        <segment code="LOC" />
+      </segmentGroup>
+      <segmentGroup code="SG46">
+        <segment code="TOD" />
+        <segment code="LOC" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

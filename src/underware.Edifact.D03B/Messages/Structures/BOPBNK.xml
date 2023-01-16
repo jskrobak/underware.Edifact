@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D03B_BOPBNK">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="NAD" />
+    <segment code="CTA" />
+    <segment code="COM" />
+    <segment code="FTX" />
+  </segmentGroup>
+  <segmentGroup code="SG3">
+    <segment code="RFF" />
+    <segment code="CUX" />
+    <segment code="MOA" />
+    <segment code="LOC" />
+    <segmentGroup code="SG4">
+      <segment code="RCS" />
+      <segment code="FTX" />
+      <segmentGroup code="SG5">
+        <segment code="MOA" />
+        <segment code="ATT" />
+        <segment code="NAD" />
+        <segmentGroup code="SG6">
+          <segment code="GIR" />
+          <segment code="QTY" />
+          <segment code="PRI" />
+        </segmentGroup>
+        <segmentGroup code="SG7">
+          <segment code="RFF" />
+          <segment code="DTM" />
+        </segmentGroup>
+        <segment code="LOC" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="CNT" />
+  <segment code="UNT" />
+</segmentGroup>

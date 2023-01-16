@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D02B_CONDRO">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="AUT" />
+  <segment code="AGR" />
+  <segment code="FTX" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DOC" />
+    <segment code="DTM" />
+    <segment code="FTX" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="NAD" />
+    <segment code="LOC" />
+    <segment code="FTX" />
+    <segmentGroup code="SG3">
+      <segment code="RFF" />
+      <segment code="CED" />
+      <segment code="DTM" />
+    </segmentGroup>
+    <segmentGroup code="SG4">
+      <segment code="CTA" />
+      <segment code="COM" />
+      <segment code="LOC" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG5">
+    <segment code="DOC" />
+    <segment code="INP" />
+    <segment code="RFF" />
+    <segment code="MEA" />
+    <segmentGroup code="SG6">
+      <segment code="EFI" />
+      <segment code="CED" />
+      <segment code="DTM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG7">
+    <segment code="BII" />
+    <segment code="GEI" />
+    <segment code="DTM" />
+    <segment code="IMD" />
+    <segment code="RFF" />
+    <segment code="QTY" />
+    <segmentGroup code="SG8">
+      <segment code="LOC" />
+      <segment code="DIM" />
+      <segment code="QTY" />
+      <segment code="MEA" />
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

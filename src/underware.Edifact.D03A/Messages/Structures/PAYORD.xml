@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D03A_PAYORD">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="BUS" />
+  <segment code="PAI" />
+  <segment code="FCA" />
+  <segment code="DTM" />
+  <segment code="FTX" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="MOA" />
+    <segment code="CUX" />
+    <segment code="DTM" />
+    <segment code="RFF" />
+  </segmentGroup>
+  <segmentGroup code="SG3">
+    <segment code="FII" />
+    <segment code="CTA" />
+    <segment code="COM" />
+  </segmentGroup>
+  <segmentGroup code="SG4">
+    <segment code="NAD" />
+    <segment code="CTA" />
+    <segment code="COM" />
+  </segmentGroup>
+  <segmentGroup code="SG5">
+    <segment code="INP" />
+    <segment code="FTX" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG6">
+    <segment code="GEI" />
+    <segment code="MOA" />
+    <segment code="LOC" />
+    <segment code="NAD" />
+    <segment code="RCS" />
+    <segment code="FTX" />
+  </segmentGroup>
+  <segmentGroup code="SG7">
+    <segment code="DOC" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG8">
+    <segment code="AUT" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D96B_COPRAR">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="FTX" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="TDT" />
+    <segment code="RFF" />
+    <segment code="LOC" />
+    <segment code="DTM" />
+    <segment code="FTX" />
+  </segmentGroup>
+  <segmentGroup code="SG3">
+    <segment code="NAD" />
+    <segmentGroup code="SG4">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG5">
+    <segment code="EQD" />
+    <segment code="RFF" />
+    <segment code="EQN" />
+    <segment code="TMD" />
+    <segment code="DTM" />
+    <segment code="LOC" />
+    <segment code="MEA" />
+    <segment code="DIM" />
+    <segment code="TMP" />
+    <segment code="RNG" />
+    <segment code="SEL" />
+    <segment code="FTX" />
+    <segment code="DGS" />
+    <segment code="EQA" />
+    <segmentGroup code="SG6">
+      <segment code="TDT" />
+      <segment code="RFF" />
+      <segment code="LOC" />
+      <segment code="DTM" />
+    </segmentGroup>
+    <segment code="NAD" />
+  </segmentGroup>
+  <segment code="CNT" />
+  <segment code="UNT" />
+</segmentGroup>

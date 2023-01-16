@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D95A_QALITY">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="IMD" />
+  <segment code="MEA" />
+  <segment code="FTX" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="NAD" />
+    <segment code="LOC" />
+    <segmentGroup code="SG3">
+      <segment code="RFF" />
+      <segment code="DTM" />
+    </segmentGroup>
+    <segmentGroup code="SG4">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG5">
+    <segment code="LIN" />
+    <segment code="PIA" />
+    <segment code="IMD" />
+    <segment code="MEA" />
+    <segment code="PSD" />
+    <segment code="SPS" />
+    <segment code="DTM" />
+    <segment code="QTY" />
+    <segment code="FTX" />
+    <segmentGroup code="SG6">
+      <segment code="RFF" />
+      <segment code="DTM" />
+    </segmentGroup>
+    <segmentGroup code="SG7">
+      <segment code="NAD" />
+      <segment code="LOC" />
+      <segmentGroup code="SG8">
+        <segment code="RFF" />
+        <segment code="DTM" />
+      </segmentGroup>
+      <segmentGroup code="SG9">
+        <segment code="CTA" />
+        <segment code="COM" />
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG10">
+      <segment code="TEM" />
+      <segment code="MEA" />
+      <segment code="DTM" />
+      <segmentGroup code="SG11">
+        <segment code="RFF" />
+        <segment code="DTM" />
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG12">
+      <segment code="CCI" />
+      <segment code="PSD" />
+      <segment code="SPS" />
+      <segment code="DTM" />
+      <segment code="FTX" />
+      <segmentGroup code="SG13">
+        <segment code="RFF" />
+        <segment code="DTM" />
+      </segmentGroup>
+      <segmentGroup code="SG14">
+        <segment code="MEA" />
+        <segment code="DTM" />
+        <segmentGroup code="SG15">
+          <segment code="RFF" />
+          <segment code="DTM" />
+        </segmentGroup>
+      </segmentGroup>
+      <segmentGroup code="SG16">
+        <segment code="STA" />
+        <segment code="DTM" />
+        <segmentGroup code="SG17">
+          <segment code="RFF" />
+          <segment code="DTM" />
+        </segmentGroup>
+      </segmentGroup>
+      <segmentGroup code="SG18">
+        <segment code="TEM" />
+        <segment code="MEA" />
+        <segment code="DTM" />
+        <segmentGroup code="SG19">
+          <segment code="RFF" />
+          <segment code="DTM" />
+        </segmentGroup>
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG20">
+      <segment code="GIN" />
+      <segment code="DTM" />
+      <segmentGroup code="SG21">
+        <segment code="RFF" />
+        <segment code="DTM" />
+      </segmentGroup>
+      <segmentGroup code="SG22">
+        <segment code="CCI" />
+        <segment code="PSD" />
+        <segment code="SPS" />
+        <segment code="DTM" />
+        <segment code="FTX" />
+        <segmentGroup code="SG23">
+          <segment code="RFF" />
+          <segment code="DTM" />
+        </segmentGroup>
+        <segmentGroup code="SG24">
+          <segment code="MEA" />
+          <segment code="DTM" />
+          <segmentGroup code="SG25">
+            <segment code="RFF" />
+            <segment code="DTM" />
+          </segmentGroup>
+        </segmentGroup>
+        <segmentGroup code="SG26">
+          <segment code="STA" />
+          <segment code="DTM" />
+          <segmentGroup code="SG27">
+            <segment code="RFF" />
+            <segment code="DTM" />
+          </segmentGroup>
+        </segmentGroup>
+        <segmentGroup code="SG28">
+          <segment code="TEM" />
+          <segment code="MEA" />
+          <segment code="DTM" />
+          <segmentGroup code="SG29">
+            <segment code="RFF" />
+            <segment code="DTM" />
+          </segmentGroup>
+        </segmentGroup>
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG30">
+      <segment code="PRC" />
+      <segmentGroup code="SG31">
+        <segment code="NAD" />
+        <segment code="LOC" />
+      </segmentGroup>
+      <segmentGroup code="SG32">
+        <segment code="CCI" />
+        <segment code="PSD" />
+        <segment code="SPS" />
+        <segment code="DTM" />
+        <segment code="FTX" />
+        <segmentGroup code="SG33">
+          <segment code="RFF" />
+          <segment code="DTM" />
+        </segmentGroup>
+        <segmentGroup code="SG34">
+          <segment code="MEA" />
+          <segment code="DTM" />
+          <segmentGroup code="SG35">
+            <segment code="RFF" />
+            <segment code="DTM" />
+          </segmentGroup>
+        </segmentGroup>
+        <segmentGroup code="SG36">
+          <segment code="STA" />
+          <segment code="DTM" />
+          <segmentGroup code="SG37">
+            <segment code="RFF" />
+            <segment code="DTM" />
+          </segmentGroup>
+        </segmentGroup>
+        <segmentGroup code="SG38">
+          <segment code="TEM" />
+          <segment code="MEA" />
+          <segment code="DTM" />
+          <segmentGroup code="SG39">
+            <segment code="RFF" />
+            <segment code="DTM" />
+          </segmentGroup>
+        </segmentGroup>
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

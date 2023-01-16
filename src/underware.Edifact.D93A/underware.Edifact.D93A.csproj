@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Remove="Messages\Structures\BANSTA.xml" />
+    <None Remove="Messages\Structures\BAPLIE.xml" />
+    <None Remove="Messages\Structures\BAPLTE.xml" />
+    <None Remove="Messages\Structures\composites.xml" />
+    <None Remove="Messages\Structures\CONDPV.xml" />
+    <None Remove="Messages\Structures\CONEST.xml" />
+    <None Remove="Messages\Structures\CONITT.xml" />
+    <None Remove="Messages\Structures\CONPVA.xml" />
+    <None Remove="Messages\Structures\CONQVA.xml" />
+    <None Remove="Messages\Structures\CONTEN.xml" />
+    <None Remove="Messages\Structures\CREADV.xml" />
+    <None Remove="Messages\Structures\CREEXT.xml" />
+    <None Remove="Messages\Structures\CUSCAR.xml" />
+    <None Remove="Messages\Structures\CUSDEC.xml" />
+    <None Remove="Messages\Structures\CUSREP.xml" />
+    <None Remove="Messages\Structures\CUSRES.xml" />
+    <None Remove="Messages\Structures\DEBADV.xml" />
+    <None Remove="Messages\Structures\DELFOR.xml" />
+    <None Remove="Messages\Structures\DELJIT.xml" />
+    <None Remove="Messages\Structures\DESADV.xml" />
+    <None Remove="Messages\Structures\DIRDEB.xml" />
+    <None Remove="Messages\Structures\DOCADV.xml" />
+    <None Remove="Messages\Structures\DOCAPP.xml" />
+    <None Remove="Messages\Structures\DOCINF.xml" />
+    <None Remove="Messages\Structures\IFCSUM.xml" />
+    <None Remove="Messages\Structures\IFTCCA.xml" />
+    <None Remove="Messages\Structures\IFTMAN.xml" />
+    <None Remove="Messages\Structures\IFTMBC.xml" />
+    <None Remove="Messages\Structures\IFTMBF.xml" />
+    <None Remove="Messages\Structures\IFTMBP.xml" />
+    <None Remove="Messages\Structures\IFTMCS.xml" />
+    <None Remove="Messages\Structures\IFTMIN.xml" />
+    <None Remove="Messages\Structures\IFTRIN.xml" />
+    <None Remove="Messages\Structures\IFTSAI.xml" />
+    <None Remove="Messages\Structures\IFTSTA.xml" />
+    <None Remove="Messages\Structures\INVOIC.xml" />
+    <None Remove="Messages\Structures\INVRPT.xml" />
+    <None Remove="Messages\Structures\ORDCHG.xml" />
+    <None Remove="Messages\Structures\ORDERS.xml" />
+    <None Remove="Messages\Structures\ORDRSP.xml" />
+    <None Remove="Messages\Structures\PARTIN.xml" />
+    <None Remove="Messages\Structures\PAXLST.xml" />
+    <None Remove="Messages\Structures\PAYDUC.xml" />
+    <None Remove="Messages\Structures\PAYEXT.xml" />
+    <None Remove="Messages\Structures\PAYMUL.xml" />
+    <None Remove="Messages\Structures\PAYORD.xml" />
+    <None Remove="Messages\Structures\PRICAT.xml" />
+    <None Remove="Messages\Structures\QALITY.xml" />
+    <None Remove="Messages\Structures\QUOTES.xml" />
+    <None Remove="Messages\Structures\REMADV.xml" />
+    <None Remove="Messages\Structures\REQOTE.xml" />
+    <None Remove="Messages\Structures\SANCRT.xml" />
+    <None Remove="Messages\Structures\segments.xml" />
+    <None Remove="Messages\Structures\SLSRPT.xml" />
+    <None Remove="Messages\Structures\STATAC.xml" />
+    <None Remove="Messages\Structures\SUPCOT.xml" />
+    <None Remove="Messages\Structures\SUPMAN.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Messages\Structures\BANSTA.xml" />
+    <EmbeddedResource Include="Messages\Structures\BAPLIE.xml" />
+    <EmbeddedResource Include="Messages\Structures\BAPLTE.xml" />
+    <EmbeddedResource Include="Messages\Structures\composites.xml" />
+    <EmbeddedResource Include="Messages\Structures\CONDPV.xml" />
+    <EmbeddedResource Include="Messages\Structures\CONEST.xml" />
+    <EmbeddedResource Include="Messages\Structures\CONITT.xml" />
+    <EmbeddedResource Include="Messages\Structures\CONPVA.xml" />
+    <EmbeddedResource Include="Messages\Structures\CONQVA.xml" />
+    <EmbeddedResource Include="Messages\Structures\CONTEN.xml" />
+    <EmbeddedResource Include="Messages\Structures\CREADV.xml" />
+    <EmbeddedResource Include="Messages\Structures\CREEXT.xml" />
+    <EmbeddedResource Include="Messages\Structures\CUSCAR.xml" />
+    <EmbeddedResource Include="Messages\Structures\CUSDEC.xml" />
+    <EmbeddedResource Include="Messages\Structures\CUSREP.xml" />
+    <EmbeddedResource Include="Messages\Structures\CUSRES.xml" />
+    <EmbeddedResource Include="Messages\Structures\DEBADV.xml" />
+    <EmbeddedResource Include="Messages\Structures\DELFOR.xml" />
+    <EmbeddedResource Include="Messages\Structures\DELJIT.xml" />
+    <EmbeddedResource Include="Messages\Structures\DESADV.xml" />
+    <EmbeddedResource Include="Messages\Structures\DIRDEB.xml" />
+    <EmbeddedResource Include="Messages\Structures\DOCADV.xml" />
+    <EmbeddedResource Include="Messages\Structures\DOCAPP.xml" />
+    <EmbeddedResource Include="Messages\Structures\DOCINF.xml" />
+    <EmbeddedResource Include="Messages\Structures\IFCSUM.xml" />
+    <EmbeddedResource Include="Messages\Structures\IFTCCA.xml" />
+    <EmbeddedResource Include="Messages\Structures\IFTMAN.xml" />
+    <EmbeddedResource Include="Messages\Structures\IFTMBC.xml" />
+    <EmbeddedResource Include="Messages\Structures\IFTMBF.xml" />
+    <EmbeddedResource Include="Messages\Structures\IFTMBP.xml" />
+    <EmbeddedResource Include="Messages\Structures\IFTMCS.xml" />
+    <EmbeddedResource Include="Messages\Structures\IFTMIN.xml" />
+    <EmbeddedResource Include="Messages\Structures\IFTRIN.xml" />
+    <EmbeddedResource Include="Messages\Structures\IFTSAI.xml" />
+    <EmbeddedResource Include="Messages\Structures\IFTSTA.xml" />
+    <EmbeddedResource Include="Messages\Structures\INVOIC.xml" />
+    <EmbeddedResource Include="Messages\Structures\INVRPT.xml" />
+    <EmbeddedResource Include="Messages\Structures\ORDCHG.xml" />
+    <EmbeddedResource Include="Messages\Structures\ORDERS.xml" />
+    <EmbeddedResource Include="Messages\Structures\ORDRSP.xml" />
+    <EmbeddedResource Include="Messages\Structures\PARTIN.xml" />
+    <EmbeddedResource Include="Messages\Structures\PAXLST.xml" />
+    <EmbeddedResource Include="Messages\Structures\PAYDUC.xml" />
+    <EmbeddedResource Include="Messages\Structures\PAYEXT.xml" />
+    <EmbeddedResource Include="Messages\Structures\PAYMUL.xml" />
+    <EmbeddedResource Include="Messages\Structures\PAYORD.xml" />
+    <EmbeddedResource Include="Messages\Structures\PRICAT.xml" />
+    <EmbeddedResource Include="Messages\Structures\QALITY.xml" />
+    <EmbeddedResource Include="Messages\Structures\QUOTES.xml" />
+    <EmbeddedResource Include="Messages\Structures\REMADV.xml" />
+    <EmbeddedResource Include="Messages\Structures\REQOTE.xml" />
+    <EmbeddedResource Include="Messages\Structures\SANCRT.xml" />
+    <EmbeddedResource Include="Messages\Structures\segments.xml" />
+    <EmbeddedResource Include="Messages\Structures\SLSRPT.xml" />
+    <EmbeddedResource Include="Messages\Structures\STATAC.xml" />
+    <EmbeddedResource Include="Messages\Structures\SUPCOT.xml" />
+    <EmbeddedResource Include="Messages\Structures\SUPMAN.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\underware.Edifact\underware.Edifact.csproj" />
+  </ItemGroup>
+</Project>

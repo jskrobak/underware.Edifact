@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D97B_BAPLIE">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="NAD" />
+    <segmentGroup code="SG3">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG4">
+    <segment code="TDT" />
+    <segment code="LOC" />
+    <segment code="DTM" />
+    <segment code="RFF" />
+    <segment code="FTX" />
+  </segmentGroup>
+  <segmentGroup code="SG5">
+    <segment code="LOC" />
+    <segment code="GID" />
+    <segment code="GDS" />
+    <segment code="FTX" />
+    <segment code="MEA" />
+    <segment code="DIM" />
+    <segment code="TMP" />
+    <segment code="RNG" />
+    <segment code="LOC" />
+    <segment code="RFF" />
+    <segmentGroup code="SG6">
+      <segment code="EQD" />
+      <segment code="EQA" />
+      <segment code="NAD" />
+      <segment code="RFF" />
+    </segmentGroup>
+    <segmentGroup code="SG7">
+      <segment code="DGS" />
+      <segment code="FTX" />
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

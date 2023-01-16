@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D02A_SAFHAZ">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="RFF" />
+  <segment code="DTM" />
+  <segment code="FTX" />
+  <segmentGroup code="SG1">
+    <segment code="NAD" />
+    <segment code="RFF" />
+    <segmentGroup code="SG2">
+      <segment code="CTA" />
+      <segment code="COM" />
+    </segmentGroup>
+  </segmentGroup>
+  <segmentGroup code="SG3">
+    <segment code="DOC" />
+    <segment code="IMD" />
+    <segment code="PIA" />
+    <segment code="MEA" />
+    <segment code="RCS" />
+    <segment code="RFF" />
+    <segment code="DTM" />
+    <segment code="FTX" />
+    <segmentGroup code="SG4">
+      <segment code="NAD" />
+      <segment code="RFF" />
+      <segmentGroup code="SG5">
+        <segment code="CTA" />
+        <segment code="COM" />
+      </segmentGroup>
+    </segmentGroup>
+    <segmentGroup code="SG6">
+      <segment code="SFI" />
+      <segment code="PIA" />
+      <segment code="EQD" />
+      <segment code="FTX" />
+      <segmentGroup code="SG7">
+        <segment code="NAD" />
+        <segment code="RFF" />
+        <segmentGroup code="SG8">
+          <segment code="CTA" />
+          <segment code="COM" />
+        </segmentGroup>
+      </segmentGroup>
+      <segmentGroup code="SG9">
+        <segment code="HAN" />
+        <segment code="FTX" />
+      </segmentGroup>
+      <segmentGroup code="SG10">
+        <segment code="IMD" />
+        <segment code="MEA" />
+        <segment code="PCD" />
+        <segment code="RFF" />
+        <segment code="FTX" />
+      </segmentGroup>
+      <segmentGroup code="SG11">
+        <segment code="DGS" />
+        <segment code="RFF" />
+        <segment code="FTX" />
+        <segmentGroup code="SG12">
+          <segment code="PAC" />
+          <segment code="PCI" />
+        </segmentGroup>
+      </segmentGroup>
+      <segmentGroup code="SG13">
+        <segment code="CCI" />
+        <segment code="IMD" />
+        <segment code="FTX" />
+        <segment code="CAV" />
+        <segmentGroup code="SG14">
+          <segment code="RFF" />
+          <segment code="DTM" />
+        </segmentGroup>
+        <segmentGroup code="SG15">
+          <segment code="MEA" />
+          <segment code="TEM" />
+          <segment code="DTM" />
+          <segment code="RFF" />
+          <segment code="FTX" />
+        </segmentGroup>
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

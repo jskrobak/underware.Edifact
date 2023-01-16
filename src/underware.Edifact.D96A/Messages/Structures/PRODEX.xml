@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<segmentGroup code="Message" type="EFACT_D96A_PRODEX">
+  <segment code="UNH" />
+  <segment code="BGM" />
+  <segment code="DTM" />
+  <segment code="MEA" />
+  <segment code="NAD" />
+  <segmentGroup code="SG1">
+    <segment code="RFF" />
+    <segment code="DTM" />
+  </segmentGroup>
+  <segmentGroup code="SG2">
+    <segment code="IMD" />
+    <segment code="QTY" />
+    <segmentGroup code="SG3">
+      <segment code="LIN" />
+      <segment code="GIS" />
+      <segment code="LOC" />
+      <segment code="DTM" />
+      <segment code="MEA" />
+      <segment code="QTY" />
+      <segment code="TDT" />
+      <segmentGroup code="SG4">
+        <segment code="RFF" />
+        <segment code="DTM" />
+      </segmentGroup>
+    </segmentGroup>
+  </segmentGroup>
+  <segment code="UNT" />
+</segmentGroup>

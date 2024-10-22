@@ -5,35 +5,39 @@ using System.Linq;
 using underware.Edi.Common;
 using underware.Edi.Common.DocumentModel;
 using underware.Edifact.D01B.Segments;
+using underware.Edifact.Xml;
 
 namespace underware.Edifact.D01B.Messages
 {
-    public class ORDERS: Message
+    public class ORDRSP: Message
     {
         protected override BaseDocument GetBaseDocument()
         {
-
+            var xml = Root.ToXml();
+            
             var billNo = Segments.OfType<BGM>().First().C106.E1004;
             var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date;
-            var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2").Date;
-            var customer = GetParty("SG2", "BY");
-            var supplier = GetParty("SG2", "SU");
-            var deliveryPlace = GetParty("SG2", "DP");
-            var invoicePlace = GetParty("SG2", "IV");
-            var dispatchPlace = GetParty("SG2", "SH");
+            //var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2").Date;
+            var customer = GetParty("SG3", "BY");
+            var supplier = GetParty("SG3", "SU");
+            var deliveryPlace = GetParty("SG3", "DP");
+            var invoicePlace = GetParty("SG3", "IV");
+            var dispatchPlace = GetParty("SG3", "SH");
+            
             var texts = Segments.OfType<FTX>()
                 .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
             var messageFunction = Segments.OfType<BGM>().First().C002.E1001;
             var items =
-                Root.FindGroups("SG28", true)
-                    .Select(GetOrderItem)
+                Root.FindGroups("SG26", true)
+                    .Select(GetOrderResponseItem)
                     .ToList();
                 
-            var order = new Order()
+            var orderResponse = new OrderResponse()
             {
+                AllParties = Root.FindGroups("SG3").Select(GetParty).ToList(),
                 BillNo = billNo,
                 IssueDate = issueDate,
-                DeliveryDate = deliveryDate,
+                //DeliveryDate = deliveryDate,
                 Customer = customer,
                 Supplier = supplier,
                 DeliveryPlace = deliveryPlace,
@@ -44,13 +48,13 @@ namespace underware.Edifact.D01B.Messages
                 Items = items
             };
 
-            foreach(var item in order.Items)
-                if(item.DeliveryDate == DateTime.MinValue) item.DeliveryDate = order.DeliveryDate;
+            foreach(var item in orderResponse.Items)
+                if(item.DeliveryDate == DateTime.MinValue) item.DeliveryDate = orderResponse.DeliveryDate;
 
-            return order;
+            return orderResponse;
         }
 
-        private OrderItem GetOrderItem(SegmentGroup sg28)
+        private OrderResponseItem GetOrderResponseItem(SegmentGroup sg28)
         {
             var lin = sg28.Segments.OfType<LIN>().FirstOrDefault();
             var qty = sg28.Segments.OfType<QTY>().FirstOrDefault();
@@ -71,7 +75,7 @@ namespace underware.Edifact.D01B.Messages
                 }
             }
 
-            return new OrderItem()
+            return new OrderResponseItem()
             {
                 LineNo = lin?.E1082,
                 GTIN = lin?.C212?.E7140,
@@ -97,14 +101,9 @@ namespace underware.Edifact.D01B.Messages
                     })
                 .ToList();
         }
-        private underware.Edi.Common.DocumentModel.Party GetParty(string groupName, string qualf)
-        {
-            var group = Root.FindGroups(groupName).FirstOrDefault(g =>
-                g.Segments.OfType<NAD>().Any() &&
-                g.Segments.OfType<NAD>().First().E3035 == qualf);
 
-            if (group == null) return null;
-            
+        private underware.Edi.Common.DocumentModel.Party GetParty(SegmentGroup group)
+        {
             var nad = group.Segments.OfType<NAD>().First();
 
             var refs = GetReferences(group,"SG3");
@@ -114,6 +113,7 @@ namespace underware.Edifact.D01B.Messages
 
             var contact = new underware.Edi.Common.DocumentModel.Party()
             {
+                Qualifier = nad.E3035,
                 GLN = nad.C082?.E3039,
                 Name = 
                     $"{nad.C080?.E3036}{nad.C080?.E3036_0}{nad.C080?.E3036_1}{nad.C080?.E3036_2}{nad.C080?.E3036_3}",
@@ -125,9 +125,16 @@ namespace underware.Edifact.D01B.Messages
                 RegNo = regNo
             };
             
-            
-            
             return contact;
+        }
+        
+        private underware.Edi.Common.DocumentModel.Party GetParty(string groupName, string qualf)
+        {
+            var group = Root.FindGroups(groupName).FirstOrDefault(g =>
+                g.Segments.OfType<NAD>().Any() &&
+                g.Segments.OfType<NAD>().First().E3035 == qualf);
+
+            return group == null ? null : GetParty(group);
         }
     }
 }

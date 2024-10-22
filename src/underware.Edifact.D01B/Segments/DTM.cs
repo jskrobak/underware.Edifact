@@ -18,10 +18,21 @@ namespace underware.Edifact.D01B.Segments
         {
             get
             {
-                DateTimeFormat format = DateTimeFormat.GetFromEdi(C507.E2379);
+                var format = DateTimeFormat.Parse(C507.E2379);
                 return C507.E2380.ParseDateTime(format);
             }
         }
+        
+        public DateTime? NullableDate
+        {
+            get
+            {
+                var format = DateTimeFormat.Parse(C507.E2379);
+                var date = C507.E2380.ParseDateTime(format);
+                return date == DateTime.MinValue ? (DateTime?)null : date;
+            }
+        }
 
+        public string Qualifier => C507.E2005;
     }
 }

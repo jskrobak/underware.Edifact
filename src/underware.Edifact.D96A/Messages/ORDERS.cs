@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using underware.Edi.Common.DocumentModel;
 using underware.Edifact.D96A.Segments;
 
@@ -9,7 +10,7 @@ namespace underware.Edifact.D96A.Messages
 {
     public class ORDERS : Message
     {
-        public override BaseDocument GetDocument()
+        protected override BaseDocument GetBaseDocument()
         {
             var order = new Order()
             {
@@ -21,7 +22,9 @@ namespace underware.Edifact.D96A.Messages
                 DeliveryPlace = GetParty("SG2", "DP"),
                 InvoicePlace = GetParty("SG2", "IV"),
                 DispatchPlace = GetParty("SG2", "SH"),
-                Text = Segments.OfType<FTX>().FirstOrDefault(p => p.E4451 == "PUR")?.C108?.E4440,
+                UltimateCustomer = GetParty("SG2", "UC"),
+                Texts = Segments.OfType<FTX>()
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 }),
                 MessageFunction = Segments.OfType<BGM>().First().C002.E1001,
                 Items =
                     Root.FindGroups("SG25", true)
@@ -41,18 +44,33 @@ namespace underware.Edifact.D96A.Messages
             var lin = sg.Segments.OfType<LIN>().FirstOrDefault();
             var qty = sg.Segments.OfType<QTY>().FirstOrDefault();
             var dtm = sg.Segments.OfType<DTM>().FirstOrDefault(d=> d.Qualifier == "2");
-            var ftx = sg.Segments.OfType<FTX>().FirstOrDefault();
             var pia = sg.Segments.OfType<PIA>().FirstOrDefault();
 
+            var name = "";
+            var ftx = sg.Segments.OfType<FTX>().FirstOrDefault();
+            if (ftx != null)
+            {
+                name = ftx.C108.Text;
+            }
+            else
+            {
+                var imd = sg.Segments.OfType<IMD>().FirstOrDefault();
+                if (imd != null)
+                {
+                    name = imd.C273.E7008;
+                }   
+            }
+
+            
             return new OrderItem()
             {
                 LineNo = lin?.E1082,
                 GTIN = lin.C212.E7140,
-                SupplierItemCode = pia.C212.E7140,
+                SupplierItemCode = pia?.C212?.E7140,
                 Qty = qty.Value,
                 Unit = qty.Unit,
                 DeliveryDate = (dtm != null && dtm.Date > DateTime.MinValue) ? dtm.Date : DateTime.MinValue,
-                Name = ftx.C108.Text
+                Name = name
             };
         }
 
@@ -65,7 +83,7 @@ namespace underware.Edifact.D96A.Messages
                     {
                         Qualifier = rff.C506.E1153,
                         BillNo = rff.C506.E1154,
-                        RefDate = dtm.Date
+                        RefDate = dtm == null ? null : new DateTime?(dtm.Date)
                     })
                 .ToList();
         }
@@ -78,11 +96,16 @@ namespace underware.Edifact.D96A.Messages
             if (group == null) return null;
             
             var nad = group.Segments.OfType<NAD>().First();
-
+            
             var refs = GetReferences(group,"SG3");
             var vatNo = refs.FirstOrDefault(r => r.Qualifier == "VA")?.BillNo;
             var regNo = refs.FirstOrDefault(r => r.Qualifier == "GN")?.BillNo;
+            var addId = refs.FirstOrDefault(r => r.Qualifier == "IA")?.BillNo;
 
+            var sg5 = group.FindGroups("SG5").FirstOrDefault();
+            var ctaContact = sg5?.Segments.OfType<CTA>().FirstOrDefault()?.C056?.E3412;
+            var email = sg5?.Segments.OfType<COM>().FirstOrDefault(x => x.C076.E3155 == "EM")?.C076.E3148;
+            var phone = sg5?.Segments.OfType<COM>().FirstOrDefault(x => x.C076.E3155 == "TE")?.C076.E3148;
 
             var contact = new underware.Edi.Common.DocumentModel.Party()
             {
@@ -94,7 +117,11 @@ namespace underware.Edifact.D96A.Messages
                 ZIPCode = nad.E3251,
                 Country = nad.E3207,
                 VATNo = vatNo,
-                RegNo = regNo
+                RegNo = regNo,
+                ExternalCode = addId,
+                Email = email,
+                Phone1 = phone,
+                Contact = ctaContact
             };
             
             

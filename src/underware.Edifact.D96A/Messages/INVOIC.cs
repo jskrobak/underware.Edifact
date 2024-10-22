@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using underware.Edi.Common.DocumentModel;
-using underware.Edifact.D01B.Segments;
+using underware.Edifact.D96A.Segments;
 using underware.Edifact.Xml;
 
-namespace underware.Edifact.D01B.Messages
+namespace underware.Edifact.D96A.Messages
 {
     public class INVOIC : Message
     {
-        public override BaseDocument GetDocument()
+        protected override BaseDocument GetBaseDocument()
         {
             var xml = Root.ToXml();
 
-            var billNo = Segments.OfType<BGM>().First().C106.E1004;
+            var billNo = Segments.OfType<BGM>().First().E1004;
             var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date;
             var fulfillmentDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "325").Date;
             var customer = GetParty("SG2", "BY");
@@ -22,22 +22,24 @@ namespace underware.Edifact.D01B.Messages
             var deliveryPlace = GetParty("SG2", "DP");
             var invoicePlace = GetParty("SG2", "IV");
             var dispatchPlace = GetParty("SG2", "SH");
-            var text = Segments.OfType<FTX>().FirstOrDefault(p => p.E4451 == "ZZZ")?.C108?.E4440;
+            var texts = Segments.OfType<FTX>()
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
             var messageFunction = Segments.OfType<BGM>().First().E1225;
             var invoiceType = Segments.OfType<BGM>().First().C002.E1001;
             var desadv = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "DQ");
             var purchaseOrder = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "ON");
             var refInvoice = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "IV");
+            var contract = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "CT");
             var currency = Segments.OfType<CUX>().FirstOrDefault()?.C504.E6345;
 
             var items =
-                Root.FindGroups("SG26", true)
+                Root.FindGroups("SG25", true)
                     .Select(GetInvoiceItem)
                     .ToList();
 
             var paymentRules = GetPaymentRules();
             
-            var taxes = Root.FindGroups("SG52").Select(GetTax).ToList();
+            var taxes = Root.FindGroups("SG50").Select(GetTax).ToList();
 
             var inv = new Invoice()
             {
@@ -48,7 +50,7 @@ namespace underware.Edifact.D01B.Messages
                 DeliveryPlace = deliveryPlace,
                 InvoicePlace = invoicePlace,
                 DispatchPlace = dispatchPlace,
-                Text = text,
+                Texts = texts,
                 MessageFunction = messageFunction,
                 Items = items,
                 FulfillmentDate = fulfillmentDate,
@@ -58,12 +60,13 @@ namespace underware.Edifact.D01B.Messages
                 PurchaseOrder = purchaseOrder,
                 RefInvoice = refInvoice,
                 Currency = currency,
-                Taxes = taxes
+                Taxes = taxes,
+                Contract = contract
             };
 
-            foreach (var sg50 in Root.FindGroups("SG50"))
+            foreach (var sg48 in Root.FindGroups("SG48"))
             {
-                foreach (var moa in sg50.Segments.OfType<MOA>())
+                foreach (var moa in sg48.Segments.OfType<MOA>())
                 {
                     switch (moa.C516.E5025)
                     {
@@ -107,6 +110,7 @@ namespace underware.Edifact.D01B.Messages
             return new Tax
             {
                 TaxType = tax.C241.E5153,
+                Code = tax.C243?.E5279,
                 Rate = rate,
                 Amount = amount,
                 Basis = basis
@@ -136,20 +140,21 @@ namespace underware.Edifact.D01B.Messages
             };
         }
         
-        private InvoiceItem GetInvoiceItem(SegmentGroup sg26)
+        private InvoiceItem GetInvoiceItem(SegmentGroup sg)
         {
-            var lin = sg26.Segments.OfType<LIN>().FirstOrDefault();
-            var qty47 = sg26.Segments.OfType<QTY>().FirstOrDefault(q => q.Qualifier == "47");
-            var qty59 = sg26.Segments.OfType<QTY>().FirstOrDefault(q => q.Qualifier == "59");
-            var dtm = sg26.Segments.OfType<DTM>().FirstOrDefault(d=>d.Qualifier == "35");
-            var imdE = sg26.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "E");
-            var imdF = sg26.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "F");
-            var piaSA = sg26.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "SA");
-            var piaIN = sg26.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "IN");
+            var lin = sg.Segments.OfType<LIN>().FirstOrDefault();
+            var qty47 = sg.Segments.OfType<QTY>().FirstOrDefault(q => q.Qualifier == "47");
+            var qty59 = sg.Segments.OfType<QTY>().FirstOrDefault(q => q.Qualifier == "59");
+            var dtm = sg.Segments.OfType<DTM>().FirstOrDefault(d=>d.Qualifier == "35");
+            //var imdE = sg.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "E");
+            var imdF = sg.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "F");
+            var piaSA = sg.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "SA");
+            var piaIN = sg.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "IN");
+            var ftx = sg.Segments.OfType<FTX>().FirstOrDefault(f => f.E4451 == "ZZZ");
             
-            var purchaseOrder = GetReferences(sg26, "SG30", false).FirstOrDefault(r => r.Qualifier == "ON");
-            var despatchAdvice = GetReferences(sg26, "SG30", false).FirstOrDefault(r => r.Qualifier == "DQ");
-            var refInvoice = GetReferences(sg26, "SG30", false).FirstOrDefault(r => r.Qualifier == "IV");
+            var purchaseOrder = GetReferences(sg, "SG29", false).FirstOrDefault(r => r.Qualifier == "ON");
+            var despatchAdvice = GetReferences(sg, "SG29", false).FirstOrDefault(r => r.Qualifier == "DQ");
+            var refInvoice = GetReferences(sg, "SG29", false).FirstOrDefault(r => r.Qualifier == "IV");
 
             var item = new InvoiceItem()
             {
@@ -160,7 +165,7 @@ namespace underware.Edifact.D01B.Messages
                 Qty = qty47.Value,
                 Unit = qty47?.Unit,
                 ItemType = imdF.C273.E7008,
-                Name  = imdE.C273.E7008,
+                Name  = ftx.C108?.Text,
                 DeliveryDate = dtm?.Date ?? DateTime.MinValue,
                 PurchaseOrder = purchaseOrder,
                 RefInvoice = refInvoice,
@@ -168,8 +173,8 @@ namespace underware.Edifact.D01B.Messages
                 PcePerUnitQty = qty59.Value,
             };
             
-            var sg27 = sg26.Groups.FirstOrDefault(g => g.Name == "SG27");
-            var moa203 = sg27?.Segments.OfType<MOA>().FirstOrDefault(m => m.C516.E5025 == "203");
+            var sg26 = sg.Groups.FirstOrDefault(g => g.Name == "SG26");
+            var moa203 = sg26?.Segments.OfType<MOA>().FirstOrDefault(m => m.C516.E5025 == "203");
 
             if (decimal.TryParse(moa203.C516.E5004,
                     NumberStyles.Any,
@@ -179,9 +184,9 @@ namespace underware.Edifact.D01B.Messages
                 item.Price = price;
             }
             
-            foreach(var sg29 in sg26.FindGroups("SG29", true))
+            foreach(var sg28 in sg26.FindGroups("SG28", true))
             {
-                var pri = sg29.Segments.OfType<PRI>().FirstOrDefault();
+                var pri = sg28.Segments.OfType<PRI>().FirstOrDefault();
                 
                 if (decimal.TryParse(pri.C509?.E5118, NumberStyles.Any, CultureInfo.InvariantCulture, out var unitPrice))
                 {
@@ -193,8 +198,8 @@ namespace underware.Edifact.D01B.Messages
                 }
             }
 
-            var sg34 = sg26.Groups.FirstOrDefault(g => g.Name == "SG34");
-            var tax = sg34.Segments.OfType<TAX>().FirstOrDefault(t => t.C241.E5153 == "VAT");
+            var sg33 = sg.Groups.FirstOrDefault(g => g.Name == "SG33");
+            var tax = sg33.Segments.OfType<TAX>().FirstOrDefault(t => t.C241.E5153 == "VAT");
             
             if (decimal.TryParse(tax.C243?.E5279, NumberStyles.Any, CultureInfo.InvariantCulture, out var vatRate))
             {

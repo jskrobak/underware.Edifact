@@ -86,6 +86,7 @@ namespace underware.Edifact.D96A
                 E7164 = "1"
             };
         }
+
         public static Segment CPS(string hierarchicalLevelId, string hierarchicalParentId, string packagingLevelCode)
         {
             return new CPS()
@@ -93,6 +94,27 @@ namespace underware.Edifact.D96A
                 E7164 = hierarchicalLevelId,
                 E7166 = hierarchicalParentId,
                 E7075 = packagingLevelCode
+            };
+        }
+
+        public static CUX CUX(string invCurrCode, string homeCurrCode, string rateBase, string rate)
+        {
+            return new CUX()
+            {
+                C504 = new C504()
+                {
+                    E6347 = "2",
+                    E6345 = invCurrCode,
+                    E6343 = "4",
+                    E6348 = rateBase
+                },
+                C504_0 = new C504()
+                {
+                    E6347 = "3",
+                    E6345 = homeCurrCode,
+                    E6343 = "10E"
+                },
+                E5402 = rate
             };
         }
 
@@ -122,7 +144,8 @@ namespace underware.Edifact.D96A
             };
         }
 
-        public static FII FII(string qualf, string accountNo, string varSymbol, string constSymbol, string bankCode, string bankName, string swift, string iban)
+        public static FII FII(string qualf, string accountNo, string varSymbol, string constSymbol, string bankCode,
+            string bankName, string swift, string iban)
         {
             return new FII()
             {
@@ -182,7 +205,7 @@ namespace underware.Edifact.D96A
 
         public static FTX FTX(string qualf, string text2)
         {
-            string[] parts = text2.SplitToChunks(70, 5);
+            var parts = text2.SplitToChunks(70, 5);
 
             return new FTX()
             {
@@ -221,7 +244,8 @@ namespace underware.Edifact.D96A
             };
         }
 
-        public static FTX FTX(string qualf, string functionCode, string text1, string text2="", string agency="", string langCode="")
+        public static FTX FTX(string qualf, string functionCode, string text1, string text2 = "", string agency = "",
+            string langCode = "")
         {
             string[] parts = text2.SplitToChunks(512, 5);
 
@@ -268,14 +292,15 @@ namespace underware.Edifact.D96A
         public static DateTime GetDate(this DTM dtm)
         {
             DateTime date = DateTime.MinValue;
-            DateTime.TryParseExact(dtm.C507.E2380, GetFormat(dtm).Format, CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+            DateTime.TryParseExact(dtm.C507.E2380, GetFormat(dtm).Format, CultureInfo.InvariantCulture,
+                DateTimeStyles.None, out date);
 
             return date;
         }
 
         public static DateTimeFormat GetFormat(this DTM dtm)
         {
-            return DateTimeFormat.GetFromEdi(dtm.C507.E2379);
+            return DateTimeFormat.Parse(dtm.C507.E2379);
         }
 
         public static string GetQualf(this DTM dtm)
@@ -338,7 +363,8 @@ namespace underware.Edifact.D96A
             };
         }
 
-        public static NAD NAD(string qualf, string gln, string name, string street, string city, string zip, string countryCode)
+        public static NAD NAD(string qualf, string gln, string name, string street, string city, string zip,
+            string countryCode, string agency = "9")
         {
             string[] nameParts = name.SplitToChunks(35, 5);
             string[] streetParts = street.SplitToChunks(35, 5);
@@ -348,7 +374,7 @@ namespace underware.Edifact.D96A
                 C082 = new C082()
                 {
                     E3039 = gln,
-                    E3055 = "9"
+                    E3055 = agency
                 },
                 C080 = new C080()
                 {
@@ -400,7 +426,8 @@ namespace underware.Edifact.D96A
             };
         }
 
-        public static PAT PAT(string qualf, string paymentTimeReference, string timeRelation, string typeOfPeriod, int numberOfPeriods)
+        public static PAT PAT(string qualf, string paymentTimeReference, string timeRelation, string typeOfPeriod,
+            int numberOfPeriods)
         {
             return new PAT()
             {
@@ -445,9 +472,9 @@ namespace underware.Edifact.D96A
         public static PRI PRI(string qualf, decimal price)
         {
             return PRI(qualf, price, "0.000");
-            
+
         }
-        
+
         public static PRI PRI(string qualf, decimal price, string format)
         {
             return new PRI()
@@ -468,6 +495,19 @@ namespace underware.Edifact.D96A
                 {
                     E6063 = qualf,
                     E6060 = qty.ToString("0"),
+                    E6411 = unitCode
+                }
+            };
+        }
+        
+        public static QTY QTY(string qualf, string qty, string unitCode)
+        {
+            return new QTY()
+            {
+                C186 = new C186()
+                {
+                    E6063 = qualf,
+                    E6060 = qty,
                     E6411 = unitCode
                 }
             };
@@ -506,7 +546,7 @@ namespace underware.Edifact.D96A
 
             if (string.IsNullOrEmpty(text))
                 return parts;
-            
+
             while (textPos < text.Length && part < parts.Length)
             {
                 int len = (textPos + chunkSize >= text.Length) ? text.Length - textPos : chunkSize;
@@ -542,7 +582,7 @@ namespace underware.Edifact.D96A
                 }
             };
         }
-        
+
         public static TAX TAX(string qualf, string type, string rateId, decimal rate)
         {
             return new TAX()
@@ -580,7 +620,7 @@ namespace underware.Edifact.D96A
                 E5305 = category
             };
         }
-        
+
         public static TAX TAX(string qualf, string type, decimal rate, string rateId, decimal basis)
         {
             return new TAX()
@@ -604,14 +644,65 @@ namespace underware.Edifact.D96A
             };
         }
 
-        public static PAC PAC(string noOfPackages, string typeOfPackagesIdentification)
+        public static PAC PAC(string noOfPackages, string typeOfPackagesIdentification, string agency)
         {
             return new PAC()
             {
                 E7224 = noOfPackages,
                 C202 = new C202()
                 {
+                    E3055 = agency,
                     E7065 = typeOfPackagesIdentification
+                },
+            };
+        }
+
+        public static MEA MEA(string qualf, string dimensionCode, string unit, string value)
+        {
+            return new MEA()
+            {
+                E6311 = qualf,
+                C502 = new C502()
+                {
+                    E6313 = dimensionCode
+                },
+                C174 = new C174()
+                {
+                    E6411 = unit,
+                    E6314 = value
+                }
+            };
+        }
+
+        public static LOC LOC(string qualf, string placeId)
+        {
+            return new LOC()
+            {
+                E3227 = qualf,
+                C517 = new C517()
+                {
+                    E3225 = placeId
+                }
+            };
+        }
+
+        public static PCI PCI(string markingInstructions)
+        {
+            return new PCI()
+            {
+                E4233 = markingInstructions
+            };
+        }
+
+        public static GIR GIR(string qualf, string identityNo, string identityNoQualf)
+        {
+            return new GIR()
+            {
+                E7297 = qualf,
+                C206 = new C206()
+                {
+                    E7402 = identityNo,
+                    E7405 = identityNoQualf
                 }
             };
         }

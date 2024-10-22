@@ -133,39 +133,31 @@ namespace underware.Edifact
             if (!string.IsNullOrEmpty(OriginalContent))
                 return OriginalContent;
 
-            List<string> elements = new List<string>();
-            elements.Add(Name);
+            var elements = new List<string> { Name };
 
-            Type t = GetType();
+            var t = GetType();
             foreach (var elementInfo in t.GetElementInfoList())
             {
-                PropertyInfo property = t.GetProperty(elementInfo.PropertyName);
-                object propValue = property.GetValue(this);
-                Type propType = property.PropertyType;
+                var property = t.GetProperty(elementInfo.PropertyName);
+                var propValue = property.GetValue(this);
+                var propType = property.PropertyType;
 
                 if (propType == typeof(string))
                 {
-                    if (string.IsNullOrEmpty((string) propValue))
-                    {
-                        elements.Add("");
-                    }
-                    else
-                    {
-                        elements.Add(((string) propValue).EDIEncode());
-                    }
+                    elements.Add(string.IsNullOrEmpty((string)propValue) ? "" : ((string)propValue).EDIEncode());
                 }
                 else
                 {
-                    List<string> components = new List<string>();
+                    var components = new List<string>();
 
                     foreach (var componentInfo in propType.GetElementInfoList())
                     {
-                        PropertyInfo componentProp = propType.GetProperty(componentInfo.PropertyName);
-                        string value = "";
+                        var componentProp = propType.GetProperty(componentInfo.PropertyName);
+                        var value = "";
 
                         if (propValue != null)
                         {
-                            object componentValue = componentProp.GetValue(propValue);
+                            var componentValue = componentProp.GetValue(propValue);
 
                             if (componentValue != null)
                                 value = componentValue.ToString();
@@ -194,16 +186,16 @@ namespace underware.Edifact
 
         public static Segment Parse(CharSpec spec, int syntaxVersion, string msgVersion, string content)
         {
-            string segmentName = content.Substring(0, 3);
+            var segmentName = content.Substring(0, 3);
 
-            Type type = GetSegmentType(segmentName, msgVersion);
+            var type = (GetSegmentType(segmentName, msgVersion) ?? 
+                        GetSegmentType(segmentName, syntaxVersion)) ??
+                        GetSegmentType(segmentName);
 
             if (type == null)
-                type = GetSegmentType(segmentName, syntaxVersion);
-
-            if (type == null)
-                type = GetSegmentType(segmentName);
-
+                throw new NullReferenceException(
+                    $"No type found for segment name={segmentName}, messageVersion={msgVersion}, syntaxVersion={syntaxVersion}");
+            
             return Parse(spec, type, content);
         }
 

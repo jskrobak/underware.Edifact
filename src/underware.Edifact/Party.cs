@@ -53,5 +53,16 @@ namespace underware.Edifact
         {
             return new Party(id, "ZZZ", "");
         }
+        
+        public static Party ZZ(string id)
+        {
+            return new Party(id, "ZZ", "");
+        }
+        
+        public static Party NoAgency(string id)
+        {
+            return new Party(id, "", "");
+        }
+        
     }
 }

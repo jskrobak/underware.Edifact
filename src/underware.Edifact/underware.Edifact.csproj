@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
 <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     
@@ -11,6 +12,6 @@
     <None Remove=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="underware.Edi.Common" Version="1.0.0" />
+    <ProjectReference Include="..\..\..\underware.Edi.Common\src\underware.Edi.Common.csproj" />
   </ItemGroup>
 </Project>

@@ -4,16 +4,16 @@ using System.Globalization;
 using System.Linq;
 using underware.Edi.Common;
 using underware.Edi.Common.DocumentModel;
-using underware.Edifact.D01B.Segments;
+using underware.Edifact.D96A.Segments;
 
-namespace underware.Edifact.D01B.Messages
+namespace underware.Edifact.D96A.Messages
 {
     public class DESADV: Message
     {
-        public override BaseDocument GetDocument()
+        protected override BaseDocument GetBaseDocument()
         {
 
-            var billNo = Segments.OfType<BGM>().First().C106.E1004;
+            var billNo = Segments.OfType<BGM>().First().E1004;
             var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date;
             var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2").Date;
             var customer = GetParty("SG2", "BY");
@@ -21,12 +21,13 @@ namespace underware.Edifact.D01B.Messages
             var deliveryPlace = GetParty("SG2", "DP");
             var invoicePlace = GetParty("SG2", "IV");
             var dispatchPlace = GetParty("SG2", "SH");
-            var text = Segments.OfType<FTX>().FirstOrDefault(p => p.E4451 == "PUR")?.C108?.E4440;
+            var texts = Segments.OfType<FTX>()
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
             var messageFunction = Segments.OfType<BGM>().First().C002.E1001;
             var purchaseOrder = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "ON");
             
             var items =
-                Root.FindGroups("SG17", true)
+                Root.FindGroups("SG15", true)
                     .Select(GetItem)
                     .ToList();
                 
@@ -40,7 +41,7 @@ namespace underware.Edifact.D01B.Messages
                 DeliveryPlace = deliveryPlace,
                 InvoicePlace = invoicePlace,
                 DispatchPlace = dispatchPlace,
-                Text = text,
+                Texts = texts,
                 MessageFunction = messageFunction,
                 PurchaseOrder = purchaseOrder,
                 Items = items
@@ -48,7 +49,9 @@ namespace underware.Edifact.D01B.Messages
 
             foreach (var item in dn.Items)
             {
-                if (item.DeliveryDate == DateTime.MinValue) item.DeliveryDate = dn.DeliveryDate;
+                if (item.DeliveryDate == DateTime.MinValue && dn.DeliveryDate.HasValue) 
+                    item.DeliveryDate = dn.DeliveryDate.Value;
+                
                 if(item.PurchaseOrder == null) item.PurchaseOrder = dn.PurchaseOrder;
                 
             }
@@ -63,7 +66,7 @@ namespace underware.Edifact.D01B.Messages
             var imdE = sg17.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "E");
             var imdF = sg17.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "F");
             var pia = sg17.Segments.OfType<PIA>().FirstOrDefault();
-            var purchaseOrder = GetReferences(sg17, "SG18", false).FirstOrDefault(r => r.Qualifier == "ON");
+            var purchaseOrder = GetReferences(sg17, "SG16", false).FirstOrDefault(r => r.Qualifier == "ON");
 
             return new DespatchAdviceItem()
             {

@@ -18,5 +18,6 @@ namespace underware.Edifact.D01B.Composites
         [ElementInfo(4, "Free text value", "C", "", "an..512", "")]
         public string E4440_3 { get; set; }
 
+        public string WholeText => $"{E4440}{E4440_0}{E4440_1}{E4440_2}{E4440_3}";  
     }
 }

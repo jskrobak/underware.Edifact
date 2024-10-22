@@ -401,6 +401,7 @@
     <EmbeddedResource Include="Messages\Structures\WKGRRE.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\underware.Edi.Common\src\underware.Edi.Common.csproj" />
     <ProjectReference Include="..\underware.Edifact\underware.Edifact.csproj" />
   </ItemGroup>
 </Project>

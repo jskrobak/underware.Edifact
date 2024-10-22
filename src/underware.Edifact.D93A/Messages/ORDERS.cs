@@ -9,7 +9,7 @@ namespace underware.Edifact.D93A.Messages
 {
     public class ORDERS : Message
     {
-        public override BaseDocument GetDocument()
+        protected override BaseDocument GetBaseDocument()
         {
             var order = new Order()
             {
@@ -21,13 +21,16 @@ namespace underware.Edifact.D93A.Messages
                 DeliveryPlace = GetParty("SG2", "DP"),
                 InvoicePlace = GetParty("SG2", "IV"),
                 DispatchPlace = GetParty("SG2", "SH"),
-                Text = Segments.OfType<FTX>().FirstOrDefault(p => p.E4451 == "PUR")?.C108?.E4440,
                 MessageFunction = Segments.OfType<BGM>().First().C002.E1001,
                 Items =
                     Root.FindGroups("SG25", true)
                         .Select(GetOrderItem)
-                        .ToList()
+                        .ToList(),
+                Texts = Segments.OfType<FTX>()
+                    .Select(ftx => new TextNote() { NoteType = ftx.E4451, Text = ftx?.C108.E4440 }).ToList(),
             };
+            
+            
             
             foreach(var item in order.Items)
                 if(item.DeliveryDate == DateTime.MinValue) item.DeliveryDate = order.DeliveryDate;

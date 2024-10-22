@@ -65,6 +65,14 @@ namespace underware.Edifact.D01B
                 E7075 = packagingLevelCode
             };
         }
+        
+        public static Segment CPS(string hierarchicalLevelId)
+        {
+            return new CPS()
+            {
+                E7164 = hierarchicalLevelId
+            };
+        }
 
         public static CUX CUX(string currency)
         {
@@ -212,7 +220,7 @@ namespace underware.Edifact.D01B
 
         public static DateTimeFormat GetFormat(this DTM dtm)
         {
-            return DateTimeFormat.GetFromEdi(dtm.C507.E2379);
+            return DateTimeFormat.Parse(dtm.C507.E2379);
         }
 
         public static string GetQualf(this DTM dtm)
@@ -285,6 +293,14 @@ namespace underware.Edifact.D01B
                     E7008 = parts[0],
                     E7008_0 = parts[1]
                 }
+            };
+        }
+
+        public static INV INV(string balanceMethodCode)
+        {
+            return new INV()
+            {
+                E4503 = balanceMethodCode
             };
         }
                 
@@ -541,7 +557,10 @@ namespace underware.Edifact.D01B
         }
         public static string[] SplitToChunks(this string text, int chunkSize, int chunks)
         {
-            string[] parts = new string[chunks];
+            var parts = new string[chunks];
+
+            if (string.IsNullOrWhiteSpace(text)) return parts;
+            
             int textPos = 0;
             int part = 0;
             while (textPos < text.Length && part < parts.Length)
@@ -556,6 +575,39 @@ namespace underware.Edifact.D01B
             return parts;
         }
 
+        public static TAX TAX(string qualf, string type)
+        {
+            return new TAX()
+            {
+                E5283 = qualf,
+                C241 = new C241() { E5153 = type }
+            };
+        }
+       
+        public static TAX TAX(string qualf, string type, string name, decimal basis)
+        {
+            return new TAX()
+            {
+                E5283 = qualf,
+                C241 = new C241() { E5153 = type },
+                E5286 = basis.ToString("0.00", CultureInfo.InvariantCulture),
+                C243 = new C243() { E5279 = name }
+            };
+        }
+        
+        public static TAX TAX(string qualf, string type, string name, decimal basis, decimal rate)
+        {
+            return new TAX()
+            {
+                E5283 = qualf,
+                C241 = new C241() { E5153 = type },
+                E5286 = basis.ToString("0.00", CultureInfo.InvariantCulture),
+                C243 = new C243() { E5279 = name, E5278 = rate.ToString("0.00", CultureInfo.InvariantCulture) }
+            };
+        }
+        
+        
+        
         public static TAX TAX(string qualf, string type, decimal rate, string category)
         {
             return new TAX()
@@ -597,6 +649,51 @@ namespace underware.Edifact.D01B
             return new UNS()
             {
                 E0081 = "S"
+            };
+        }
+        
+        public static Segment COM(string comunicationType, string address)
+        {
+            return new COM()
+            {
+                C076 = new C076()
+                {
+                    E3148 = address,
+                    E3155 = comunicationType
+                }
+            };
+        }
+
+        public static Segment CTA(string type, string person)
+        {
+            return new CTA()
+            {
+                E3139 = type,
+                C056 = new C056()
+                {
+                    E3412 = person
+                }
+            };
+        }
+
+        public static Segment TOD(string transportFunctionCode, string desc="")
+        {
+            return new TOD()
+            {
+                E4055 = transportFunctionCode,
+                C100 = new C100()
+                {
+                    E4052 = desc
+                }
+            };
+
+        }
+
+        public static Segment TDT(string qualf)
+        {
+            return new TDT()
+            {
+                E8051 = qualf
             };
         }
     }

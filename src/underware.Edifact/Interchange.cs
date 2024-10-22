@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 using underware.Edi.Common;
+using underware.Edi.Common.DocumentModel;
 using underware.Edifact.Structures.Common.Segments;
 using underware.Edifact.Xml;
 
@@ -83,20 +85,38 @@ namespace underware.Edifact
             return ToString(CharSpec.Default);
         }
 
-        public XDocument ToXml()
+        public XDocument ToXml(Encoding outEnc)
         {
-            return new XDocument(new XElement("Interchange", Messages.Select(m => m.CreateTree().ToXml())));
+            var xDoc = new XDocument(new XElement("Interchange", Messages.Select(m => m.Root.ToXml())));
+
+            using var ms = new MemoryStream();
+
+            // Create an XML writer with UTF-8 encoding
+            var settings = new XmlWriterSettings
+            {
+                Encoding = outEnc, // false for no BOM
+                Indent = true // optional: for pretty formatting
+            };
+
+            using var xmlWriter = XmlWriter.Create(ms, settings);
+
+            // Write the XML document to the memory stream with UTF-8 encoding
+            xDoc.WriteTo(xmlWriter);
+
+
+            // Reset the memory stream position to the beginning
+            ms.Position = 0;
+
+            // Load the XML data from the memory stream as UTF-8 encoded
+            return XDocument.Load(ms, LoadOptions.PreserveWhitespace);
         }
 
         public string ToString(CharSpec charSpec)
         {
             UNZ.MessageCount = Messages.Count;
 
-            List<string> list = new List<string>();
-            list.Add(charSpec.JoinSegments(Header));
-
-            foreach (var msg in Messages)
-                list.Add(msg.ToString(charSpec));
+            var list = new List<string> { charSpec.JoinSegments(Header) };
+            list.AddRange(Messages.Select(msg => msg.ToString(charSpec)));
 
             list.Add(charSpec.JoinSegments(Trailer));
 
@@ -195,6 +215,11 @@ namespace underware.Edifact
             }
             
         }
+
+        public string RefNo => UNB.RefNo;
+        public DateTime Created => UNB.Created;
+
+        public IEnumerable<IDocument> Documents => Messages;
 
         public string TextContent
         {

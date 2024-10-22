@@ -20,5 +20,6 @@ namespace underware.Edifact.D01B.Composites
         [ElementInfo(5, "Language name code", "C", "", "an..3", "")]
         public string E3453 { get; set; }
 
+        public string E7008_Whole => $"{E7008}{E7008_0}";
     }
 }

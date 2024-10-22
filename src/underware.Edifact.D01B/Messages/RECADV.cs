@@ -8,29 +8,31 @@ using underware.Edifact.D01B.Segments;
 
 namespace underware.Edifact.D01B.Messages
 {
-    public class DESADV: Message
+    public class RECADV: Message
     {
-        public override BaseDocument GetDocument()
+        protected override BaseDocument GetBaseDocument()
         {
 
             var billNo = Segments.OfType<BGM>().First().C106.E1004;
-            var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date;
-            var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2").Date;
-            var customer = GetParty("SG2", "BY");
-            var supplier = GetParty("SG2", "SU");
-            var deliveryPlace = GetParty("SG2", "DP");
-            var invoicePlace = GetParty("SG2", "IV");
-            var dispatchPlace = GetParty("SG2", "SH");
-            var text = Segments.OfType<FTX>().FirstOrDefault(p => p.E4451 == "PUR")?.C108?.E4440;
+            var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137")?.Date ?? DateTime.MinValue;
+            var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "50")?.Date ?? DateTime.MinValue;
+            var customer = GetParty("SG4", "BY");
+            var supplier = GetParty("SG4", "SU");
+            var deliveryPlace = GetParty("SG4", "DP");
+            var invoicePlace = GetParty("SG4", "IV");
+            var dispatchPlace = GetParty("SG4", "SH");
+            var texts = Segments.OfType<FTX>()
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
             var messageFunction = Segments.OfType<BGM>().First().C002.E1001;
             var purchaseOrder = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "ON");
+            var despathAdvice = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "DQ");
             
             var items =
-                Root.FindGroups("SG17", true)
+                Root.FindGroups("SG22", true)
                     .Select(GetItem)
                     .ToList();
                 
-            var dn = new DeliveryNote()
+            var recadv = new ReceivingAdvice()
             {
                 BillNo = billNo,
                 IssueDate = issueDate,
@@ -40,36 +42,48 @@ namespace underware.Edifact.D01B.Messages
                 DeliveryPlace = deliveryPlace,
                 InvoicePlace = invoicePlace,
                 DispatchPlace = dispatchPlace,
-                Text = text,
+                Texts = texts,
                 MessageFunction = messageFunction,
                 PurchaseOrder = purchaseOrder,
+                DespatchAdvice = despathAdvice,
                 Items = items
             };
 
-            foreach(var item in dn.Items)
-                if(item.DeliveryDate == DateTime.MinValue) item.DeliveryDate = dn.DeliveryDate;
+            foreach (var item in recadv.Items)
+            {
+                if (item.DeliveryDate == DateTime.MinValue && recadv.DeliveryDate.HasValue) 
+                    item.DeliveryDate = recadv.DeliveryDate.Value;
+                if(item.PurchaseOrder == null) item.PurchaseOrder = recadv.PurchaseOrder;
+                if(item.DespatchAdvice == null) item.DespatchAdvice = recadv.DespatchAdvice;
+            }
 
-            return dn;
+            return recadv;
         }
 
-        private DeliverNoteItem GetItem(SegmentGroup sg17)
+        private ReceivingAdviceItem GetItem(SegmentGroup sg22)
         {
-            var lin = sg17.Segments.OfType<LIN>().FirstOrDefault();
-            var qty = sg17.Segments.OfType<QTY>().FirstOrDefault();
-            var imdE = sg17.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "E");
-            var imdF = sg17.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "F");
-            var pia = sg17.Segments.OfType<PIA>().FirstOrDefault();
-            var purchaseOrder = GetReferences(sg17, "SG18", false).FirstOrDefault(r => r.Qualifier == "ON");
+            var lin = sg22.Segments.OfType<LIN>().FirstOrDefault();
+            var qtyOrd = sg22.Segments.OfType<QTY>().FirstOrDefault(q => q.Qualifier == "46");
+            var qtyRec = sg22.Segments.OfType<QTY>().FirstOrDefault(q => q.Qualifier == "194");
+            var piaSA = sg22.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "SA");
+            var piaIN = sg22.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "IN");
+            
+            var purchaseOrder = GetReferences(sg22, "SG23", false).FirstOrDefault(r => r.Qualifier == "ON");
+            var despatchAdvice = GetReferences(sg22, "SG23", false).FirstOrDefault(r => r.Qualifier == "DQ");
 
-            return new DeliverNoteItem()
+            
+            return new ReceivingAdviceItem()
             {
                 LineNo = lin?.E1082,
                 GTIN = lin?.C212?.E7140,
-                SupplierItemCode = pia?.C212?.E7140,
-                Qty = qty.Value,
-                Unit = qty?.Unit,
+                SupplierItemCode = piaSA?.C212?.E7140,
+                CustomerItemCode = piaIN?.C212?.E7140,
+                OrderedQty = qtyOrd?.Value,
+                Unit = qtyOrd?.Unit,
+                ReceivedQty = qtyRec.Value,
                 PurchaseOrder = purchaseOrder,
-                Name = imdE?.C273.E7008,
+                Name = piaIN?.C212_0?.E7140,
+                DespatchAdvice = despatchAdvice
                 //NetUnitPrice = netPrice
             };
         }

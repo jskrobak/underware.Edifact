@@ -8,9 +8,9 @@ using underware.Edifact.D01B.Segments;
 
 namespace underware.Edifact.D01B.Messages
 {
-    public class ORDERS: Message
+    public class DESADV: Message
     {
-        public override BaseDocument GetDocument()
+        protected override BaseDocument GetBaseDocument()
         {
 
             var billNo = Segments.OfType<BGM>().First().C106.E1004;
@@ -21,14 +21,17 @@ namespace underware.Edifact.D01B.Messages
             var deliveryPlace = GetParty("SG2", "DP");
             var invoicePlace = GetParty("SG2", "IV");
             var dispatchPlace = GetParty("SG2", "SH");
-            var text = Segments.OfType<FTX>().FirstOrDefault(p => p.E4451 == "PUR")?.C108?.E4440;
+            var texts = Segments.OfType<FTX>()
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
             var messageFunction = Segments.OfType<BGM>().First().C002.E1001;
+            var purchaseOrder = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "ON");
+            
             var items =
-                Root.FindGroups("SG28", true)
-                    .Select(GetOrderItem)
+                Root.FindGroups("SG17", true)
+                    .Select(GetItem)
                     .ToList();
                 
-            var order = new Order()
+            var dn = new DespatchAdvice()
             {
                 BillNo = billNo,
                 IssueDate = issueDate,
@@ -38,48 +41,42 @@ namespace underware.Edifact.D01B.Messages
                 DeliveryPlace = deliveryPlace,
                 InvoicePlace = invoicePlace,
                 DispatchPlace = dispatchPlace,
-                Text = text,
+                Texts = texts,
                 MessageFunction = messageFunction,
+                PurchaseOrder = purchaseOrder,
                 Items = items
             };
 
-            foreach(var item in order.Items)
-                if(item.DeliveryDate == DateTime.MinValue) item.DeliveryDate = order.DeliveryDate;
-
-            return order;
-        }
-
-        private OrderItem GetOrderItem(SegmentGroup sg28)
-        {
-            var lin = sg28.Segments.OfType<LIN>().FirstOrDefault();
-            var qty = sg28.Segments.OfType<QTY>().FirstOrDefault();
-            var dtm = sg28.Segments.OfType<DTM>().FirstOrDefault(d=>d.Qualifier == "2");
-            var imd = sg28.Segments.OfType<IMD>().FirstOrDefault();
-            var pia = sg28.Segments.OfType<PIA>().FirstOrDefault();
-            decimal? netPrice = null;
-
-            var sg32 = sg28.Groups.FirstOrDefault(g => g.Name == "SG32");
-            if (sg32 != null)
+            foreach (var item in dn.Items)
             {
-                if (decimal.TryParse(sg32.Segments.OfType<PRI>().FirstOrDefault()?.C509?.E5118,
-                        NumberStyles.Any,
-                        CultureInfo.InvariantCulture,
-                        out var price))
-                {
-                    netPrice = price;
-                }
+                if (item.DeliveryDate == DateTime.MinValue && dn.DeliveryDate.HasValue) 
+                    item.DeliveryDate = dn.DeliveryDate.Value;
+                if(item.PurchaseOrder == null) item.PurchaseOrder = dn.PurchaseOrder;
+                
             }
 
-            return new OrderItem()
+            return dn;
+        }
+
+        private DespatchAdviceItem GetItem(SegmentGroup sg17)
+        {
+            var lin = sg17.Segments.OfType<LIN>().FirstOrDefault();
+            var qty = sg17.Segments.OfType<QTY>().FirstOrDefault();
+            var imdE = sg17.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "E");
+            var imdF = sg17.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "F");
+            var pia = sg17.Segments.OfType<PIA>().FirstOrDefault();
+            var purchaseOrder = GetReferences(sg17, "SG18", false).FirstOrDefault(r => r.Qualifier == "ON");
+
+            return new DespatchAdviceItem()
             {
                 LineNo = lin?.E1082,
                 GTIN = lin?.C212?.E7140,
                 SupplierItemCode = pia?.C212?.E7140,
                 Qty = qty.Value,
                 Unit = qty?.Unit,
-                DeliveryDate = dtm?.Date ?? DateTime.MinValue,
-                Name = imd?.C273.E7008,
-                NetUnitPrice = netPrice
+                PurchaseOrder = purchaseOrder,
+                Name = imdE?.C273.E7008,
+                //NetUnitPrice = netPrice
             };
         }
 

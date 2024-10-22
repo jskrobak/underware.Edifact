@@ -167,11 +167,11 @@ namespace underware.Edifact.D07A
             };
         }
 
-        public static FII FII(string accountNo, string invoiceNo, string swift, string iban)
+        public static FII FII(string accountNo, string invoiceNo, string swift, string iban, string qualf = "RB")
         {
             return new FII()
             {
-                E3035 = "RB",
+                E3035 = qualf,
                 C078 = new C078()
                 {
                     E3194 = accountNo,
@@ -184,6 +184,7 @@ namespace underware.Edifact.D07A
                 }
             };
         }
+        
         public static CUX CUX(string currency)
         {
             return new CUX()
@@ -292,6 +293,19 @@ namespace underware.Edifact.D07A
                 }
             };
         }
+        
+        public static MOA MOA(string qualf, decimal amount, string currencyCode)
+        {
+            return new MOA()
+            {
+                C516 = new C516()
+                {
+                    E5025 = qualf,
+                    E5004 = amount.ToString("0.00", CultureInfo.InvariantCulture),
+                    E6343 = currencyCode
+                }
+            };
+        }
 
         public static PRI PRI(string qualf, decimal price)
         {
@@ -374,7 +388,7 @@ namespace underware.Edifact.D07A
 
         public static DateTimeFormat GetFormat(this DTM dtm)
         {
-            return DateTimeFormat.GetFromEdi(dtm.C507.E2379);
+            return DateTimeFormat.Parse(dtm.C507.E2379);
         }
 
         public static string GetQualf(this DTM dtm)

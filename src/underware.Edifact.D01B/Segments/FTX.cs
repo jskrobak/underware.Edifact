@@ -23,6 +23,8 @@ namespace underware.Edifact.D01B.Segments
         [ElementInfo(5, "Free text format code", "C", "1", "an..3", "")]
         public string E4447 { get; set; }
 
+       
+        
 
     }
 }

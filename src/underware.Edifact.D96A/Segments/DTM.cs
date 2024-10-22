@@ -14,11 +14,12 @@ namespace underware.Edifact.D96A.Segments
         [ElementInfo(0, "DATE/TIME/PERIOD", "M", "1", "", "")]
         public C507 C507 { get; set; }
 
+        public string Qualifier => C507.E2005;
         public DateTime Date
         {
             get
             {
-                DateTimeFormat format = DateTimeFormat.GetFromEdi(C507.E2379);
+                var format = DateTimeFormat.Parse(C507.E2379);
                 return C507.E2380.ParseDateTime(format);
             }
         }

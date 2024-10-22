@@ -4,16 +4,16 @@ using System.Globalization;
 using System.Linq;
 using underware.Edi.Common;
 using underware.Edi.Common.DocumentModel;
-using underware.Edifact.D01B.Segments;
+using underware.Edifact.D96A.Segments;
 
-namespace underware.Edifact.D01B.Messages
+namespace underware.Edifact.D96A.Messages
 {
     public class RECADV: Message
     {
         protected override BaseDocument GetBaseDocument()
         {
 
-            var billNo = Segments.OfType<BGM>().First().C106.E1004;
+            var billNo = Segments.OfType<BGM>().First().E1004;
             var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137")?.Date ?? DateTime.MinValue;
             var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "50")?.Date ?? DateTime.MinValue;
             var customer = GetParty("SG4", "BY");
@@ -21,7 +21,8 @@ namespace underware.Edifact.D01B.Messages
             var deliveryPlace = GetParty("SG4", "DP");
             var invoicePlace = GetParty("SG4", "IV");
             var dispatchPlace = GetParty("SG4", "SH");
-            var text = Segments.OfType<FTX>().FirstOrDefault(p => p.E4451 == "PUR")?.C108?.E4440;
+            var texts = Segments.OfType<FTX>()
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
             var messageFunction = Segments.OfType<BGM>().First().C002.E1001;
             var purchaseOrder = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "ON");
             var despathAdvice = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "DQ");
@@ -41,7 +42,7 @@ namespace underware.Edifact.D01B.Messages
                 DeliveryPlace = deliveryPlace,
                 InvoicePlace = invoicePlace,
                 DispatchPlace = dispatchPlace,
-                Text = text,
+                Texts = texts,
                 MessageFunction = messageFunction,
                 PurchaseOrder = purchaseOrder,
                 DespatchAdvice = despathAdvice,
@@ -50,7 +51,9 @@ namespace underware.Edifact.D01B.Messages
 
             foreach (var item in recadv.Items)
             {
-                if (item.DeliveryDate == DateTime.MinValue) item.DeliveryDate = recadv.DeliveryDate;
+                if (item.DeliveryDate == DateTime.MinValue && recadv.DeliveryDate.HasValue) 
+                    item.DeliveryDate = recadv.DeliveryDate.Value;
+                
                 if(item.PurchaseOrder == null) item.PurchaseOrder = recadv.PurchaseOrder;
                 if(item.DespatchAdvice == null) item.DespatchAdvice = recadv.DespatchAdvice;
             }
@@ -76,8 +79,7 @@ namespace underware.Edifact.D01B.Messages
                 GTIN = lin?.C212?.E7140,
                 SupplierItemCode = piaSA?.C212?.E7140,
                 CustomerItemCode = piaIN?.C212?.E7140,
-                ExistsOrderedQty = qtyOrd != null,
-                Qty = qtyOrd?.Value ?? 0,
+                OrderedQty = qtyOrd?.Value,
                 Unit = qtyOrd?.Unit,
                 ReceivedQty = qtyRec.Value,
                 PurchaseOrder = purchaseOrder,

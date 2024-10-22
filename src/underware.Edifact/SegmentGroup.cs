@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace underware.Edifact
 {
@@ -19,29 +20,30 @@ namespace underware.Edifact
         public IEnumerable<SegmentGroup> Groups { get => Children.OfType<SegmentGroup>(); }
         public IEnumerable<Segment> Segments { get => Children.OfType<Segment>(); }
 
-        /*
-        public SegmentGroup FindGroup(string name)
+        
+        public List<SegmentGroup> FindGroups(string name, bool recursive = false)
         {
-            return FindGroup(this, name);
+            var list = new List<SegmentGroup>();
+
+            FindGroups(this, name, list, recursive);
+
+            return list;
         }
 
-        private SegmentGroup FindGroup(SegmentGroup parent, string name)
+        private static void FindGroups(SegmentGroup parent, string name, List<SegmentGroup> result,
+            bool recursive = false)
         {
-            SegmentGroup sg = parent.Children.OfType<SegmentGroup>().Where(s => s.Name == name).FirstOrDefault();
+            result.AddRange(parent.Groups.Where(g => g.Name == name));
 
-            if (sg != null)
-                return sg;
-
-            foreach(SegmentGroup childSg in Children.OfType<SegmentGroup>())
+            if(!recursive)
+                return;
+            
+            foreach(var group in parent.Groups)
             {
-                sg = FindGroup(childSg, name);
-
-                if (sg != null)
-                    return sg;
+                FindGroups(group, name, result);
             }
-
-            return null;
+            
         }
-        */
+        
     }
 }

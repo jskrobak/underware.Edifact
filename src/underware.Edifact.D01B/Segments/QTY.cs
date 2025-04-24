@@ -18,7 +18,16 @@ namespace underware.Edifact.D01B.Segments
 
         public string Qualifier => C186.E6063;
         public decimal Value => decimal.Parse(C186.E6060, CultureInfo.InvariantCulture);
-        public string Unit => C186.E6411;
+
+        public string Unit
+        {
+            get => C186.E6411;
+            set
+            {
+                if (C186 != null)
+                    C186.E6411 = value;
+            }
+        }
 
     }
 }

@@ -15,14 +15,14 @@ namespace underware.Edifact.D96A.Messages
 
             var billNo = Segments.OfType<BGM>().First().E1004;
             var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date;
-            var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2").Date;
+            var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2")?.Date;
             var customer = GetParty("SG2", "BY");
             var supplier = GetParty("SG2", "SU");
             var deliveryPlace = GetParty("SG2", "DP");
             var invoicePlace = GetParty("SG2", "IV");
             var dispatchPlace = GetParty("SG2", "SH");
             var texts = Segments.OfType<FTX>()
-                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 }).ToList();
             var messageFunction = Segments.OfType<BGM>().First().C002.E1001;
             var purchaseOrder = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "ON");
             

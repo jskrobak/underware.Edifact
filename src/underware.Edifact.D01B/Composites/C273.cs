@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using underware.Edi.Common;
 using underware.Edifact.Attributes;
 
 namespace underware.Edifact.D01B.Composites
@@ -20,6 +21,15 @@ namespace underware.Edifact.D01B.Composites
         [ElementInfo(5, "Language name code", "C", "", "an..3", "")]
         public string E3453 { get; set; }
 
-        public string E7008_Whole => $"{E7008}{E7008_0}";
+        public string E7008_Whole
+        {
+            get => $"{E7008}{E7008_0}";
+            set
+            {
+                var chunks = value.SplitToChunks(256, 2);
+                E7008 = chunks[0];
+                E7008_0 = chunks[1];
+            }
+        }
     }
 }

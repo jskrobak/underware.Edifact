@@ -15,14 +15,15 @@ namespace underware.Edifact.D01B.Messages
 
             var billNo = Segments.OfType<BGM>().First().C106.E1004;
             var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date;
-            var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2").Date;
+            var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2")?.Date;
             var customer = GetParty("SG2", "BY");
             var supplier = GetParty("SG2", "SU");
             var deliveryPlace = GetParty("SG2", "DP");
             var invoicePlace = GetParty("SG2", "IV");
             var dispatchPlace = GetParty("SG2", "SH");
+            var ultimateCustomer = GetFirstParty("SG2", "UD", "UC");
             var texts = Segments.OfType<FTX>()
-                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 }).ToList();
             var messageFunction = Segments.OfType<BGM>().First().C002.E1001;
             var items =
                 Root.FindGroups("SG28", true)
@@ -39,13 +40,14 @@ namespace underware.Edifact.D01B.Messages
                 DeliveryPlace = deliveryPlace,
                 InvoicePlace = invoicePlace,
                 DispatchPlace = dispatchPlace,
+                UltimateCustomer = ultimateCustomer,
                 Texts = texts,
                 MessageFunction = messageFunction,
                 Items = items
             };
 
             foreach(var item in order.Items)
-                if(item.DeliveryDate == DateTime.MinValue) item.DeliveryDate = order.DeliveryDate;
+                if(item.DeliveryDate == DateTime.MinValue && order.DeliveryDate.HasValue) item.DeliveryDate = order.DeliveryDate.Value;
 
             return order;
         }
@@ -97,6 +99,12 @@ namespace underware.Edifact.D01B.Messages
                     })
                 .ToList();
         }
+        
+        private underware.Edi.Common.DocumentModel.Party GetFirstParty(string groupName, params string[] qualifiers)
+        {
+            return qualifiers.Select(qualifier => GetParty(groupName, qualifier)).FirstOrDefault(party => party != null);
+        }
+        
         private underware.Edi.Common.DocumentModel.Party GetParty(string groupName, string qualf)
         {
             var group = Root.FindGroups(groupName).FirstOrDefault(g =>

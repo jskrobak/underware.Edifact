@@ -13,7 +13,7 @@ namespace underware.Edifact.D01B.Messages
     {
         protected override BaseDocument GetBaseDocument()
         {
-            var xml = Root.ToXml();
+            //var xml = Root.ToXml();
             
             var billNo = Segments.OfType<BGM>().First().C106.E1004;
             var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date;
@@ -25,7 +25,7 @@ namespace underware.Edifact.D01B.Messages
             var dispatchPlace = GetParty("SG3", "SH");
             
             var texts = Segments.OfType<FTX>()
-                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 }).ToList();
             var messageFunction = Segments.OfType<BGM>().First().C002.E1001;
             var items =
                 Root.FindGroups("SG26", true)
@@ -84,7 +84,8 @@ namespace underware.Edifact.D01B.Messages
                 Unit = qty?.Unit,
                 DeliveryDate = dtm?.Date ?? DateTime.MinValue,
                 Name = imd?.C273.E7008,
-                NetUnitPrice = netPrice
+                NetUnitPrice = netPrice,
+                Data = sg28
             };
         }
 

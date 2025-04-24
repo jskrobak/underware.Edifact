@@ -10,6 +10,17 @@ namespace underware.Edifact.D96A
 {
     public static class Templates
     {
+        public static PCD PCD(string qualifier, string rate)
+        {
+            return new PCD()
+            {
+                C501 = new C501()
+                {
+                    E5245 = qualifier,
+                    E5482 = rate
+                }
+            };
+        }
 
         public static Segment IMD(string qualf, string text)
         {
@@ -27,16 +38,21 @@ namespace underware.Edifact.D96A
             };
         }
 
-        public static Segment ALC(string qualf, string discountCode)
+        public static Segment ALC(string qualf, string discountCode="", string allowanceOrChargeNumber = "A", string costingSequenceId = "", string serviceCode="")
         {
             return new ALC()
             {
                 E5463 = qualf,
                 C552 = new C552()
                 {
-                    E1230 = "A"
+                    E1230 = allowanceOrChargeNumber
                 },
-                E4471 = discountCode
+                E4471 = discountCode,
+                E1227 = costingSequenceId,
+                C214 = new C214()
+                {
+                    E7161 = serviceCode
+                }
             };
         }
 
@@ -272,7 +288,7 @@ namespace underware.Edifact.D96A
 
         public static FTX FTX(string qualf, string functionCode, string text)
         {
-            string[] parts = text.SplitToChunks(512, 5);
+            var parts = text.SplitToChunks(70, 5);
 
             return new FTX()
             {
@@ -323,6 +339,23 @@ namespace underware.Edifact.D96A
                 }
             };
         }
+        
+        public static IMD IMD(string formatCode, string descCode, params string[] desc)
+        {
+            var part1 = desc.Length > 0 ? desc[0] : "";
+            var part2 = desc.Length > 1 ? desc[1] : "";
+            
+            return new IMD()
+            {
+                E7077 = formatCode,
+                C273 = new C273()
+                {
+                    E7009 = descCode,
+                    E7008 = part1.Length > 35 ? part1[..35] : part1,
+                    E7008_0 = part2.Length > 35 ? part2[..35] : part2,
+                }
+            };
+        }
 
         public static LIN LIN(string lineNo, string code, string codeType)
         {
@@ -337,7 +370,7 @@ namespace underware.Edifact.D96A
             };
         }
 
-        public static LIN LIN(string lineNo, string code, string codeType, string respAgency)
+        public static LIN LIN(string lineNo, string code, string codeType, string respAgency="", string configLevel="")
         {
             return new LIN()
             {
@@ -347,22 +380,24 @@ namespace underware.Edifact.D96A
                     E7140 = code,
                     E7143 = codeType,
                     E3055 = respAgency
-                }
+                },
+                E1222 = configLevel
             };
         }
 
-        public static MOA MOA(string qualf, decimal amount)
+        public static MOA MOA(string qualf, decimal amount, string currencyCode="")
         {
             return new MOA()
             {
                 C516 = new C516()
                 {
                     E5025 = qualf,
-                    E5004 = amount.ToString("0.00", CultureInfo.InvariantCulture)
+                    E5004 = amount.ToString("0.00", CultureInfo.InvariantCulture),
+                    E6345 = currencyCode
                 }
             };
         }
-
+        
         public static NAD NAD(string qualf, string gln, string name, string street, string city, string zip,
             string countryCode, string agency = "9")
         {
@@ -415,6 +450,14 @@ namespace underware.Edifact.D96A
             return new PAI()
             {
                 C534 = new C534() { E4461 = paymentType.ToString() }
+            };
+        }
+        
+        public static PAI PAI(string paymentType)
+        {
+            return new PAI()
+            {
+                C534 = new C534() { E4461 = paymentType }
             };
         }
 
@@ -487,7 +530,7 @@ namespace underware.Edifact.D96A
             };
         }
 
-        public static QTY QTY(string qualf, decimal qty, string unitCode)
+        public static QTY QTY(string qualf, decimal qty, string unitCode = "")
         {
             return new QTY()
             {
@@ -534,6 +577,18 @@ namespace underware.Edifact.D96A
                     E1153 = qualf,
                     E1154 = text,
                     E1156 = lineNo
+                }
+            };
+        }
+
+        public static EQD EQD(string qualifier, string equipmentIdentificationNumber)
+        {
+            return new EQD()
+            {
+                E8053 = qualifier,
+                C237 = new C237()
+                {
+                    E8260 = equipmentIdentificationNumber
                 }
             };
         }
@@ -644,11 +699,15 @@ namespace underware.Edifact.D96A
             };
         }
 
-        public static PAC PAC(string noOfPackages, string typeOfPackagesIdentification, string agency)
+        public static PAC PAC(string noOfPackages, string typeOfPackagesIdentification, string agency, string packagingRelatedInfo = "")
         {
             return new PAC()
             {
                 E7224 = noOfPackages,
+                C531 = new C531()
+                {
+                    E7233 = packagingRelatedInfo
+                },
                 C202 = new C202()
                 {
                     E3055 = agency,
@@ -704,6 +763,76 @@ namespace underware.Edifact.D96A
                     E7402 = identityNo,
                     E7405 = identityNoQualf
                 }
+            };
+        }
+
+        public static GIN GIN(string qualf, string value)
+        {
+            return new GIN()
+            {
+                E7405 = qualf,
+                C208 = new C208()
+                {
+                    E7402 = value
+                }
+            };
+        }
+        
+        public static GIN GIN(string qualf, params string[] values)
+        {
+            var result = new GIN()
+            {
+                E7405 = qualf
+            };
+
+            if(values.Length > 0)
+            {
+                result.C208 = new C208()
+                {
+                    E7402 = values[0]
+                };
+            }
+            
+            if (values.Length > 1)
+            {
+                result.C208_0 = new C208()
+                {
+                    E7402 = values[1]
+                };
+            }
+            
+            if (values.Length > 2)
+            {
+                result.C208_1 = new C208()
+                {
+                    E7402 = values[2]
+                };
+            }
+            
+            if (values.Length > 3)
+            {
+                result.C208_2 = new C208()
+                {
+                    E7402 = values[3]
+                };
+            }
+            
+            if (values.Length > 4)
+            {
+                result.C208_3 = new C208()
+                {
+                    E7402 = values[4]
+                };
+            }
+
+            return result;
+        }
+
+        public static ALI ALI(string countryCode)
+        {
+            return new ALI()
+            {
+                E3239 = countryCode
             };
         }
     }

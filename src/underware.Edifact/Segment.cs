@@ -213,7 +213,7 @@ namespace underware.Edifact
 
         public static Segment Parse(CharSpec spec, string content)
         {
-            Type type = GetSegmentType(content.Substring(0, 3));
+            var type = GetSegmentType(content.Substring(0, 3));
 
            // if (type == null)
            //     type = typeof(Segment);

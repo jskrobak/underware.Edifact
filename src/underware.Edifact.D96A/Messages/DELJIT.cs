@@ -1,81 +1,66 @@
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using underware.Edi.Common.DocumentModel;
 using underware.Edifact.D96A.Segments;
 
 namespace underware.Edifact.D96A.Messages
 {
-    public class ORDERS : Message
+    public class DELJIT: Message
     {
         protected override BaseDocument GetBaseDocument()
         {
-            var order = new Order()
+            var callIn = new DailyCallIn()
             {
+                SupplierNumber = Segments.OfType<RFF>().FirstOrDefault(s => s.C506.E1153 == "ADE").C506.E1154,
                 BillNo = Segments.OfType<BGM>().First().E1004,
                 IssueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date,
-                DeliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2")?.Date,
                 Customer = GetParty("SG2", "BY"),
-                Supplier = GetParty("SG2", "SU"),
-                DeliveryPlace = GetParty("SG2", "DP"),
-                InvoicePlace = GetParty("SG2", "IV"),
-                DispatchPlace = GetParty("SG2", "SH"),
-                UltimateCustomer = GetFirstParty("SG2", "UD", "UC"),
-                Texts = Segments.OfType<FTX>()
-                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 }).ToList(),
-                MessageFunction = Segments.OfType<BGM>().First().C002.E1001,
+                Supplier = GetParty("SG2", "SE"),
+                DeliveryPlace = GetParty("SG2", "CN"),
                 Items =
-                    Root.FindGroups("SG25", true)
-                        .Select(GetOrderItem)
+                    Root.FindGroups("SG7", true)
+                        .Select(GetItem)
                         .ToList(),
             };
+            
+            var sg4 = Root.FindGroups("SG4").FirstOrDefault();
+            callIn.ReceivingLocation = sg4.Segments.OfType<LOC>().FirstOrDefault().C517.E3225;
 
-            foreach(var item in order.Items)
-                if(item.DeliveryDate == DateTime.MinValue && order.DeliveryDate.HasValue) item.DeliveryDate = order.DeliveryDate.Value;
-
-
-            return order;
+            return callIn;
         }
-
-        private OrderItem GetOrderItem(SegmentGroup sg)
+        
+        private DailyCallInItem GetItem(SegmentGroup sg)
         {
             var lin = sg.Segments.OfType<LIN>().FirstOrDefault();
-            var qty = sg.Segments.OfType<QTY>().FirstOrDefault();
-            var dtm = sg.Segments.OfType<DTM>().FirstOrDefault(d=> d.Qualifier == "2");
-            var piaSA = sg.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "SA");
-            var piaIN = sg.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "IN");
             
-            var supplierItemCode = !string.IsNullOrEmpty(piaIN?.C212_0?.E7140) ? piaIN?.C212_0?.E7140 : piaSA?.C212_0?.E7140;
-
-            var name = "";
-            var ftx = sg.Segments.OfType<FTX>().FirstOrDefault();
-            if (ftx != null)
-            {
-                name = ftx.C108.Text;
-            }
-            else
-            {
-                var imd = sg.Segments.OfType<IMD>().FirstOrDefault();
-                if (imd != null)
-                {
-                    name = imd.C273.E7008;
-                }   
-            }
-
+            var sg11 = sg.FindGroups("SG11").FirstOrDefault();
             
-            return new OrderItem()
+            var qty = sg11.Segments.OfType<QTY>().FirstOrDefault();
+            var dtm = sg11.Segments.OfType<DTM>().FirstOrDefault(d=> d.Qualifier == "117");
+            
+            
+            var item = new DailyCallInItem()
             {
                 LineNo = lin?.E1082,
-                GTIN = lin.C212.E7140,
-                SupplierItemCode = supplierItemCode,
-                CustomerItemCode = piaIN?.C212?.E7140,
+                CustomerItemCode = lin.C212.E7140,
                 Qty = qty.Value,
                 Unit = qty.Unit,
                 DeliveryDate = (dtm != null && dtm.Date > DateTime.MinValue) ? dtm.Date : DateTime.MinValue,
-                Name = name
+                Name = sg.Segments.OfType<IMD>().FirstOrDefault().C273.E7008
             };
+            
+            var sg9 = sg.FindGroups("SG9").FirstOrDefault();
+            if(sg9 != null)
+                item.CustomerStorageLocation = sg9.Segments.OfType<LOC>().FirstOrDefault()?.C517?.E3225 ?? string.Empty;
+            
+            var refs = GetReferences(sg, "SG8");
+            refs.AddRange(GetReferences(sg11, "SG12"));
+            
+            item.PurchaseOrder = refs.FirstOrDefault(r => r.Qualifier == "ON");
+            item.DeliveryNote = refs.FirstOrDefault(r => r.Qualifier == "MA");
+            
+            return item;
         }
 
         private List<DocumentReference> GetReferences(SegmentGroup root, string groupName, bool recursive = false)
@@ -90,11 +75,6 @@ namespace underware.Edifact.D96A.Messages
                         RefDate = dtm == null ? null : new DateTime?(dtm.Date)
                     })
                 .ToList();
-        }
-        
-        private underware.Edi.Common.DocumentModel.Party GetFirstParty(string groupName, params string[] qualifiers)
-        {
-            return qualifiers.Select(qualifier => GetParty(groupName, qualifier)).FirstOrDefault(party => party != null);
         }
         
         private underware.Edi.Common.DocumentModel.Party GetParty(string groupName, string qualf)

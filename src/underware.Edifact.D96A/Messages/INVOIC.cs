@@ -12,7 +12,7 @@ namespace underware.Edifact.D96A.Messages
     {
         protected override BaseDocument GetBaseDocument()
         {
-            var xml = Root.ToXml();
+            //var xml = Root.ToXml();
 
             var billNo = Segments.OfType<BGM>().First().E1004;
             var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date;
@@ -23,7 +23,7 @@ namespace underware.Edifact.D96A.Messages
             var invoicePlace = GetParty("SG2", "IV");
             var dispatchPlace = GetParty("SG2", "SH");
             var texts = Segments.OfType<FTX>()
-                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 }).ToList();
             var messageFunction = Segments.OfType<BGM>().First().E1225;
             var invoiceType = Segments.OfType<BGM>().First().C002.E1001;
             var desadv = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "DQ");
@@ -38,7 +38,7 @@ namespace underware.Edifact.D96A.Messages
                     .ToList();
 
             var paymentRules = GetPaymentRules();
-            
+
             var taxes = Root.FindGroups("SG50").Select(GetTax).ToList();
 
             var inv = new Invoice()
@@ -64,25 +64,25 @@ namespace underware.Edifact.D96A.Messages
                 Contract = contract
             };
 
-            foreach (var sg48 in Root.FindGroups("SG48"))
+            foreach (var moa in Root.FindGroups("SG48").SelectMany(sg48 => sg48.Segments.OfType<MOA>()))
             {
-                foreach (var moa in sg48.Segments.OfType<MOA>())
+                switch (moa.Qualifier)
                 {
-                    switch (moa.C516.E5025)
-                    {
-                        case "125":
-                            inv.Round = decimal.Parse(moa.C516.E5004, NumberStyles.Any, CultureInfo.InvariantCulture);
-                            break;
-                        case "79":
-                            inv.TotalAmount = decimal.Parse(moa.C516.E5004, NumberStyles.Any,
-                                CultureInfo.InvariantCulture);
-                            break;
-                        case "86":
-                            inv.TotalAmountIncVAT = decimal.Parse(moa.C516.E5004, NumberStyles.Any,
-                                CultureInfo.InvariantCulture);
-                            break;
-                    }
+                    case "125":
+                        inv.Round = moa.Amount?? 0;
+                        break;
+                    case "79":
+                        inv.TotalAmount = moa.Amount?? 0;
+                        break;
+                    case "86":
+                        inv.TotalAmountIncVAT = moa.Amount ?? 0;
+                        break;
                 }
+            }
+
+            if (inv.TotalAmount != 0 && inv.TotalAmountIncVAT == 0)
+            {
+                inv.TotalAmountIncVAT = inv.TotalAmount + taxes.Sum(t => t.Amount);
             }
 
             return inv;
@@ -123,34 +123,41 @@ namespace underware.Edifact.D96A.Messages
                 g.Segments.OfType<NAD>().Any() &&
                 g.Segments.OfType<NAD>().First().E3035 == "SU");
             
-            var fii = sg2.Segments.OfType<FII>().First();
+            var fii = sg2.Segments.OfType<FII>().FirstOrDefault();
             
             var sg8 = Root.FindGroups("SG8").FirstOrDefault();
             
-            var dueDate = sg8.Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "13").Date;
+            var dueDate = sg8?.Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "13")?.Date;
             
             return new PaymentRules()
             {
-                BankCode = fii.C088.E3433,
-                BankAccountNo = fii.C078.E3194,
-                VariableSymbol = fii.C078.E3192_0,
-                ConstantSymbol = fii.C078.E3192,
-                SpecificSymbol = fii.C078.E6345,
+                BankCode = fii?.C088?.E3433,
+                BankAccountNo = fii?.C078?.E3194,
+                VariableSymbol = fii?.C078?.E3192_0,
+                ConstantSymbol = fii?.C078?.E3192,
+                SpecificSymbol = fii?.C078?.E6345,
                 DueDate = dueDate
             };
         }
-        
+
         private InvoiceItem GetInvoiceItem(SegmentGroup sg)
         {
             var lin = sg.Segments.OfType<LIN>().FirstOrDefault();
             var qty47 = sg.Segments.OfType<QTY>().FirstOrDefault(q => q.Qualifier == "47");
             var qty59 = sg.Segments.OfType<QTY>().FirstOrDefault(q => q.Qualifier == "59");
-            var dtm = sg.Segments.OfType<DTM>().FirstOrDefault(d=>d.Qualifier == "35");
+            var dtm = sg.Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "35");
             //var imdE = sg.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "E");
             var imdF = sg.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "F");
+            var imdA = sg.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "A");
             var piaSA = sg.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "SA");
             var piaIN = sg.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "IN");
             var ftx = sg.Segments.OfType<FTX>().FirstOrDefault(f => f.E4451 == "ZZZ");
+
+            var name = ftx?.C108?.Text;
+
+            if(string.IsNullOrEmpty(name))
+                name = imdA?.C273?.E7008;
+
             
             var purchaseOrder = GetReferences(sg, "SG29", false).FirstOrDefault(r => r.Qualifier == "ON");
             var despatchAdvice = GetReferences(sg, "SG29", false).FirstOrDefault(r => r.Qualifier == "DQ");
@@ -164,27 +171,21 @@ namespace underware.Edifact.D96A.Messages
                 CustomerItemCode = piaIN?.C212?.E7140,
                 Qty = qty47.Value,
                 Unit = qty47?.Unit,
-                ItemType = imdF.C273.E7008,
-                Name  = ftx.C108?.Text,
+                ItemType = imdF?.C273?.E7008,
+                Name  = name,
                 DeliveryDate = dtm?.Date ?? DateTime.MinValue,
                 PurchaseOrder = purchaseOrder,
                 RefInvoice = refInvoice,
                 DespatchAdvice = despatchAdvice,
-                PcePerUnitQty = qty59.Value,
+                PcePerUnitQty = qty59?.Value,
             };
             
             var sg26 = sg.Groups.FirstOrDefault(g => g.Name == "SG26");
-            var moa203 = sg26?.Segments.OfType<MOA>().FirstOrDefault(m => m.C516.E5025 == "203");
-
-            if (decimal.TryParse(moa203.C516.E5004,
-                    NumberStyles.Any,
-                    CultureInfo.InvariantCulture,
-                    out var price))
-            {
-                item.Price = price;
-            }
+            var moa203 = sg26?.Segments.OfType<MOA>().FirstOrDefault(m => m.Qualifier == "203");
+            var moa66 = sg26?.Segments.OfType<MOA>().FirstOrDefault(m => m.Qualifier == "66");
+            item.Price = moa203?.Amount ?? moa66?.Amount ?? 0;
             
-            foreach(var sg28 in sg26.FindGroups("SG28", true))
+            foreach(var sg28 in sg.FindGroups("SG28", true))
             {
                 var pri = sg28.Segments.OfType<PRI>().FirstOrDefault();
                 

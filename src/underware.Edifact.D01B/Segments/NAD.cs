@@ -10,6 +10,8 @@ namespace underware.Edifact.D01B.Segments
     {
         public NAD() : base("NAD", "Name and address") { }
 
+        public string Qualifier => E3035;
+        
         [ElementInfo(0, "Party function code qualifier", "M", "1", "an..3", "")]
         public string E3035 { get; set; }
         [ElementInfo(1, "PARTY IDENTIFICATION DETAILS", "C", "1", "", "")]

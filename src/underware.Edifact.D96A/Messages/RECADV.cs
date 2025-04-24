@@ -22,7 +22,7 @@ namespace underware.Edifact.D96A.Messages
             var invoicePlace = GetParty("SG4", "IV");
             var dispatchPlace = GetParty("SG4", "SH");
             var texts = Segments.OfType<FTX>()
-                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 }).ToList();
             var messageFunction = Segments.OfType<BGM>().First().C002.E1001;
             var purchaseOrder = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "ON");
             var despathAdvice = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "DQ");

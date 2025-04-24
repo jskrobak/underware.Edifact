@@ -33,6 +33,15 @@ namespace underware.Edifact.D01B.Segments
             }
         }
 
-        public string Qualifier => C507.E2005;
+        public string Qualifier
+        {
+            get => C507.E2005;
+            set
+            {
+                if (C507 != null)
+                    C507.E2005 = value;
+            }
+        } 
+        
     }
 }

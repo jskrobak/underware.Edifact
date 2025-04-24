@@ -10,6 +10,8 @@ namespace underware.Edifact.D01B.Segments
     {
         public TDT() : base("TDT", "Details of transport") { }
 
+        public string Qualifier => E8051;
+        
         [ElementInfo(0, "Transport stage code qualifier", "M", "1", "an..3", "")]
         public string E8051 { get; set; }
         [ElementInfo(1, "Means of transport journey identifier", "C", "1", "an..17", "")]

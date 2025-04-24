@@ -10,6 +10,8 @@ namespace underware.Edifact.D01B.Segments
     {
         public TOD() : base("TOD", "Terms of delivery or transport") { }
 
+        public string FunctionCode => E4055;
+        
         [ElementInfo(0, "Delivery or transport terms function code", "C", "1", "an..3", "")]
         public string E4055 { get; set; }
         [ElementInfo(1, "Transport charges payment method code", "C", "1", "an..3", "")]

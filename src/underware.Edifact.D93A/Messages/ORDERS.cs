@@ -15,12 +15,13 @@ namespace underware.Edifact.D93A.Messages
             {
                 BillNo = Segments.OfType<BGM>().First().E1004,
                 IssueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date,
-                DeliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2").Date,
+                DeliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2")?.Date,
                 Customer = GetParty("SG2", "BY"),
                 Supplier = GetParty("SG2", "SU"),
                 DeliveryPlace = GetParty("SG2", "DP"),
                 InvoicePlace = GetParty("SG2", "IV"),
                 DispatchPlace = GetParty("SG2", "SH"),
+                UltimateCustomer = GetFirstParty("SG2", "UD", "UC"),
                 MessageFunction = Segments.OfType<BGM>().First().C002.E1001,
                 Items =
                     Root.FindGroups("SG25", true)
@@ -33,7 +34,7 @@ namespace underware.Edifact.D93A.Messages
             
             
             foreach(var item in order.Items)
-                if(item.DeliveryDate == DateTime.MinValue) item.DeliveryDate = order.DeliveryDate;
+                if(item.DeliveryDate == DateTime.MinValue && order.DeliveryDate.HasValue) item.DeliveryDate = order.DeliveryDate.Value;
 
 
             return order;
@@ -51,12 +52,12 @@ namespace underware.Edifact.D93A.Messages
             return new OrderItem()
             {
                 LineNo = lin?.E1082,
-                GTIN = lin.C212.E7140,
-                SupplierItemCode = pia.C212.E7140,
+                GTIN = lin?.C212?.E7140,
+                SupplierItemCode = pia?.C212?.E7140,
                 Qty = qty.Value,
                 Unit = qty.Unit,
                 DeliveryDate = dtm?.Date ?? DateTime.MinValue,
-                Name = imd.C273.E7008
+                Name = imd?.C273?.E7008
             };
         }
 
@@ -69,10 +70,16 @@ namespace underware.Edifact.D93A.Messages
                     {
                         Qualifier = rff.C506.E1153,
                         BillNo = rff.C506.E1154,
-                        RefDate = dtm.Date
+                        RefDate = dtm?.Date
                     })
                 .ToList();
         }
+
+        private underware.Edi.Common.DocumentModel.Party GetFirstParty(string groupName, params string[] qualifiers)
+        {
+            return qualifiers.Select(qualifier => GetParty(groupName, qualifier)).FirstOrDefault(party => party != null);
+        }
+
         private underware.Edi.Common.DocumentModel.Party GetParty(string groupName, string qualf)
         {
             var group = Root.FindGroups(groupName).FirstOrDefault(g =>
@@ -87,7 +94,17 @@ namespace underware.Edifact.D93A.Messages
             var vatNo = refs.FirstOrDefault(r => r.Qualifier == "VA")?.BillNo;
             var regNo = refs.FirstOrDefault(r => r.Qualifier == "GN")?.BillNo;
 
-
+            var phone = "";
+            var email = "";
+            
+            var sg5 = group.Children.OfType<SegmentGroup>().FirstOrDefault(g => g.Name == "SG5");
+            if(sg5!=null)
+            {
+                phone = sg5.Segments.OfType<COM>().FirstOrDefault(c => c.C076.E3155 == "TE")?.C076.E3148;
+                email = sg5.Segments.OfType<COM>().FirstOrDefault(c => c.C076.E3155 == "EM")?.C076.E3148;
+            }
+            
+            
             var contact = new underware.Edi.Common.DocumentModel.Party()
             {
                 GLN = nad.C082?.E3039,
@@ -98,7 +115,9 @@ namespace underware.Edifact.D93A.Messages
                 ZIPCode = nad.E3251,
                 Country = nad.E3207,
                 VATNo = vatNo,
-                RegNo = regNo
+                RegNo = regNo,
+                Phone1 = phone,
+                Email = email,
             };
             
             

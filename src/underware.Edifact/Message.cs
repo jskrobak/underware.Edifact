@@ -12,7 +12,7 @@ using underware.Edifact.Structures.Common.Interfaces;
 
 namespace underware.Edifact
 {
-    public class Message: IDocument
+    public class Message: IDocument, IEdiData
     {
         private List<Segment> _segments;
         private SegmentGroup _root;
@@ -74,11 +74,13 @@ namespace underware.Edifact
         {
             try
             {
-                return GetBaseDocument();
+                var doc = GetBaseDocument();
+                doc.Data = this;
+                return doc;
             }
             catch (Exception e)
             {
-                throw new ParseDocumentException(this, Interchange); 
+                throw new ParseDocumentException(this, Interchange, e); 
             }
         }
 

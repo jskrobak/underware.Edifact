@@ -217,7 +217,7 @@ namespace underware.Edifact
         }
 
         public string RefNo => UNB.RefNo;
-        public DateTime Created => UNB.Created;
+        public DateTime? Created => UNB.Created;
 
         public IEnumerable<IDocument> Documents => Messages;
 

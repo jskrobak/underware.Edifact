@@ -16,6 +16,23 @@ namespace underware.Edifact
 {
     public static class Extensions
     {
+        
+        public static void RemoveFirstOfType<T>(this List<Segment> segments, Func<T, bool> predicate) where T: Segment
+        {
+            var segment = segments.OfType<T>().FirstOrDefault(predicate);
+            segments.Remove(segment);
+        }
+        
+        public static void RemoveAllOfType<T>(this List<Segment> segments, Func<T, bool> predicate) where T: Segment
+        {
+            var segmentsToRemove = segments.OfType<T>().Where(predicate).Cast<Segment>().ToList();
+            
+            foreach (var segment in segmentsToRemove)
+            {
+                segments.Remove(segment);
+            }
+        }
+        
         public static DateTime ParseDateTime(this string dateTimeString, DateTimeFormat format)
         {
             return format.ParseDateTime(dateTimeString);

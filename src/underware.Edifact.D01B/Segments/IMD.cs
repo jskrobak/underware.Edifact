@@ -10,6 +10,12 @@ namespace underware.Edifact.D01B.Segments
     {
         public IMD() : base("IMD", "Item description") { }
 
+        public string FormatCode
+        {
+            get => E7077;
+            set => E7077 = value;
+        }
+        
         [ElementInfo(0, "Description format code", "C", "1", "an..3", "")]
         public string E7077 { get; set; }
         [ElementInfo(1, "ITEM CHARACTERISTIC", "C", "1", "", "")]

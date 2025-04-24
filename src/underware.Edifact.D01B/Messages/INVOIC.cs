@@ -16,7 +16,7 @@ namespace underware.Edifact.D01B.Messages
 
             var billNo = Segments.OfType<BGM>().First().C106.E1004;
             var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date;
-            var fulfillmentDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "325").Date;
+            var fulfillmentDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "325")?.Date;
             var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "35")?.Date ?? DateTime.MinValue;
             var customer = GetParty("SG2", "BY");
             var supplier = GetParty("SG2", "SU");
@@ -56,7 +56,7 @@ namespace underware.Edifact.D01B.Messages
                 Texts = texts,
                 MessageFunction = messageFunction,
                 Items = items,
-                FulfillmentDate = fulfillmentDate,
+                FulfillmentDate = fulfillmentDate??DateTime.MinValue,
                 InvoiceType = invoiceType,
                 DespatchAdvice = desadv,
                 PaymentRules = paymentRules,
@@ -148,22 +148,32 @@ namespace underware.Edifact.D01B.Messages
                 g.Segments.OfType<NAD>().Any() &&
                 g.Segments.OfType<NAD>().First().E3035 == "SU");
             
-            var fii = sg2.Segments.OfType<FII>().First();
+            var fii = sg2.Segments.OfType<FII>().FirstOrDefault();
+            
+            if(fii == null) return new PaymentRules();
             
             var sg8 = Root.FindGroups("SG8").FirstOrDefault();
             
             var dueDate = sg8.Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "13").Date;
             
-            return new PaymentRules()
+            var rule = new PaymentRules()
             {
-                BankCode = fii.C088.E3433,
-                BankAccountNo = fii.C078.E3194,
-                VariableSymbol = fii.C078.E3192_0,
-                ConstantSymbol = fii.C078.E3192,
-                SpecificSymbol = fii.C078.E6345,
                 DueDate = dueDate,
                 PaymentType = paymentType
             };
+
+            if (fii.C088 != null)
+                rule.BankCode = fii.C088.E3433;
+
+            if (fii.C078 != null)
+            {
+                rule.BankAccountNo = fii.C078.E3194;
+                rule.VariableSymbol = fii.C078.E3192_0;
+                rule.ConstantSymbol = fii.C078.E3192;
+                rule.SpecificSymbol = fii.C078.E6345;
+            }
+
+            return rule;
         }
         
         private InvoiceItem GetInvoiceItem(SegmentGroup sg26)

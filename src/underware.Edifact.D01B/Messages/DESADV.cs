@@ -15,14 +15,18 @@ namespace underware.Edifact.D01B.Messages
 
             var billNo = Segments.OfType<BGM>().First().C106.E1004;
             var issueDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "137").Date;
-            var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2").Date;
+            var deliveryDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "2")?.Date 
+                               ?? Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "11")?.Date;
+
+            ;
+            
             var customer = GetParty("SG2", "BY");
             var supplier = GetParty("SG2", "SU");
             var deliveryPlace = GetParty("SG2", "DP");
             var invoicePlace = GetParty("SG2", "IV");
             var dispatchPlace = GetParty("SG2", "SH");
             var texts = Segments.OfType<FTX>()
-                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 });
+                .Select(p => new TextNote() { NoteType = p.E4451, Text = p?.C108?.E4440 }).ToList();
             var messageFunction = Segments.OfType<BGM>().First().C002.E1001;
             var purchaseOrder = GetReferences(Root, "SG1", false).FirstOrDefault(r => r.Qualifier == "ON");
             
@@ -67,6 +71,7 @@ namespace underware.Edifact.D01B.Messages
             var pia = sg17.Segments.OfType<PIA>().FirstOrDefault();
             var purchaseOrder = GetReferences(sg17, "SG18", false).FirstOrDefault(r => r.Qualifier == "ON");
 
+            var name = imdE?.C273.E7008 ?? imdF?.C273.E7008;
             return new DespatchAdviceItem()
             {
                 LineNo = lin?.E1082,
@@ -75,7 +80,7 @@ namespace underware.Edifact.D01B.Messages
                 Qty = qty.Value,
                 Unit = qty?.Unit,
                 PurchaseOrder = purchaseOrder,
-                Name = imdE?.C273.E7008,
+                Name = name
                 //NetUnitPrice = netPrice
             };
         }

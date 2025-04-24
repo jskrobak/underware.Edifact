@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
  
+  
   <ItemGroup>
     <None Remove="Messages\Structures\APERAK.xml" />
     <None Remove="Messages\Structures\AUTHOR.xml" />

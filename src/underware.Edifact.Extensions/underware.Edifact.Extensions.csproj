@@ -9,6 +9,7 @@
     <ProjectReference Include="..\underware.Edifact.D01B\underware.Edifact.D01B.csproj" />
     <ProjectReference Include="..\underware.Edifact.D07A\underware.Edifact.D07A.csproj" />
     <ProjectReference Include="..\underware.Edifact.D96A\underware.Edifact.D96A.csproj" />
+    <ProjectReference Include="..\underware.Edifact.D97A\underware.Edifact.D97A.csproj" />
   </ItemGroup>
 
 </Project>

@@ -190,12 +190,12 @@ namespace underware.Edifact
 
         public string Sender
         {
-            get { return UNB.Sender.Identifier; }
+            get => UNB.Sender.Identifier;
         }
 
         public string Receiver
         {
-            get { return UNB.Receiver.Identifier; }
+            get => UNB.Receiver.Identifier;
         }
         
         public string Format 

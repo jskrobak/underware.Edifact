@@ -18,31 +18,21 @@ namespace underware.Edifact
         public string Qualifier { get; set; }
         public string InternalCode { get; set; }
 
-        public S002 Sender
-        {
-            get
+        public S002 Sender =>
+            new()
             {
-                return new S002()
-                {
-                    E0004 = Identifier,
-                    E0007 = Qualifier,
-                    E0008 = InternalCode
-                };
-            }
-        }
+                E0004 = Identifier,
+                E0007 = Qualifier,
+                E0008 = InternalCode
+            };
 
-        public S003 Receiver
-        {
-            get
+        public S003 Receiver =>
+            new()
             {
-                return new S003()
-                {
-                    E0010 = Identifier,
-                    E0007 = Qualifier,
-                    E0014 = InternalCode
-                };
-            }
-        }
+                E0010 = Identifier,
+                E0007 = Qualifier,
+                E0014 = InternalCode
+            };
 
         public static Party EAN(string id)
         {

@@ -93,6 +93,7 @@ namespace underware.Edifact
         {
             throw new NotImplementedException();
         }
+        
 
         public string ToString(CharSpec charSpec)
         {

@@ -20,6 +20,7 @@ namespace underware.Edifact.Structures.S3.Segments
             SegmentsCount = segmentCnt;
             MessageReferenceNumber = refNo;
         }
+        public UNT(string stringToFormat, int segmentCnt, string refNo) : base(stringToFormat, segmentCnt, refNo) { }
 
         [ElementInfo(0, "Number of segments in a message", "M", "1", "n..10", "")]
         public string E0074 { get; set; }

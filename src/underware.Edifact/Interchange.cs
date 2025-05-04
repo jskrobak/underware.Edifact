@@ -140,7 +140,7 @@ namespace underware.Edifact
             List<string> allSegments = spec.SplitSegments(content);
 
             //UNB
-            string unbStr = allSegments.Where(s => s.StartsWith("UNB")).FirstOrDefault();
+            string unbStr = allSegments.FirstOrDefault(s => s.StartsWith("UNB"));
 
             if (String.IsNullOrEmpty(unbStr))
                 throw new Exception("Interchange must have at least one UNB segment!");

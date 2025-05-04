@@ -8,5 +8,6 @@ namespace underware.Edifact.Structures.Common.Interfaces
     {
         int SegmentsCount { get; set; }
         string MessageReferenceNumber { get; set; }
+        string OriginalContent { get; set; }
     }
 }

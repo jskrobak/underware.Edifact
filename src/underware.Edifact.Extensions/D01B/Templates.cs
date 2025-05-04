@@ -696,5 +696,18 @@ namespace underware.Edifact.D01B
                 E8051 = qualf
             };
         }
+
+        public static Segment ALC(string qualifier, string calcSequence , string specialServiceDescriptionCode)
+        {
+            return new ALC()
+            {
+                E5463 = qualifier,
+                E1227 = calcSequence,
+                C214 = new C214()
+                {
+                    E7161 = specialServiceDescriptionCode
+                }
+            };
+        }
     }
 }

@@ -98,6 +98,7 @@ namespace underware.Edifact
         public string ToString(CharSpec charSpec)
         {
             var allSegments = AllSegments;
+            UNT.OriginalContent = string.Empty;
             UNT.SegmentsCount = allSegments.Count;
             
             return charSpec.JoinSegments(allSegments);

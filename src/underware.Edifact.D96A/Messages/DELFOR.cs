@@ -11,6 +11,8 @@ public class DELFOR: Message
 {
     protected override BaseDocument GetBaseDocument()
     {
+        //var xml = Root.ToXml();
+        
         var delfor = new DeliveryForecast()
         {
             BillNo = Segments.OfType<BGM>().First().E1004,
@@ -43,12 +45,17 @@ public class DELFOR: Message
         var quantities = sg.FindGroups("SG12")
             .SelectMany(sg12 => sg12.Segments.OfType<QTY>())
             .ToList();
-        
-        var receivedQantities = sg.FindGroups("SG12")
-            .Where(group => group.Segments.OfType<QTY>().Any(qty => qty.Qualifier == "48"))
-            .ToList();
 
-        var sg13 = receivedQantities.First().FindGroups("SG13").First(); //. First()..Select(group =>
+        var firstSg12WithSg13 = sg
+            .FindGroups("SG12").FirstOrDefault(group => group.Groups.Any(s => s.Name == "SG13"));
+        
+        
+        //var receivedQantities = sg.FindGroups("SG12")
+        //    .Where(group => group.Segments.OfType<QTY>().Any(qty => qty.Qualifier == "48"))
+         //   .ToList();
+
+        var sg13 = firstSg12WithSg13.Groups.FirstOrDefault(s => s.Name == "SG13"); //. First()..Select(group =>
+        
         var lastDeliveryNote = new DocumentReference
             {
                 BillNo = sg13.Segments.OfType<RFF>().FirstOrDefault()?.Value,
@@ -58,7 +65,7 @@ public class DELFOR: Message
         var item = new DeliveryForecastItem
         {
             CalculationDate = sg.Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "257")?.Date,
-            LastReceivedQty = receivedQantities.FirstOrDefault().Segments.OfType<QTY>().FirstOrDefault()?.Value,
+            LastReceivedQty = firstSg12WithSg13.Segments.OfType<QTY>().FirstOrDefault()?.Value,
             LastReceivedDeliveryNoteNo = sg13.Segments.OfType<RFF>().FirstOrDefault()?.Value,
             LastReceivedDeliveryNoteDate = sg13.Segments.OfType<DTM>().FirstOrDefault()?.Date,
             DeliveryScheduleNumberOld = references.FirstOrDefault(s => s.Qualifier == "AIF")?.BillNo,

@@ -85,26 +85,24 @@ namespace underware.Edifact
         {
             OriginalContent = content;
 
-            Type type = this.GetType();
+            var type = this.GetType();
 
-            List<ElementInfo> structure = type.GetElementInfoList();
+            var structure = type.GetElementInfoList();
 
             var elements = spec.SplitElements(content);
 
 
-            for (int i = 0; i < elements.Count - 1; i++)
+            for (var i = 0; i < elements.Count - 1; i++)
             {
-                string element = elements[i + 1];
+                var element = elements[i + 1];
 
-                if (structure.Count > i)
-                {
-                    PropertyInfo property = type.GetProperty(structure[i].PropertyName);
+                if (structure.Count <= i) continue;
+                var property = type.GetProperty(structure[i].PropertyName);
 
-                    if (property.PropertyType == typeof(string))
-                        property.SetValue(this, element.EDIDecode());
-                    else
-                        property.SetValue(this, ParseComposite(spec, property.PropertyType, element));
-                }
+                property.SetValue(this,
+                    property.PropertyType == typeof(string)
+                        ? element.EDIDecode()
+                        : ParseComposite(spec, property.PropertyType, element));
             }
         }
 
@@ -201,19 +199,16 @@ namespace underware.Edifact
 
         public static Segment Parse(CharSpec spec, int syntaxVersion, string content)
         {
-            string segmentName = content.Substring(0, 3);
+            var segmentName = content.Substring(0, 3);
 
-            Type type = GetSegmentType(segmentName, syntaxVersion);
-
-            if (type == null)
-                type = GetSegmentType(segmentName);
+            var type = GetSegmentType(segmentName, syntaxVersion) ?? GetSegmentType(segmentName);
 
             return Parse(spec, type, content);
         }
 
         public static Segment Parse(CharSpec spec, string content)
         {
-            var type = GetSegmentType(content.Substring(0, 3));
+            var type = GetSegmentType(content[..3]);
 
            // if (type == null)
            //     type = typeof(Segment);
@@ -223,6 +218,10 @@ namespace underware.Edifact
 
         public static Segment Parse(CharSpec spec, Type type, string content)
         {
+            if (type == null)
+                throw new NullReferenceException(
+                    $"No type found for segment name={content.Substring(0, 3)}");
+            
             var segment = Activator.CreateInstance(type) as Segment;
 
             segment.ParseSegment(spec, content);

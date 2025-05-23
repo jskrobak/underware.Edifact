@@ -4,10 +4,11 @@ using System.Text;
 
 namespace underware.Edifact.Security
 {
-    public class SignatureVerificationResult
+    public class SignatureVerificationResult(SignatureInfo signature)
     {
-        public string InterchangeRefNo { get; set; }
-        public string MessageRefNo { get; set; }
+        public DateTime Created { get; } = DateTime.Now;
+        public SignatureInfo Signature { get; set; } = signature;
+        
         public bool IsSignatureValid { get; set; }
         public string CertStatus { get; set; }
         public byte[] SignedDataSHA1Hash { get; set; }

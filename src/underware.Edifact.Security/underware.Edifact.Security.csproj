@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
    
@@ -12,12 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BouncyCastle.NetCore" Version="1.8.5" />
+    <ProjectReference Include="..\underware.Edifact\underware.Edifact.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\underware.Edifact.D94A\underware.Edifact.D94A.csproj" />
-    <ProjectReference Include="..\underware.Edifact\underware.Edifact.csproj" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
   </ItemGroup>
 
 </Project>

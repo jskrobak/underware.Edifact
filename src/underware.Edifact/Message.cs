@@ -19,12 +19,12 @@ namespace underware.Edifact
 
         public Message()
         {
-            _segments = new List<Segment>();
+            _segments = [];
         }
         
         public List<Segment>Segments => _segments;
         
-        public SegmentGroup Root => _root ?? (_root = CreateTree());
+        public SegmentGroup Root => _root ??= CreateTree();
 
         public List<Segment> AllSegments
         {
@@ -41,22 +41,21 @@ namespace underware.Edifact
 
         public Message(int syntax, string messageType, string version, string release, string agency, string association, string refNo)
         {
-            if (syntax == 3)
+            switch (syntax)
             {
-                UNH = new S3.Segments.UNH(messageType, version, release, agency, association, refNo);
-                UNT = new S3.Segments.UNT(0, refNo);
-            }
-            else if (syntax == 4)
-            {
-                UNH = new S4.Segments.UNH(messageType, version, release, agency, association, refNo);
-                UNT = new S4.Segments.UNT(0, refNo);
-            }
-            else
-            {
-                throw new NotSupportedException($"Syntax version {version} is not supported.");
+                case 3:
+                    UNH = new S3.Segments.UNH(messageType, version, release, agency, association, refNo);
+                    UNT = new S3.Segments.UNT(0, refNo);
+                    break;
+                case 4:
+                    UNH = new S4.Segments.UNH(messageType, version, release, agency, association, refNo);
+                    UNT = new S4.Segments.UNT(0, refNo);
+                    break;
+                default:
+                    throw new NotSupportedException($"Syntax version {version} is not supported.");
             }
 
-            _segments = new List<Segment>();
+            _segments = [];
         }
 
         public Interchange Interchange { get; set; }

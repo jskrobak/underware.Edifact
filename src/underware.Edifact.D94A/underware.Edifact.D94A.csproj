@@ -151,6 +151,7 @@
     <EmbeddedResource Include="Messages\Structures\SUPMAN.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\underware.Edifact.Security\underware.Edifact.Security.csproj" />
     <ProjectReference Include="..\underware.Edifact\underware.Edifact.csproj" />
   </ItemGroup>
 </Project>

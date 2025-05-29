@@ -202,14 +202,28 @@ namespace underware.Edifact
         public static Message Parse(CharSpec spec, int syntaxVersion, List<string> segments)
         {
             if (segments.Count < 2)
-                throw new ArgumentOutOfRangeException("Message must have at least 2 segments (UNH, UNT)");
+                throw new ArgumentOutOfRangeException(nameof(segments), "Message must have at least 2 segments (UNH, UNT)");
 
             if (!segments[0].StartsWith("UNH"))
-                throw new ArgumentException("Message must start with UNH segment;");
+                throw new ArgumentException("Message must start with UNH segment;", nameof(segments));
 
             var unh = Segment.Parse(spec, syntaxVersion, segments.First()) as IUNH;
-            var msgType = $"underware.Edifact.{unh.Version}{unh.Release}.Messages.{unh.MessageType}, underware.Edifact.{unh.Version}{unh.Release}";
-            var type = Type.GetType(msgType);
+            
+            var typeNames = new[]
+            {
+                $"underware.Edifact.{unh.Version}{unh.Release}.Messages.{unh.ControllingAgency}{unh.Association}.{unh.MessageType}, underware.Edifact.{unh.Version}{unh.Release}",
+                $"underware.Edifact.{unh.Version}{unh.Release}.Messages.{unh.MessageType}, underware.Edifact.{unh.Version}{unh.Release}"
+            };
+            
+            var type = Type.GetType(typeNames.First());
+
+            if (type == null)
+            {
+                for(var i = 1; i < typeNames.Length && type == null; i++)
+                {
+                    type = Type.GetType(typeNames[i]);
+                }
+            }
             
             var msg = type == null ? new Message() : Activator.CreateInstance(type) as Message;
             

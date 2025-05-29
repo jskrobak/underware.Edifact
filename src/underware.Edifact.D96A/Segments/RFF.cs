@@ -7,10 +7,8 @@ using underware.Edifact.Structures.Common.Segments.Interfaces;
 
 namespace underware.Edifact.D96A.Segments
 {
-    public class RFF : Segment, IRFF
+    public class RFF() : Segment("RFF", "Reference"), IRFF
     {
-        public RFF() : base("RFF", "Reference") { }
-
         [ElementInfo(0, "REFERENCE", "M", "1", "", "")]
         public C506 C506 { get; set; }
 

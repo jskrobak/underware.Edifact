@@ -172,7 +172,7 @@ namespace underware.Edifact.D01B.Messages
                 rule.ConstantSymbol = fii.C078.E3192;
                 rule.SpecificSymbol = fii.C078.E6345;
             }
-
+            
             return rule;
         }
         

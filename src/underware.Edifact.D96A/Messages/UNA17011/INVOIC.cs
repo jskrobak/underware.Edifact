@@ -4,11 +4,10 @@ using System.Globalization;
 using System.Linq;
 using underware.Edi.Common.DocumentModel;
 using underware.Edifact.D96A.Segments;
-using underware.Edifact.Xml;
 
-namespace underware.Edifact.D96A.Messages
-{
-    public class INVOIC : Message
+namespace underware.Edifact.D96A.Messages.UNA17011;
+
+public class INVOIC : Message
     {
         protected override BaseDocument GetBaseDocument()
         {
@@ -19,7 +18,7 @@ namespace underware.Edifact.D96A.Messages
             var fulfillmentDate = Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "325")?.Date ?? issueDate;
             var customer = GetParty("SG2", "BY");
             var supplier = GetParty("SG2", "SU")??GetParty("SG2", "SE");
-            var deliveryPlace = GetParty("SG2", "DP");
+            var deliveryPlace = GetParty("SG34", "CN");
             var invoicePlace = GetParty("SG2", "IV");
             var dispatchPlace = GetParty("SG2", "SH");
             var texts = Segments.OfType<FTX>()
@@ -37,9 +36,10 @@ namespace underware.Edifact.D96A.Messages
                     .Select(GetInvoiceItem)
                     .ToList();
 
-            var paymentRules = GetPaymentRules();
-
-            var taxes = Root.FindGroups("SG50").Select(GetTax).ToList();
+            var paymentRules = new PaymentRules
+            {
+                DueDate = AllSegments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "140").Date
+            };//GetPaymentRules();}
 
             var inv = new Invoice()
             {
@@ -60,7 +60,7 @@ namespace underware.Edifact.D96A.Messages
                 PurchaseOrder = purchaseOrder,
                 RefInvoice = refInvoice,
                 Currency = currency,
-                Taxes = taxes,
+                Taxes = new List<Tax>(),
                 Contract = contract
             };
 
@@ -74,7 +74,7 @@ namespace underware.Edifact.D96A.Messages
                     case "79":
                         inv.TotalAmount = moa.Amount?? 0;
                         break;
-                    case "86":
+                    case "77":
                         inv.TotalAmountIncVAT = moa.Amount ?? 0;
                         break;
                 }
@@ -82,116 +82,56 @@ namespace underware.Edifact.D96A.Messages
 
             if (inv.TotalAmount != 0 && inv.TotalAmountIncVAT == 0)
             {
-                inv.TotalAmountIncVAT = inv.TotalAmount + taxes.Sum(t => t.Amount);
+                inv.TotalAmountIncVAT = inv.TotalAmount + inv.Taxes.Sum(t => t.Amount);
             }
+
+            inv.DespatchAdvice ??= inv.Items.FirstOrDefault()?.DespatchAdvice;
+            
+            inv.PurchaseOrder ??= inv.Items.FirstOrDefault()?.PurchaseOrder;
 
             return inv;
-        }
-
-        private Tax GetTax(SegmentGroup sg)
-        {
-            var tax = sg.Segments.OfType<TAX>().FirstOrDefault();
-            var moa125 = sg.Segments.OfType<MOA>().FirstOrDefault(m => m.C516.E5025 == "125");
-            var moa124 = sg.Segments.OfType<MOA>().FirstOrDefault(m => m.C516.E5025 == "124");
-
-            decimal.TryParse(tax.C243?.E5278, NumberStyles.Any, CultureInfo.InvariantCulture, out var rate);
-            var basis = !string.IsNullOrEmpty(tax.E5286) ? decimal.Parse(tax.E5286, NumberStyles.Any, CultureInfo.InvariantCulture):0;
-            var amount = 0m;
-
-            if (rate != 0)
-            {
-                basis = !string.IsNullOrEmpty(tax.E5286) 
-                    ? decimal.Parse(tax.E5286, NumberStyles.Any, CultureInfo.InvariantCulture)
-                    : decimal.Parse(moa125.C516.E5004, NumberStyles.Any, CultureInfo.InvariantCulture);
-
-                amount = decimal.Parse(moa124.C516.E5004, NumberStyles.Any, CultureInfo.InvariantCulture);
-            }
-
-            return new Tax
-            {
-                TaxType = tax.C241.E5153,
-                Code = tax.C243?.E5279,
-                Rate = rate,
-                Amount = amount,
-                Basis = basis
-            };
-        }
-
-    private PaymentRules GetPaymentRules()
-        {
-            var sg2 = Root.FindGroups("SG2").FirstOrDefault(g =>
-                g.Segments.OfType<NAD>().Any() &&
-                g.Segments.OfType<NAD>().First().E3035 == "SU");
-            
-            var fii = sg2.Segments.OfType<FII>().FirstOrDefault();
-            
-            var sg8 = Root.FindGroups("SG8").FirstOrDefault();
-            
-            var dueDate = sg8?.Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "13")?.Date;
-            
-            return new PaymentRules()
-            {
-                BankCode = fii?.C088?.E3433,
-                BankAccountNo = fii?.C078?.E3194,
-                VariableSymbol = fii?.C078?.E3192_0,
-                ConstantSymbol = fii?.C078?.E3192,
-                SpecificSymbol = fii?.C078?.E6345,
-                DueDate = dueDate
-            };
         }
 
         private InvoiceItem GetInvoiceItem(SegmentGroup sg)
         {
             var lin = sg.Segments.OfType<LIN>().FirstOrDefault();
-            var qty47 = sg.Segments.OfType<QTY>().FirstOrDefault(q => q.Qualifier == "47");
-            var qty59 = sg.Segments.OfType<QTY>().FirstOrDefault(q => q.Qualifier == "59");
-            var dtm = sg.Segments.OfType<DTM>().FirstOrDefault(d => d.Qualifier == "35");
-            //var imdE = sg.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "E");
-            var imdF = sg.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "F");
-            var imdA = sg.Segments.OfType<IMD>().FirstOrDefault(i => i.E7077 == "A");
-            var piaSA = sg.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "SA");
-            var piaIN = sg.Segments.OfType<PIA>().FirstOrDefault(p => p.C212.E7143 == "IN");
-            var ftx = sg.Segments.OfType<FTX>().FirstOrDefault(f => f.E4451 == "ZZZ");
+            var qty12 = sg.Segments.OfType<QTY>().FirstOrDefault(q => q.Qualifier == "12");
+            var imd = sg.Segments.OfType<IMD>().FirstOrDefault();
 
-            var name = ftx?.C108?.Text;
+            var name = imd?.C273?.E7008;
 
-            if(string.IsNullOrEmpty(name))
-                name = imdA?.C273?.E7008;
-
-            
             var purchaseOrder = GetReferences(sg, "SG29", false).FirstOrDefault(r => r.Qualifier == "ON");
-            var despatchAdvice = GetReferences(sg, "SG29", false).FirstOrDefault(r => r.Qualifier == "DQ");
+            var despatchAdvice = GetReferences(sg, "SG29", false).FirstOrDefault(r => r.Qualifier == "AAK");
             var refInvoice = GetReferences(sg, "SG29", false).FirstOrDefault(r => r.Qualifier == "IV");
 
             var item = new InvoiceItem()
             {
                 LineNo = lin?.E1082,
                 GTIN = lin?.C212?.E7140,
-                SupplierItemCode = piaSA?.C212?.E7140,
-                CustomerItemCode = piaIN?.C212?.E7140,
-                Qty = qty47.Value,
-                Unit = qty47?.Unit,
-                ItemType = imdF?.C273?.E7008,
-                Name  = name,
-                DeliveryDate = dtm?.Date ?? DateTime.MinValue,
+                CustomerItemCode = lin?.C212?.E7140,
+                Qty = qty12.Value,
+                Unit = qty12?.Unit,
+                Name = name,
+                //DeliveryDate = dtm?.Date ?? DateTime.MinValue,
                 PurchaseOrder = purchaseOrder,
                 RefInvoice = refInvoice,
                 DespatchAdvice = despatchAdvice,
-                PcePerUnitQty = qty59?.Value,
+                //PcePerUnitQty = qty59?.Value,
             };
-            
+
             var sg26 = sg.Groups.FirstOrDefault(g => g.Name == "SG26");
             var moa203 = sg26?.Segments.OfType<MOA>().FirstOrDefault(m => m.Qualifier == "203");
             var moa66 = sg26?.Segments.OfType<MOA>().FirstOrDefault(m => m.Qualifier == "66");
             item.Price = moa203?.Amount ?? moa66?.Amount ?? 0;
-            
-            foreach(var sg28 in sg.FindGroups("SG28", true))
+
+            foreach (var sg28 in sg.FindGroups("SG28", true))
             {
                 var pri = sg28.Segments.OfType<PRI>().FirstOrDefault();
-                
-                if (decimal.TryParse(pri.C509?.E5118, NumberStyles.Any, CultureInfo.InvariantCulture, out var unitPrice))
+
+                if (decimal.TryParse(pri.C509?.E5118, NumberStyles.Any, CultureInfo.InvariantCulture,
+                        out var unitPrice))
                 {
-                    if(pri.C509.E5125 == "AAB")
+                    if (pri.C509.E5125 == "AAB")
                         item.UnitPriceGross = unitPrice;
 
                     if (pri.C509.E5125 == "AAA")
@@ -200,13 +140,15 @@ namespace underware.Edifact.D96A.Messages
             }
 
             var sg33 = sg.Groups.FirstOrDefault(g => g.Name == "SG33");
-            var tax = sg33.Segments.OfType<TAX>().FirstOrDefault(t => t.C241.E5153 == "VAT");
+            if (sg33 == null) return item;
             
+            var tax = sg33.Segments.OfType<TAX>().FirstOrDefault(t => t.C241.E5153 == "VAT");
+
             if (decimal.TryParse(tax.C243?.E5279, NumberStyles.Any, CultureInfo.InvariantCulture, out var vatRate))
             {
                 item.VATRate = vatRate;
             }
-            
+
             return item;
 
 
@@ -227,7 +169,7 @@ namespace underware.Edifact.D96A.Messages
         }
         private underware.Edi.Common.DocumentModel.Party GetParty(string groupName, string qualf)
         {
-            var group = Root.FindGroups(groupName).FirstOrDefault(g =>
+            var group = Root.FindGroups(groupName, true).FirstOrDefault(g =>
                 g.Segments.OfType<NAD>().Any() &&
                 g.Segments.OfType<NAD>().First().E3035 == qualf);
 
@@ -258,4 +200,3 @@ namespace underware.Edifact.D96A.Messages
             return contact;
         }
     }
-}

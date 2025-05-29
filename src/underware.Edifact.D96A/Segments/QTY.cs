@@ -8,10 +8,8 @@ using underware.Edifact.Structures.Common.Segments.Interfaces;
 
 namespace underware.Edifact.D96A.Segments
 {
-    public class QTY : Segment, IQTY
+    public class QTY() : Segment("QTY", "Quantity"), IQTY
     {
-        public QTY() : base("QTY", "Quantity") { }
-
         [ElementInfo(0, "QUANTITY DETAILS", "M", "1", "", "")]
         public C186 C186 { get; set; }
 

@@ -26,8 +26,8 @@ namespace underware.Edifact
             _charSpec = spec;
             _syntax = syntax;
             _messages = new MessageList(this);
-            _header = new List<Segment>();
-            _trailer = new List<Segment>();
+            _header = [];
+            _trailer = [];
 
         }
 
@@ -37,48 +37,27 @@ namespace underware.Edifact
             _charSpec = spec;
             _syntax = syntax;
             _messages = new MessageList(this);
-            _header = new List<Segment>();
-            _trailer = new List<Segment>();
+            _header = [];
+            _trailer = [];
 
             this.Header.Add(new UNB(syntax, sender, receiver, DateTime.Now, refNo, appRef, isTest));
             this.Trailer.Add(new UNZ(0, refNo));
         }
 
-        public Syntax Syntax
-        {
-            get { return _syntax; }
-        }
+        public Syntax Syntax => _syntax;
 
-        public CharSpec CharSpec
-        {
-            get { return _charSpec; }
-        }
+        public CharSpec CharSpec => _charSpec;
 
         //public Encoding Encoding { get { return _encoding; } }
-        public List<Segment> Header
-        {
-            get { return _header; }
-        }
+        public List<Segment> Header => _header;
 
-        public List<Segment> Trailer
-        {
-            get { return _trailer; }
-        }
+        public List<Segment> Trailer => _trailer;
 
-        public MessageList Messages
-        {
-            get { return _messages; }
-        }
+        public MessageList Messages => _messages;
 
-        public UNB UNB
-        {
-            get => Header.Where(s => s.Name == "UNB").First() as UNB;
-        }
+        public UNB UNB => Header.First(s => s.Name == "UNB") as UNB;
 
-        public UNZ UNZ
-        {
-            get => Trailer.Where(s => s.Name == "UNZ").First() as UNZ;
-        }
+        public UNZ UNZ => Trailer.First(s => s.Name == "UNZ") as UNZ;
 
         public override string ToString()
         {
@@ -131,49 +110,48 @@ namespace underware.Edifact
 
         public static Interchange Parse(string contentString)
         {
-            string content = contentString.Replace("\r", "");
+            var content = contentString.Replace("\r", "");
             content = content.Replace("\n", "");
 
-            CharSpec spec = CharSpec.GetFromUNAOrDefault(content);
+            var spec = CharSpec.GetFromUNAOrDefault(content);
 
             List<string> segmentBuffer = null;
-            List<string> allSegments = spec.SplitSegments(content);
+            var allSegments = spec.SplitSegments(content);
 
             //UNB
-            string unbStr = allSegments.FirstOrDefault(s => s.StartsWith("UNB"));
+            var unbStr = allSegments.FirstOrDefault(s => s.StartsWith("UNB"));
 
-            if (String.IsNullOrEmpty(unbStr))
+            if (string.IsNullOrEmpty(unbStr))
                 throw new Exception("Interchange must have at least one UNB segment!");
 
-            UNB unb = Segment.Parse(spec, unbStr) as UNB;
+            var unb = Segment.Parse(spec, unbStr) as UNB;
 
 
             //UNB
-            string unzStr = allSegments.Where(s => s.StartsWith("UNZ")).FirstOrDefault();
+            var unzStr = allSegments.FirstOrDefault(s => s.StartsWith("UNZ"));
 
-            if (String.IsNullOrEmpty(unzStr))
+            if (string.IsNullOrEmpty(unzStr))
                 throw new Exception("Interchange must have at least one UNZ segment!");
 
-            UNZ unz = Segment.Parse(spec, unzStr) as UNZ;
+            var unz = Segment.Parse(spec, unzStr) as UNZ;
 
-            Interchange itr = new Interchange(spec, unb.Syntax);
+            var itr = new Interchange(spec, unb.Syntax);
             itr.Header.Add(unb);
             itr.Trailer.Add(unz);
 
-            string[] toSkip = new string[] { "UNA", "UNB", "UNZ" };
+            string[] toSkip = ["UNA", "UNB", "UNZ"];
 
-            foreach (string segmentString in allSegments.Where(s =>
-                         !string.IsNullOrEmpty(s) && s.Length > 2 && !toSkip.Contains(s.Substring(0, 3))))
+            foreach (var segmentString in allSegments.Where(s =>
+                         !string.IsNullOrEmpty(s) && s.Length > 2 && !toSkip.Contains(s[..3])))
             {
-                string name = segmentString.Substring(0, 3);
+                var name = segmentString[..3];
 
                 if (name == "UNH")
                 {
                     if (segmentBuffer != null)
                         itr.Messages.Add(Message.Parse(spec, unb.Syntax.Version, segmentBuffer));
 
-                    segmentBuffer = new List<string>();
-                    segmentBuffer.Add(segmentString);
+                    segmentBuffer = [segmentString];
                 }
                 else
                 {
@@ -188,16 +166,10 @@ namespace underware.Edifact
             return itr;
         }
 
-        public string Sender
-        {
-            get => UNB.Sender.Identifier;
-        }
+        public string Sender => UNB.Sender.Identifier;
 
-        public string Receiver
-        {
-            get => UNB.Receiver.Identifier;
-        }
-        
+        public string Receiver => UNB.Receiver.Identifier;
+
         public string Format 
         {
             get
@@ -221,9 +193,6 @@ namespace underware.Edifact
 
         public IEnumerable<IDocument> Documents => Messages;
 
-        public string TextContent
-        {
-            get { return ToString(); }
-        }
+        public string TextContent => ToString();
     }
 }

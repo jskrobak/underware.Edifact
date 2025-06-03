@@ -74,14 +74,14 @@ public class DELFOR: Message
         //    .Where(group => group.Segments.OfType<QTY>().Any(qty => qty.Qualifier == "48"))
          //   .ToList();
 
-        var sg17 = firstSg16WithSg17.Groups.FirstOrDefault(s => s.Name == "SG17"); //. First()..Select(group =>
+        var sg17 = firstSg16WithSg17?.Groups.FirstOrDefault(s => s.Name == "SG17"); //. First()..Select(group =>
             
         var item = new DeliveryForecastItem
         {
-            CalculationDate = lastSg16WithSg17.Segments.OfType<DTM>().FirstOrDefault()?.Date,
-            LastReceivedQty = firstSg16WithSg17.Segments.OfType<QTY>().FirstOrDefault()?.Value,
-            LastReceivedDeliveryNoteNo = sg17.Segments.OfType<RFF>().FirstOrDefault()?.Value,
-            LastReceivedDeliveryNoteDate = sg17.Segments.OfType<DTM>().FirstOrDefault()?.Date,
+            CalculationDate = lastSg16WithSg17?.Segments.OfType<DTM>().FirstOrDefault()?.Date,
+            LastReceivedQty = firstSg16WithSg17?.Segments.OfType<QTY>().FirstOrDefault()?.Value,
+            LastReceivedDeliveryNoteNo = sg17?.Segments.OfType<RFF>().FirstOrDefault()?.Value,
+            LastReceivedDeliveryNoteDate = sg17?.Segments.OfType<DTM>().FirstOrDefault()?.Date,
             DeliveryScheduleNumberNew = references.FirstOrDefault(s => s.Qualifier == "AAN")?.BillNo,
             DeliveryScheduleDateNew = references.FirstOrDefault(s => s.Qualifier == "AAN")?.RefDate,
             DeliveryScheduleNumberOld = references.FirstOrDefault(s => s.Qualifier == "AIF")?.BillNo,

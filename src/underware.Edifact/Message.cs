@@ -184,13 +184,9 @@ namespace underware.Edifact
 
         private static string GetFirstSegmentDesc(XElement descNode)
         {
-            if (IsGroup(descNode))
-            {
-                //return descNode.SelectSingleNode(".//segment[1]").Attributes["code"].Value;
-                return descNode.XPathSelectElement(".//segment[1]").Attribute("code").Value;
-            }
-            else
-                return descNode.Attribute("code").Value;
+            return IsGroup(descNode) 
+                ? descNode.XPathSelectElement(".//segment[1]").Attribute("code").Value 
+                : descNode.Attribute("code").Value;
         }
 
         private static bool IsGroup(XElement descNode)

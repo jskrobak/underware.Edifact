@@ -8,4 +8,8 @@
     <ProjectReference Include="..\underware.Edifact\underware.Edifact.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Messages\Structures\INVOIC.xml" />
+  </ItemGroup>
+
 </Project>

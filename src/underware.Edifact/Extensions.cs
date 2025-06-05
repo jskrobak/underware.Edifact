@@ -136,6 +136,8 @@ namespace underware.Edifact
 
             return sb.ToString().Replace(guid, chars.ReleaseIndicator.ToString());
         }
+        
+        
 
     }
 }

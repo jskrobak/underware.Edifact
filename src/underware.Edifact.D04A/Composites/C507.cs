@@ -16,7 +16,7 @@ namespace underware.Edifact.D04A.Composites
 
         public DateTime GetDateTime()
         {
-            return underware.Edifact.Extensions.ParseDateTime(E2380, DateTimeFormat.Parse(E2379));
+            return E2380.ParseDateTime(DateTimeFormat.Parse(E2379));
         }
     }
 }

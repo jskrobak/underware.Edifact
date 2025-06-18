@@ -25,7 +25,7 @@ public class DELFOR: Message
         {
             var sg7 = sg6.FindGroups("SG7").FirstOrDefault();
             
-            var placeOfDischarge = sg7.Segments.OfType<LOC>().FirstOrDefault(loc => loc.E3227 == "11").C517.E3225;
+            var placeOfDischarge = sg7.Segments.OfType<LOC>().FirstOrDefault(loc => loc.E3227 == "7").C517.E3225;
             //XmlHelper.GetString(sg6, "SG7[NAD/@E3035='ST']/LOC[@E3227='11']/C517/@E3225");
             
             var placeOfDelivery =  sg7.Segments.OfType<LOC>().FirstOrDefault(loc => loc.E3227 == "11").C517.E3225;
@@ -92,6 +92,7 @@ public class DELFOR: Message
             OrderNo = references.FirstOrDefault(s => s.Qualifier == "ON")?.BillNo,
             BackorderQty = quantities.FirstOrDefault(q => q.Qualifier == "83")?.Value,
             CumulativeQtyReceived = quantities.FirstOrDefault(q => q.Qualifier == "70")?.Value,
+            UsingCode = sg.Segments.OfType<IMD>().FirstOrDefault().C273.E7009
         };
 
         foreach (var sg18 in sg.FindGroups("SG18"))

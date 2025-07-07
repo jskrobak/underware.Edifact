@@ -28,6 +28,7 @@ namespace underware.Edifact
             };
         }
 
+        public static Syntax UNOA2 = new Syntax() { Identifier = "UNOA", Version = 2 };
         public static Syntax UNOA3 = new Syntax() { Identifier = "UNOA", Version = 3 };
         public static Syntax UNOB3 = new Syntax() { Identifier = "UNOB", Version = 3 };
         public static Syntax UNOC3 = new Syntax() { Identifier = "UNOC", Version = 3 };

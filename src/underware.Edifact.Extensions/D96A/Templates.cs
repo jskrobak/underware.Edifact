@@ -398,11 +398,12 @@ namespace underware.Edifact.D96A
             };
         }
         
-        public static NAD NAD(string qualf, string gln, string name, string street, string city, string zip,
-            string countryCode, string agency = "9")
+        public static NAD NAD(string qualf, string gln, string name="", string street="", string city="", string zip="",
+            string countryCode="", string agency = "9")
         {
-            string[] nameParts = name.SplitToChunks(35, 5);
-            string[] streetParts = street.SplitToChunks(35, 5);
+            var nameParts = name.SplitToChunks(35, 5);
+            var streetParts = street.SplitToChunks(35, 5);
+            
             return new NAD()
             {
                 E3035 = qualf,
@@ -432,7 +433,7 @@ namespace underware.Edifact.D96A
             };
         }
 
-        public static NAD NAD(string qualf, string gln)
+        public static NAD XNAD(string qualf, string gln)
         {
             return new NAD()
             {
@@ -733,23 +734,29 @@ namespace underware.Edifact.D96A
             };
         }
 
-        public static LOC LOC(string qualf, string placeId)
+        public static LOC LOC(string qualf, string placeId, string agency = "")
         {
             return new LOC()
             {
                 E3227 = qualf,
                 C517 = new C517()
                 {
-                    E3225 = placeId
+                    E3225 = placeId,
+                    E3055 = agency
                 }
             };
         }
 
-        public static PCI PCI(string markingInstructions)
+        public static PCI PCI(string markingInstructions, string typeOfMarking = "", string agency = "")
         {
             return new PCI()
             {
-                E4233 = markingInstructions
+                E4233 = markingInstructions,
+                C827 = new C827()
+                {
+                    E7511 = typeOfMarking,
+                    E3055 = agency
+                }
             };
         }
 
